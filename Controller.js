@@ -15,7 +15,7 @@ app.set('views', './views');
 app.use(express.static('assets'));
 
 app.get('/', async(req, res) => {
-    res.render('home');
+    res.render('painel');
 });
 
 let port = process.env.PORT || 3000;
