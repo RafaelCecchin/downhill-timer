@@ -5,7 +5,7 @@ const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const minify = require('gulp-minify');
 
-const sass_src_dir = "assets/styles/scss/*.scss";
+const sass_src_dir = "assets/styles/scss/**/*.scss";
 const sass_dest_dir = "./assets/styles";
 
 const js_src_dir = "assets/scripts/js/*.js";
