@@ -1,10 +1,20 @@
 body {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr;
-    padding: 2rem;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 2rem;
     min-height: 100vh;
     gap: 2.125rem;
     font-family: 'Roboto', sans-serif;
     color: $gray;
+    font-size: 16px;
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.text {
+    font-size: 1.25rem;
 }
