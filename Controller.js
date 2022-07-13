@@ -1,23 +1,59 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const hbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const models = require('./models');
-
-let app = express();
+var app = express();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
-
-app.engine('handlebars', hbs.engine());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
 app.use(express.static('assets'));
 
-app.get('/', async(req, res) => {
-    res.render('painel');
+var hbs = exphbs.create({
+    helpers: {
+        ifCond: function (v1, operator, v2, options) {
+            switch (operator) {
+                case '==':
+                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                case '===':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '!=':
+                    return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                case '!==':
+                    return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                case '<':
+                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                case '<=':
+                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                case '>':
+                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                case '>=':
+                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                case '&&':
+                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                case '||':
+                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                default:
+                    return options.inverse(this);
+            }
+        }
+    }
 });
 
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+// Routes
+app.get('/', async(req, res) => {
+    res.render('painel', {viewName: 'painel'});
+});
+
+app.get('/configuracoes', async(req, res) => {
+    res.render('configuracoes', {viewName: 'configuracoes'});
+});
+
+// Server
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
     console.log('Servidor rodando');
