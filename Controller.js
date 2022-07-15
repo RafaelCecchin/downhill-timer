@@ -53,6 +53,10 @@ app.get('/configuracoes', async(req, res) => {
     res.render('configuracoes', {viewName: 'configuracoes'});
 });
 
+app.get('/campeonatos', async(req, res) => {
+    res.render('campeonatos', {viewName: 'campeonatos'});
+});
+
 // Server
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {

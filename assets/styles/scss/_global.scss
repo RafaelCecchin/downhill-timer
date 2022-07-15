@@ -4,10 +4,17 @@ body {
     grid-template-rows: auto 1fr auto;
     padding: 0 2rem;
     min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
     gap: 2.125rem;
     font-family: 'Roboto', sans-serif;
     color: $gray;
     font-size: 16px;
+
+    main {
+        max-height: 100%;
+        overflow: hidden;
+    }
 }
 
 .page-title {
@@ -48,7 +55,8 @@ body {
     transition: .2s ease-in-out;
     transition-property: background-color, color, box-shadow;
     width: max-content;
-
+    margin: 1px;
+    
     svg {
         width: 1.5rem;
         height: 1.5rem;
@@ -117,4 +125,9 @@ body {
     font-size: 1rem;
     font-weight: 500;
     color: $gray;
+    border: 1px solid;
+    margin: 1px;
 }
+
+
+

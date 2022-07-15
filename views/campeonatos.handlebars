@@ -1,0 +1,72 @@
+<section class="page-campeonatos index-page">
+    <div class="container">
+        <div class="actions">
+
+            <div class="label add">
+                <div class="label-inputs">
+                    <button class="button primary-button" id="btn-add-campeonato">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M11,0A11,11,0,1,1,0,11,11,11,0,0,1,11,0Z" transform="translate(1 1)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+                            <line y2="12" transform="translate(12 6)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <line x1="12" transform="translate(6 12)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </svg>
+                        <span>Adicionar campeonato</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="label filter">
+                <div class="label-inputs">
+                    <input class="input" type="text" placeholder="Filtre sua pesquisa..."/>
+                    <button class="button secondary-button" id="btn-filter-campeonato">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                            <polygon points="0,0 0,128 201.143,329.143 201.143,512 310.857,475.429 310.857,329.143 512,128 512,0 		"/>
+                        </svg>
+                        <span>Filtrar</span>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="table-container">
+            <table class="table" data-number-columns="3">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Quantidade de etapas</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr data-cod="">
+                        <td>Campeonato Brasileiro de Downhill 2022</td>
+                        <td>8</td>
+                        <td>
+                            <button class="table-button remove-row" data-target="id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
+                                    <g id="Lixo" transform="translate(-2 -1)">
+                                        <path id="Caminho_5" data-name="Caminho 5" d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path id="Caminho_6" data-name="Caminho 6" d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <line id="Linha_8" data-name="Linha 8" y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <line id="Linha_9" data-name="Linha 9" y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                </svg>
+                            </button>
+                            <button class="table-button edit-row" data-target="id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                    <g id="Editar" transform="translate(-6 -2.6)">
+                                        <path id="Caminho_3" data-name="Caminho 3" d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                        <path id="Caminho_4" data-name="Caminho 4" d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                    </g>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
