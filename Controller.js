@@ -58,12 +58,16 @@ app.get('/campeonatos', async(req, res) => {
     res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
 });
 
+app.get('/campeonatos/:id', async(req, res) => {
+    res.render('pages/campeonatos/show', {viewName: 'campeonatos'});
+});
+
 app.get('/competidores', async(req, res) => {
     res.render('pages/competidores/index', {viewName: 'competidores'});
 });
 
-app.get('/campeonatos/:id', async(req, res) => {
-    res.render('pages/campeonatos/show', {viewName: 'campeonatos'});
+app.get('/competidores/:id', async(req, res) => {
+    res.render('pages/competidores/show', {viewName: 'competidores'});
 });
 
 app.get('/categorias', async(req, res) => {
