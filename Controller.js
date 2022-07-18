@@ -65,6 +65,10 @@ app.get('/categorias', async(req, res) => {
     res.render('categorias', {viewName: 'categorias'});
 });
 
+app.get('/etapas', async(req, res) => {
+    res.render('etapas', {viewName: 'etapas'});
+});
+
 // Server
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {

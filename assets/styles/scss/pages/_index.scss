@@ -110,7 +110,8 @@
                                 padding: 0.6875rem 1.25rem;
                                 vertical-align: middle;
                                 height: max-content;
-                                
+                                font-weight: 600;
+
                                 &:last-of-type {
                                     text-align: right;
                                 }
@@ -125,6 +126,10 @@
                         width: auto;
                         fill: $gray;
                         cursor: pointer;
+                    }
+
+                    a {
+                        color: $green;
                     }
                 }
             }   

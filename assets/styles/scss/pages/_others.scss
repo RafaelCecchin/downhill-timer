@@ -1,4 +1,7 @@
-.page-configuracoes {
+.others-page {
+    height: 100%;
+    overflow-y: scroll;
+
     .container {
         display: grid;
         gap: 1rem;
