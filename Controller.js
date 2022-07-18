@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const exphbs = require('express-handlebars');
 const models = require('./models');
+const path = require('path');
 var app = express();
 
 app.use(cors());
@@ -46,27 +47,27 @@ app.set('views', './views');
 
 // Routes
 app.get('/', async(req, res) => {
-    res.render('painel', {viewName: 'painel'});
+    res.render('pages/painel/index', {viewName: 'painel'});
 });
 
 app.get('/configuracoes', async(req, res) => {
-    res.render('configuracoes', {viewName: 'configuracoes'});
+    res.render('pages/configuracoes/index', {viewName: 'configuracoes'});
 });
 
 app.get('/campeonatos', async(req, res) => {
-    res.render('campeonatos', {viewName: 'campeonatos'});
+    res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
 });
 
 app.get('/competidores', async(req, res) => {
-    res.render('competidores', {viewName: 'competidores'});
+    res.render('pages/competidores/index', {viewName: 'competidores'});
 });
 
 app.get('/categorias', async(req, res) => {
-    res.render('categorias', {viewName: 'categorias'});
+    res.render('pages/categorias/index', {viewName: 'categorias'});
 });
 
 app.get('/etapas', async(req, res) => {
-    res.render('etapas', {viewName: 'etapas'});
+    res.render('pages/etapas/index', {viewName: 'etapas'});
 });
 
 // Server
