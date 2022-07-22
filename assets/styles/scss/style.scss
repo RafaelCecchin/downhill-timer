@@ -8,8 +8,11 @@
 @import 'parts/header';
 @import 'parts/sidebar';
 
-@import 'pages/painel';
-@import 'pages/others';
-@import 'pages/index';
-@import 'pages/show';
-@import 'pages/show-etapa';
+@import 'page/painel';
+@import 'page/others';
+@import 'page/index';
+@import 'page/show';
+@import 'page/show-etapa';
+
+@import 'page/modal';
+@import 'page/modal/modal-option';
