@@ -1,14 +1,25 @@
-<section class="page-campeonatos show-page">
+<section class="page-categorias show-page">
     <div class="container">
-        
+
         <div class="data">
-            <div class="label nome-do-campeonato">
-                <span class="label-title">Nome do campeonato</span>
+            <div class="label nome-da-categoria">
+                <span class="label-title">Nome da categoria</span>
                 <div class="label-inputs">                
-                    <input class="input" type="text" name="nome-do-campeonato"/>
+                    <input class="input" type="text" name="nome-da-categoria"/>
                 </div>
             </div>
-        </div>        
+                
+            <div class="label genero-da-categoria">
+                <span class="label-title">Gênero</span>
+                <div class="label-inputs">       
+                    <select class="input" name="genero-da-categoria">
+                        <option value="">Selecione o gênero</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Feminino</option>
+                    </select>         
+                </div>
+            </div>
+        </div>
 
         <div class="actions">
             <button type="button" class="button remove-button" id="btn-excluir-campeonato">

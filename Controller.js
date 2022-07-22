@@ -74,8 +74,16 @@ app.get('/categorias', async(req, res) => {
     res.render('pages/categorias/index', {viewName: 'categorias'});
 });
 
+app.get('/categorias/:id', async(req, res) => {
+    res.render('pages/categorias/show', {viewName: 'categorias'});
+});
+
 app.get('/etapas', async(req, res) => {
     res.render('pages/etapas/index', {viewName: 'etapas'});
+});
+
+app.get('/etapas/:id', async(req, res) => {
+    res.render('pages/etapas/show', {viewName: 'etapas'});
 });
 
 // Server
