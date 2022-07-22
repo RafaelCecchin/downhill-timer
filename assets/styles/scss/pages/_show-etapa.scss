@@ -181,6 +181,13 @@
             justify-content: end;
             gap: 1rem;     
             flex-wrap: wrap;       
+            align-items: center;
+
+            .status {
+                margin-right: auto;
+                font-size: 1.25rem;
+                font-weight: 700;
+            }
         }
 
         .actions-competidores {
