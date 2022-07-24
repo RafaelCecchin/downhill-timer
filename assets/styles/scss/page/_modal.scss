@@ -56,4 +56,70 @@
             gap: 1rem;
         }
     }
+
+    &.modal-test {
+        .modal-container {
+            width: 36rem;
+
+            .modal-status {
+                display: flex;
+                align-items: baseline;
+                gap: 1rem;
+                justify-content: center;
+
+                .status-image {
+                    width: 6.25rem;
+                    height: auto;
+                }
+
+                .status-icon {
+                    display: none;
+                    width: 3.125rem;
+                    height: auto;
+                }
+            }
+
+            .modal-actions {
+                .button {
+                    display: none;
+                }
+            }
+        }
+
+        &.status-loading {
+           
+            .status-icon.loading {
+                display: block;
+            }
+
+            #btn-cancelar {
+                display: flex;
+            }
+
+        }
+
+        &.status-error {
+           
+            .status-icon.error {
+                display: block;
+            }
+
+            #btn-fechar, #btn-tentar-novamente {
+                display: flex;
+            }
+
+        }
+
+        &.status-finish {
+           
+            .status-icon.finish {
+                display: block;
+            }
+
+            #btn-finalizar {
+                display: flex;
+            }
+
+        }
+    }
 }
