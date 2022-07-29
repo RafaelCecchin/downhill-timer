@@ -1,32 +1,44 @@
 .show-page {
     .container {
-        display: grid;
-        gap: 1rem;
         width: 47rem;
         max-width: 100%;
-
-        .data {
+        display: grid;
+        gap: 1rem;
+        
+        form {
             display: grid;
             gap: 1rem;
             width: 100%;
 
-            .label {
-                .label-title {
-                    margin-bottom: .5rem;
+            .data {
+                display: grid;
+                gap: 1rem;
+                width: 100%;
+    
+                .label {
+                    .label-title {
+                        margin-bottom: .5rem;
+                    }
+            
+                    .input {
+                        width: 100%;
+                    }
                 }
-        
-                .input {
-                    width: 100%;
-                }
+            }
+    
+            .actions {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+                gap: 1rem;            
             }
         }
 
-        .actions {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: end;
-            gap: 1rem;            
+        .return-message {
+            text-align: center;
+            font-size: 1.25rem;
+            color: red;
         }
     }    
 }

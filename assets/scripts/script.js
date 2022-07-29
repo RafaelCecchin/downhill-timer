@@ -10,9 +10,8 @@ function showModalOption(message, yesCallback, noCallback = closeModal) {
     $('#modal-option').find('#btn-aceitar').off('click').on('click', yesCallback);
     $('#modal-option').find('#btn-recusar').off('click').on('click', noCallback);
 }
-function showModalInformation(title, message, okCallback = closeModal) {
+function showModalInformation(message, okCallback = closeModal) {
     $('#modal-information').addClass('show');
-    $('#modal-information').find('.information-title').text(title);
     $('#modal-information').find('.information-text').text(message);
     $('#modal-information').find('#btn-ok').off('click').on('click', okCallback);
 }
@@ -38,3 +37,40 @@ function testFunctionExample() {
 
     return ret;
 }
+
+// Campeonatos
+
+$('#formCampeonato').on('submit', function(event) {
+    event.preventDefault();
+
+    if ($( this ).data('action') == 'create') {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(response){
+                window.location.pathname = `/campeonatos/${response.id}`;
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+
+    if ($( this ).data('action') == 'update') {
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(response){
+                showModalInformation("Campeonato atualizado com sucesso.");
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    
+});

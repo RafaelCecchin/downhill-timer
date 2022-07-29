@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Campeonato.init({
-    nome: DataTypes.STRING
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Campeonato',
