@@ -1,7 +1,7 @@
 const models = require('../models');
 const Campeonato = models.Campeonato;
 
-exports.findAll = (req, res) => {
+exports.index = (req, res) => {
     res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
 };
 
@@ -9,7 +9,7 @@ exports.new = (req, res) => {
     res.render('pages/campeonatos/show', {viewName: 'campeonatos', formAction: 'create'});
 };
 
-exports.findOne = (req, res) => {
+exports.show = (req, res) => {
     Campeonato.findByPk( req.params.id )
         .then(data => {
             if (data) {

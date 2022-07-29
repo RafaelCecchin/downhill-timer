@@ -46,18 +46,17 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 // Controllers
+const painelController = require('./controllers/painel');
 const campeonatoController = require('./controllers/campeonato');
 
 // Routes
-app.get('/campeonatos', campeonatoController.findAll);
+app.get('/', painelController.index);
+
+app.get('/campeonatos', campeonatoController.index);
 app.get('/campeonatos/create', campeonatoController.new);
 app.post('/campeonatos/create', campeonatoController.create);
-app.get('/campeonatos/:id', campeonatoController.findOne);
+app.get('/campeonatos/:id', campeonatoController.show);
 app.put('/campeonatos/:id', campeonatoController.update);
-
-app.get('/', async(req, res) => {
-    res.render('pages/painel/index', {viewName: 'painel'});
-});
 
 app.get('/configuracoes', async(req, res) => {
     res.render('pages/configuracoes/index', {viewName: 'configuracoes'});
