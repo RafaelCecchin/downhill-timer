@@ -17,7 +17,8 @@ exports.show = (req, res) => {
                 {
                     viewName: 'campeonatos', 
                     formAction: 'update',
-                    campeonato: data.dataValues
+                    campeonato: data.dataValues,
+                    created: req.query.created == '' ? true : false
                 });
             } else {
                 res.redirect('/campeonatos/create');

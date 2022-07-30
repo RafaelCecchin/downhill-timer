@@ -1,6 +1,8 @@
+// Url
+const url = new URL(window.location.href);
+
 // Modal
 $('.close-modal').on('click', closeModal);
-
 function closeModal() {
     $(this).parents('.modal').removeClass('show');
 }
@@ -37,40 +39,3 @@ function testFunctionExample() {
 
     return ret;
 }
-
-// Campeonatos
-
-$('#formCampeonato').on('submit', function(event) {
-    event.preventDefault();
-
-    if ($( this ).data('action') == 'create') {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            data: $(this).serialize(),
-            success: function(response){
-                window.location.pathname = `/campeonatos/${response.id}`;
-            },
-            error: function(res, status, error) {
-                const response = JSON.parse(res.responseText);
-                showModalInformation(response.message);
-            }
-        });
-    }
-
-    if ($( this ).data('action') == 'update') {
-        $.ajax({
-            type: "PUT",
-            dataType: "json",
-            data: $(this).serialize(),
-            success: function(response){
-                showModalInformation("Campeonato atualizado com sucesso.");
-            },
-            error: function(res, status, error) {
-                const response = JSON.parse(res.responseText);
-                showModalInformation(response.message);
-            }
-        });
-    }
-    
-});

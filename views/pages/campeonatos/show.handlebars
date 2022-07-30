@@ -1,7 +1,6 @@
 <section class="page-campeonatos show-page">
     <div class="container">
-        
-        <form method="POST" id="formCampeonato" data-action="{{ formAction }}">
+        <form method="POST" id="formCampeonato" class="form {{ formAction }}">
             <div class="data">
                 <div class="label nome-do-campeonato">
                     <span class="label-title">Nome do campeonato</span>
@@ -37,3 +36,43 @@
 
     </div>
 </section>
+
+{{#section 'scripts'}}
+<script>
+    {{#if created}}
+        showModalInformation("Campeonato criado com sucesso!");
+    {{/if}}
+
+    $('#formCampeonato.create').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(response){
+                window.location.href = url.origin + `/campeonatos/${response.id}?created`;
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });    
+    });
+
+    $('#formCampeonato.update').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(response){
+                showModalInformation("Campeonato atualizado com sucesso.");
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    });
+</script>
+{{/section}}

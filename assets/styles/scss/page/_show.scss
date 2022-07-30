@@ -33,6 +33,12 @@
                 justify-content: end;
                 gap: 1rem;            
             }
+
+            &.create {
+                .remove-button {
+                    display: none;
+                }
+            }
         }
 
         .return-message {

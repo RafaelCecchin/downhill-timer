@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const util = require("util");
 const cors = require('cors');
 const exphbs = require('express-handlebars');
+const sections = require('express-handlebars-sections');
 const path = require('path');
 var app = express();
 
@@ -37,7 +38,8 @@ var hbs = exphbs.create({
                 default:
                     return options.inverse(this);
             }
-        }
+        },
+        section: sections()
     }
 });
 
@@ -62,6 +64,7 @@ app.get('/configuracoes', async(req, res) => {
     res.render('pages/configuracoes/index', {viewName: 'configuracoes'});
 });
 
+// Routes without controller
 app.get('/competidores', async(req, res) => {
     res.render('pages/competidores/index', {viewName: 'competidores'});
 });
