@@ -104,7 +104,7 @@
                 dataType: "json",
                 success: function(response){
                     const categoriasUrl = url.origin + `/categorias`;
-                    showModalInformation("Campeonato excluído com sucesso.", () => { window.location.href = categoriasUrl }, () => { window.location.href = categoriasUrl });
+                    showModalInformation("Categoria excluída com sucesso.", () => { window.location.href = categoriasUrl }, () => { window.location.href = categoriasUrl });
                 },
                 error: function(res, status, error) {
                     const response = JSON.parse(res.responseText);
