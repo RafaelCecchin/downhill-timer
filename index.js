@@ -54,17 +54,22 @@ const campeonatoController = require('./controllers/campeonato');
 // Routes
 app.get('/', painelController.index);
 
+// Campeonatos
 app.get('/campeonatos', campeonatoController.index);
-app.get('/campeonatos/create', campeonatoController.new);
-app.post('/campeonatos/create', campeonatoController.create);
+app.get('/campeonatos/new', campeonatoController.new);
 app.get('/campeonatos/:id', campeonatoController.show);
-app.put('/campeonatos/:id', campeonatoController.update);
 
+app.post('/api/campeonatos/create', campeonatoController.create);
+app.get('/api/campeonatos/:id', campeonatoController.read);
+app.put('/api/campeonatos/:id', campeonatoController.update);
+app.delete('/api/campeonatos/:id', campeonatoController.delete);
+
+
+// Routes without controller
 app.get('/configuracoes', async(req, res) => {
     res.render('pages/configuracoes/index', {viewName: 'configuracoes'});
 });
 
-// Routes without controller
 app.get('/competidores', async(req, res) => {
     res.render('pages/competidores/index', {viewName: 'competidores'});
 });

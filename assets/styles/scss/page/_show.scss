@@ -38,6 +38,16 @@
                 .remove-button {
                     display: none;
                 }
+
+                .save-button {
+                    display: none;
+                }
+            }
+
+            &.update {
+                .add-button {
+                    display: none;
+                }
             }
         }
 

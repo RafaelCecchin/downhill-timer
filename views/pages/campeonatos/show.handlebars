@@ -11,7 +11,7 @@
             </div>        
 
             <div class="actions">
-                <button type="button" class="button remove-button" id="btn-excluir-campeonato">
+                <button type="button" class="button remove-button" id="btnExcluirCampeonato">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16.243" height="16.243" viewBox="0 0 16.243 16.243">
                         <g transform="translate(-3.879 -3.756)">
                             <line x1="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
@@ -21,7 +21,7 @@
                     <span>Excluir</span>
                 </button>
 
-                <button type="submit" class="button secondary-button" id="btn-salvar-campeonato">
+                <button type="button" class="button secondary-button save-button" id="btnSalvarCampeonato">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                         <g transform="translate(-2 -2)">
                             <path d="M19,21H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3H16l5,5V19A2,2,0,0,1,19,21Z" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -31,6 +31,13 @@
                     </svg>
                     <span>Salvar</span>
                 </button>
+
+                <button type="button" class="button secondary-button add-button" id="btnAdicionarCampeonato">   
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
+                    </svg>
+                    <span>Adicionar</span>
+                </button>
             </div>
         </form>
 
@@ -39,18 +46,17 @@
 
 {{#section 'scripts'}}
 <script>
-    {{#if created}}
-        showModalInformation("Campeonato criado com sucesso!");
-    {{/if}}
-
-    $('#formCampeonato.create').on('submit', function(event) {
+    $('#btnAdicionarCampeonato').on('click', function(event) {
         event.preventDefault();
+
         $.ajax({
             type: "POST",
+            url: url.origin + `/api/campeonatos/create`,
             dataType: "json",
-            data: $(this).serialize(),
+            data: $('#formCampeonato').serialize(),
             success: function(response){
-                window.location.href = url.origin + `/campeonatos/${response.id}?created`;
+                const campeonatoUrl = url.origin + `/campeonatos/${response.id}`;
+                showModalInformation("Campeonato criado com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
             },
             error: function(res, status, error) {
                 const response = JSON.parse(res.responseText);
@@ -59,12 +65,14 @@
         });    
     });
 
-    $('#formCampeonato.update').on('submit', function(event) {
+    $('#btnSalvarCampeonato').on('click', function(event) {
         event.preventDefault();
+
         $.ajax({
             type: "PUT",
+            url: url.origin + `/api` + url.pathname,
             dataType: "json",
-            data: $(this).serialize(),
+            data: $('#formCampeonato').serialize(),
             success: function(response){
                 showModalInformation("Campeonato atualizado com sucesso.");
             },
@@ -74,5 +82,23 @@
             }
         });
     });
+
+    $('#btnExcluirCampeonato').on('click', function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: "DELETE",
+            url: url.origin + `/api` + url.pathname,
+            dataType: "json",
+            success: function(response){
+                const campeonatosUrl = url.origin + `/campeonatos`;
+                showModalInformation("Campeonato excluído com sucesso.", () => { window.location.href = campeonatosUrl }, () => { window.location.href = campeonatosUrl });
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    });
+    
 </script>
 {{/section}}

@@ -17,17 +17,16 @@ exports.show = (req, res) => {
                 {
                     viewName: 'campeonatos', 
                     formAction: 'update',
-                    campeonato: data.dataValues,
-                    created: req.query.created == '' ? true : false
+                    campeonato: data.dataValues
                 });
             } else {
-                res.redirect('/campeonatos/create');
+                res.redirect('/campeonatos/new');
             }
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                err.message
+                  err.message
             });
         });
 };
@@ -44,7 +43,26 @@ exports.create = (req, res) => {
             .catch(err => {
             res.status(500).send({
                 message:
-                err.message
+                  err.message
+            });
+        });
+};
+
+exports.read = (req, res) => {
+    Campeonato.findByPk( req.params.id )
+        .then(data => {
+            if (data) {
+                res.status(200).send(data.dataValues);
+            } else {
+                res.status(404).send({
+                    message: "Campeonato não encontrado."
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
             });
         });
 };
@@ -70,18 +88,27 @@ exports.update = (req, res) => {
         res.status(500).send({
             message:
               err.message
-          });
+        });
     });
 };
 
 exports.delete = (req, res) => {
-  
-};
-
-exports.deleteAll = (req, res) => {
-  
-};
-
-exports.findAllPublished = (req, res) => {
-  
+    Campeonato.destroy({
+        where: { id: req.params.id }
+        })
+        .then(num => {
+            if (num == 1) {
+                res.status(204).send();
+            } else {
+                res.status(500).send({
+                    message: `Campeonato não encontrado.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
 };
