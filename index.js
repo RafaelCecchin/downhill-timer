@@ -50,6 +50,7 @@ app.set('views', './views');
 // Controllers
 const painelController = require('./controllers/painel');
 const campeonatoController = require('./controllers/campeonato');
+const categoriaController = require('./controllers/categoria');
 
 // Routes
 app.get('/', painelController.index);
@@ -64,6 +65,16 @@ app.get('/api/campeonatos/:id', campeonatoController.read);
 app.put('/api/campeonatos/:id', campeonatoController.update);
 app.delete('/api/campeonatos/:id', campeonatoController.delete);
 
+// Categorias
+app.get('/categorias', categoriaController.index);
+app.get('/categorias/new', categoriaController.new);
+app.get('/categorias/:id', categoriaController.show);
+
+app.post('/api/categorias/create', categoriaController.create);
+app.get('/api/categorias/:id', categoriaController.read);
+app.put('/api/categorias/:id', categoriaController.update);
+app.delete('/api/categorias/:id', categoriaController.delete);
+
 
 // Routes without controller
 app.get('/configuracoes', async(req, res) => {
@@ -76,14 +87,6 @@ app.get('/competidores', async(req, res) => {
 
 app.get('/competidores/:id', async(req, res) => {
     res.render('pages/competidores/show', {viewName: 'competidores'});
-});
-
-app.get('/categorias', async(req, res) => {
-    res.render('pages/categorias/index', {viewName: 'categorias'});
-});
-
-app.get('/categorias/:id', async(req, res) => {
-    res.render('pages/categorias/show', {viewName: 'categorias'});
 });
 
 app.get('/etapas', async(req, res) => {

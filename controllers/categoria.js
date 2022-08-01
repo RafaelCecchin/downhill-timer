@@ -1,40 +1,36 @@
 const { Op } = require("sequelize");
 const models = require('../models');
-const Campeonato = models.Campeonato;
+const Categoria = models.Categoria;
+const Genero = models.Genero;
 
 exports.index = async (req, res) => {
-    Campeonato.findAll({
-            where: {
-                [Op.or]: [
-                    { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
-                ]
-            }
-        })
-        .then(data => {
-            res.render('pages/campeonatos/index', {
-                viewName: 'campeonatos',
-                campeonatos: data,
-                search: req.query.search ?? ''
-            });
-        });
+    res.render('pages/categorias/index', {viewName: 'categorias'});
 };
 
 exports.new = async (req, res) => {
-    res.render('pages/campeonatos/show', {viewName: 'campeonatos', formAction: 'create'});
+    const generos = await Genero.findAll();
+    res.render('pages/categorias/show', {
+        viewName: 'categorias', 
+        formAction: 'create',
+        generos: generos
+    });
 };
 
 exports.show = async (req, res) => {
-    Campeonato.findByPk( req.params.id )
+    const generos = await Genero.findAll();
+
+    Categoria.findByPk( req.params.id )
         .then(data => {
             if (data) {
-                res.render('pages/campeonatos/show', 
+                res.render('pages/categorias/show', 
                 {
-                    viewName: 'campeonatos', 
+                    viewName: 'categorias', 
                     formAction: 'update',
-                    campeonato: data.dataValues
+                    categoria: data.dataValues,
+                    generos: generos
                 });
             } else {
-                res.redirect('/campeonatos/new');
+                res.redirect('/categorias/new');
             }
         })
         .catch(err => {
@@ -47,11 +43,12 @@ exports.show = async (req, res) => {
 
 
 exports.create = async (req, res) => {
-    const campeonato = { 
-        nome: req.body.nomeCampeonato 
+    const categoria = { 
+        nome: req.body.nomeCategoria,
+        generoId: req.body.generoCategoria
     }
 
-    Campeonato.create(campeonato)
+    Categoria.create(categoria)
         .then(data => {
             res.status(201).send(data);
             })
@@ -64,13 +61,13 @@ exports.create = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    Campeonato.findByPk( req.params.id )
+    Categoria.findByPk( req.params.id )
         .then(data => {
             if (data) {
                 res.status(200).send(data.dataValues);
             } else {
                 res.status(404).send({
-                    message: "Campeonato não encontrado."
+                    message: "Categoria não encontrada."
                 });
             }
         })
@@ -83,11 +80,12 @@ exports.read = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-    const campeonato = {
-        nome: req.body.nomeCampeonato
+    const categoria = { 
+        nome: req.body.nomeCategoria,
+        generoId: req.body.generoCategoria
     }
 
-    Campeonato.update(campeonato, {
+    Categoria.update(categoria, {
             where: { id: req.params.id }
         })
         .then(num => {
@@ -95,7 +93,7 @@ exports.update = async (req, res) => {
                 res.status(204).send();
             } else {
                 res.status(500).send({
-                    message: `Campeonato não encontrado.`
+                    message: `Categoria não encontrado.`
                 });
             }
         })
@@ -108,7 +106,7 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-    Campeonato.destroy({
+    Categoria.destroy({
             where: { id: req.params.id }
         })
         .then(num => {
@@ -116,14 +114,14 @@ exports.delete = async (req, res) => {
                 res.status(204).send();
             } else {
                 res.status(500).send({
-                    message: `Campeonato não encontrado.`
+                    message: `Categoria não encontrada.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                  err.message
+                err.message
             });
         });
 };
