@@ -2,7 +2,7 @@
     <div class="container">
         <div class="actions">
 
-            <div class="label add">
+            <a class="label add" href="/campeonatos/new">
                 <div class="label-inputs">
                     <button class="button primary-button" id="btn-add-campeonato">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -11,7 +11,7 @@
                         <span>Adicionar campeonato</span>
                     </button>
                 </div>
-            </div>
+            </a>
 
             <div class="label filter">
                 <div class="label-inputs">
@@ -30,44 +30,73 @@
         
         <div class="content">
             <div class="table-container">
-                <table class="table" data-number-columns="3">
+                <table class="table" data-number-columns="2">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
-                            <th scope="col">Quantidade de etapas</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        
+                        {{#each campeonatos}}
+                            <tr id="campeonato-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
+                                <td>{{ this.dataValues.nome }}</td>
+                                <td>
+                                    <button class="table-button remove-row" data-target="#campeonato-{{ this.dataValues.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
+                                            <g id="Lixo" transform="translate(-2 -1)">
+                                                <path d="M3,6H26.44" transform="translate(0 1.2009)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                    <a class="table-button edit-row" href="/campeonatos/{{ this.dataValues.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                            <g id="Editar" transform="translate(-6 -2.6)">
+                                                <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        {{/each}}
 
-                        <tr data-cod="">
-                            <td>Campeonato Brasileiro de Downhill 2022</td>
-                            <td>8</td>
-                            <td>
-                                <button class="table-button remove-row" data-target="id">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
-                                        <g id="Lixo" transform="translate(-2 -1)">
-                                            <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                        </g>
-                                    </svg>
-                                </button>
-                                <button class="table-button edit-row" data-target="id">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
-                                        <g id="Editar" transform="translate(-6 -2.6)">
-                                            <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                            <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                        </g>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
+                        
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</section>
+</section>{{#section 'scripts'}}
+<script>
+    function excluirCampeonato(event) {
+        event.preventDefault();
+
+        const row = $( $(this).data('target') );
+        const idCampeonato = row.data('cod');
+
+        showModalOption("Você tem certeza que deseja excluir esse campeonato?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api/campeonatos/` + idCampeonato,
+                dataType: "json",
+                success: function(response){
+                    row.remove();
+                    showModalInformation("Campeonato excluído com sucesso.");                    
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });   
+    }
+
+    $('.remove-row').on('click', excluirCampeonato);    
+</script>
+{{/section}}

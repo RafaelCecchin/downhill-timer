@@ -2,7 +2,18 @@ const models = require('../models');
 const Campeonato = models.Campeonato;
 
 exports.index = (req, res) => {
-    res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
+    Campeonato.findAll()
+        .then(data => {
+            if (data) {
+                res.render('pages/campeonatos/index', {
+                    viewName: 'campeonatos',
+                    campeonatos: data
+                });
+            } else {
+                res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
+            }
+        });
+    
 };
 
 exports.new = (req, res) => {
@@ -30,6 +41,7 @@ exports.show = (req, res) => {
             });
         });
 };
+
 
 exports.create = (req, res) => {
     const campeonato = { 
