@@ -1,19 +1,22 @@
+const { Op } = require("sequelize");
 const models = require('../models');
 const Campeonato = models.Campeonato;
 
 exports.index = (req, res) => {
-    Campeonato.findAll()
-        .then(data => {
-            if (data) {
-                res.render('pages/campeonatos/index', {
-                    viewName: 'campeonatos',
-                    campeonatos: data
-                });
-            } else {
-                res.render('pages/campeonatos/index', {viewName: 'campeonatos'});
+    Campeonato.findAll({
+            where: {
+                [Op.or]: [
+                    { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
+                ]
             }
+        })
+        .then(data => {
+            res.render('pages/campeonatos/index', {
+                viewName: 'campeonatos',
+                campeonatos: data,
+                search: req.query.search ?? ''
+            });
         });
-    
 };
 
 exports.new = (req, res) => {

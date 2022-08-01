@@ -4,7 +4,7 @@
 
             <a class="label add" href="/campeonatos/new">
                 <div class="label-inputs">
-                    <button class="button primary-button" id="btn-add-campeonato">
+                    <button class="button primary-button" id="btnAddCampeonato">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                             <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
                         </svg>
@@ -13,10 +13,10 @@
                 </div>
             </a>
 
-            <div class="label filter">
+            <form class="label filter">
                 <div class="label-inputs">
-                    <input class="input" type="text" placeholder="Filtre sua pesquisa..."/>
-                    <button class="button secondary-button" id="btn-filter-campeonato">
+                    <input class="input filter" type="search" name="search" placeholder="Filtre sua pesquisa..." value="{{ search }}"/>
+                    <button class="button secondary-button" type="submit" id="btnFilterCampeonato">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <polygon points="0,0 0,128 201.143,329.143 201.143,512 310.857,475.429 310.857,329.143 512,128 512,0 		"/>
@@ -24,7 +24,7 @@
                         <span>Filtrar</span>
                     </button>
                 </div>
-            </div>
+            </form>
             
         </div>
         
