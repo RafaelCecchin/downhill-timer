@@ -4,11 +4,28 @@ const Categoria = models.Categoria;
 const Genero = models.Genero;
 
 exports.index = async (req, res) => {
-    res.render('pages/categorias/index', {viewName: 'categorias'});
+    const generos = await Genero.findAll();
+
+    Categoria.findAll({
+        where: {
+            [Op.or]: [
+                { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
+            ]
+        }
+    })
+    .then(data => {
+        res.render('pages/categorias/index', {
+            viewName: 'campeonatos',
+            categorias: data,
+            search: req.query.search ?? '',
+            generos: generos
+        });
+    });
 };
 
 exports.new = async (req, res) => {
     const generos = await Genero.findAll();
+    
     res.render('pages/categorias/show', {
         viewName: 'categorias', 
         formAction: 'create',
