@@ -46,7 +46,7 @@
 
 {{#section 'scripts'}}
 <script>
-    $('#btnAdicionarCampeonato').on('click', function(event) {
+    function adicionarCampeonato(event) {
         event.preventDefault();
 
         $.ajax({
@@ -63,9 +63,8 @@
                 showModalInformation(response.message);
             }
         });    
-    });
-
-    $('#btnSalvarCampeonato').on('click', function(event) {
+    }
+    function salvarCampeonato(event) {
         event.preventDefault();
 
         $.ajax({
@@ -81,24 +80,29 @@
                 showModalInformation(response.message);
             }
         });
-    });
-
-    $('#btnExcluirCampeonato').on('click', function(event) {
+    }
+    function excluirCampeonato(event) {
         event.preventDefault();
-        $.ajax({
-            type: "DELETE",
-            url: url.origin + `/api` + url.pathname,
-            dataType: "json",
-            success: function(response){
-                const campeonatosUrl = url.origin + `/campeonatos`;
-                showModalInformation("Campeonato excluído com sucesso.", () => { window.location.href = campeonatosUrl }, () => { window.location.href = campeonatosUrl });
-            },
-            error: function(res, status, error) {
-                const response = JSON.parse(res.responseText);
-                showModalInformation(response.message);
-            }
-        });
-    });
-    
+
+        showModalOption("Você tem certeza que deseja excluir esse campeonato?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                success: function(response){
+                    const campeonatosUrl = url.origin + `/campeonatos`;
+                    showModalInformation("Campeonato excluído com sucesso.", () => { window.location.href = campeonatosUrl }, () => { window.location.href = campeonatosUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });        
+    }
+
+    $('#btnAdicionarCampeonato').on('click', adicionarCampeonato);
+    $('#btnSalvarCampeonato').on('click', salvarCampeonato);
+    $('#btnExcluirCampeonato').on('click', excluirCampeonato);    
 </script>
 {{/section}}
