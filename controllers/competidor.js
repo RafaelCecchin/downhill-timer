@@ -7,20 +7,20 @@ exports.index = async (req, res) => {
     const generos = await Genero.findAll();
 
     Competidor.findAll({
-        where: {
-            [Op.or]: [
-                { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
-            ]
-        }
-    })
-    .then(data => {
-        res.render('pages/competidores/index', {
-            viewName: 'competidores',
-            competidores: data,
-            search: req.query.search ?? '',
-            generos: generos
+            where: {
+                [Op.or]: [
+                    { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
+                ]
+            }
+        })
+        .then(data => {
+            res.render('pages/competidores/index', {
+                viewName: 'competidores',
+                competidores: data,
+                search: req.query.search ?? '',
+                generos: generos
+            });
         });
-    });
 };
 
 exports.new = async (req, res) => {
