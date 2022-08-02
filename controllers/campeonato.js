@@ -31,7 +31,7 @@ exports.show = async (req, res) => {
                 {
                     viewName: 'campeonatos', 
                     formAction: 'update',
-                    campeonato: data.dataValues
+                    campeonato: data
                 });
             } else {
                 res.redirect('/campeonatos/new');

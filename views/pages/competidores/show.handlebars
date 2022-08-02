@@ -1,69 +1,142 @@
 <section class="page-competidores show-page">
     <div class="container">
-        
-        <div class="data cpf">
-            <div class="label">
-                <span class="label-title">CPF</span>
-                <div class="label-inputs">                
-                    <input class="input" type="text" name="cpf-do-competidor"/>
+
+        <form method="POST" id="formCompetidor" class="form {{ formAction }}">
+            <div class="data cpf">
+                <div class="label">
+                    <span class="label-title">CPF</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="cpfCompetidor" value="{{ competidor.dataValues.cpf }}"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="label nome-do-competidor">
-                <span class="label-title">Nome do competidor</span>
-                <div class="label-inputs">                
-                    <input class="input" type="text" name="nome-do-competidor"/>
+                <div class="label nome-do-competidor">
+                    <span class="label-title">Nome do competidor</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="nomeCompetidor" value="{{ competidor.dataValues.nome }}"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="label genero-do-competidor">
-                <span class="label-title">Gênero</span>
-                <div class="label-inputs">       
-                    <select class="input" name="genero-do-competidor">
-                        <option value="">Selecione o gênero</option>
-                        <option value="1">Masculino</option>
-                        <option value="2">Feminino</option>
-                    </select>         
+                <div class="label genero-do-competidor">
+                    <span class="label-title">Gênero</span>
+                    <div class="label-inputs">       
+                        <select class="input" name="generoCompetidor">
+                            <option value="" hidden>Selecione o gênero</option>
+                            {{#each generos}}
+                                <option value="{{ this.dataValues.id }}" {{#ifCond this.dataValues.id '==' ../competidor.dataValues.generoId}} selected {{/ifCond}}>{{ this.dataValues.nome }}</option>
+                            {{/each}}
+                        </select>         
+                    </div>
                 </div>
-            </div>
 
-            <div class="label data-de-nascimento-do-competidor">
-                <span class="label-title">Data de nascimento</span>
-                <div class="label-inputs">                
-                    <input class="input" type="date" name="data-de-nascimento-do-competidor"/>
+                <div class="label data-de-nascimento-do-competidor">
+                    <span class="label-title">Data de nascimento</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="date" name="dataNascimentoCompetidor" value="{{getDateOnly competidor.dataValues.nascimento }}"/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="label patrocinador-do-competidor">
-                <span class="label-title">Patrocinador</span>
-                <div class="label-inputs">                
-                    <input class="input" type="text" name="patrocinador-do-competidor"/>
+                <div class="label patrocinador-do-competidor">
+                    <span class="label-title">Patrocinador</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="patrocinadorCompetidor" value="{{ competidor.dataValues.patrocinador }}"/>
+                    </div>
                 </div>
+            </div>        
+
+            <div class="actions">
+                <button type="button" class="button remove-button" id="btnExcluirCompetidor">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16.243" height="16.243" viewBox="0 0 16.243 16.243">
+                        <g transform="translate(-3.879 -3.756)">
+                            <line x1="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                            <line x2="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                        </g>
+                    </svg>
+                    <span>Excluir</span>
+                </button>
+
+                <button type="button" class="button secondary-button save-button" id="btnSalvarCompetidor">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                        <g transform="translate(-2 -2)">
+                            <path d="M19,21H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3H16l5,5V19A2,2,0,0,1,19,21Z" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path d="M17,21V13H7v8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path d="M7,3V8h8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </g>
+                    </svg>
+                    <span>Salvar</span>
+                </button>
+
+                <button type="button" class="button secondary-button add-button" id="btnAdicionarCompetidor">   
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
+                    </svg>
+                    <span>Adicionar</span>
+                </button>
             </div>
-        </div>        
-
-        <div class="actions">
-            <button type="button" class="button remove-button" id="btn-excluir-campeonato">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16.243" height="16.243" viewBox="0 0 16.243 16.243">
-                    <g transform="translate(-3.879 -3.756)">
-                        <line x1="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                        <line x2="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                    </g>
-                </svg>
-                <span>Excluir</span>
-            </button>
-
-            <button type="button" class="button secondary-button" id="btn-salvar-campeonato">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                    <g transform="translate(-2 -2)">
-                        <path d="M19,21H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3H16l5,5V19A2,2,0,0,1,19,21Z" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        <path d="M17,21V13H7v8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        <path d="M7,3V8h8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </g>
-                </svg>
-                <span>Salvar</span>
-            </button>
-        </div>
+        </form>
 
     </div>
 </section>
+
+{{#section 'scripts'}}
+<script>
+    function adicionarCompetidor(event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: url.origin + `/api/competidores/create`,
+            dataType: "json",
+            data: $('#formCompetidor').serialize(),
+            success: function(response){
+                const competidorUrl = url.origin + `/competidores/${response.id}`;
+                showModalInformation("Competidor criado com sucesso.", () => { window.location.href = competidorUrl }, () => { window.location.href = competidorUrl });
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });    
+    }
+    function salvarCompetidor(event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: url.origin + `/api` + url.pathname,
+            dataType: "json",
+            data: $('#formCompetidor').serialize(),
+            success: function(response){
+                showModalInformation("Competidor atualizado com sucesso.");
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    function excluirCompetidor(event) {
+        event.preventDefault();
+
+        showModalOption("Você tem certeza que deseja excluir esse competidor?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                success: function(response){
+                    const competidoresUrl = url.origin + `/competidores`;
+                    showModalInformation("Competidor excluído com sucesso.", () => { window.location.href = competidoresUrl }, () => { window.location.href = competidoresUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });        
+    }
+
+    $('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
+    $('#btnSalvarCompetidor').on('click', salvarCompetidor);
+    $('#btnExcluirCompetidor').on('click', excluirCompetidor);    
+</script>
+{{/section}}

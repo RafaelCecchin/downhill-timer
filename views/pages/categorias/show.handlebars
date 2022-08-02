@@ -6,7 +6,7 @@
                 <div class="label nome-da-categoria">
                     <span class="label-title">Nome da categoria</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="nomeCategoria" value="{{ categoria.nome }}"/>
+                        <input class="input" type="text" name="nomeCategoria" value="{{ categoria.dataValues.nome }}"/>
                     </div>
                 </div>
 
@@ -16,7 +16,7 @@
                         <select class="input" name="generoCategoria">
                             <option value="" hidden>Selecione o gênero</option>
                             {{#each generos}}
-                                <option value="{{ this.dataValues.id }}" {{#ifCond this.dataValues.id '==' ../categoria.generoId}} selected {{/ifCond}}>{{ this.dataValues.nome }}</option>
+                                <option value="{{ this.dataValues.id }}" {{#ifCond this.dataValues.id '==' ../categoria.dataValues.generoId}} selected {{/ifCond}}>{{ this.dataValues.nome }}</option>
                             {{/each}}
                         </select>         
                     </div>

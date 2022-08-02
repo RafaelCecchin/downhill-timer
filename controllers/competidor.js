@@ -1,12 +1,12 @@
 const { Op } = require("sequelize");
 const models = require('../models');
-const Categoria = models.Categoria;
+const Competidor = models.Competidor;
 const Genero = models.Genero;
 
 exports.index = async (req, res) => {
     const generos = await Genero.findAll();
 
-    Categoria.findAll({
+    Competidor.findAll({
         where: {
             [Op.or]: [
                 { nome: { [Op.like]: `%${req.query.search ?? ''}%` } },
@@ -14,9 +14,9 @@ exports.index = async (req, res) => {
         }
     })
     .then(data => {
-        res.render('pages/categorias/index', {
-            viewName: 'categorias',
-            categorias: data,
+        res.render('pages/competidores/index', {
+            viewName: 'competidores',
+            competidores: data,
             search: req.query.search ?? '',
             generos: generos
         });
@@ -26,8 +26,8 @@ exports.index = async (req, res) => {
 exports.new = async (req, res) => {
     const generos = await Genero.findAll();
     
-    res.render('pages/categorias/show', {
-        viewName: 'categorias', 
+    res.render('pages/competidores/show', {
+        viewName: 'competidores', 
         formAction: 'create',
         generos: generos
     });
@@ -36,18 +36,18 @@ exports.new = async (req, res) => {
 exports.show = async (req, res) => {
     const generos = await Genero.findAll();
 
-    Categoria.findByPk( req.params.id )
+    Competidor.findByPk( req.params.id )
         .then(data => {
             if (data) {
-                res.render('pages/categorias/show', 
+                res.render('pages/competidores/show', 
                 {
-                    viewName: 'categorias', 
+                    viewName: 'competidores', 
                     formAction: 'update',
-                    categoria: data,
+                    competidor: data,
                     generos: generos
                 });
             } else {
-                res.redirect('/categorias/new');
+                res.redirect('/competidores/new');
             }
         })
         .catch(err => {
@@ -60,12 +60,15 @@ exports.show = async (req, res) => {
 
 
 exports.create = async (req, res) => {
-    const categoria = { 
-        nome: req.body.nomeCategoria,
-        generoId: req.body.generoCategoria
+    const competidor = { 
+        cpf: req.body.cpfCompetidor,
+        nome: req.body.nomeCompetidor,
+        generoId: req.body.generoCompetidor,
+        nascimento: req.body.dataNascimentoCompetidor,
+        patrocinador: req.body.patrocinadorCompetidor
     }
 
-    Categoria.create(categoria)
+    Competidor.create(competidor)
         .then(data => {
             res.status(201).send(data);
             })
@@ -78,13 +81,13 @@ exports.create = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    Categoria.findByPk( req.params.id )
+    Competidor.findByPk( req.params.id )
         .then(data => {
             if (data) {
                 res.status(200).send(data.dataValues);
             } else {
                 res.status(404).send({
-                    message: "Categoria não encontrada."
+                    message: "Competidor não encontrada."
                 });
             }
         })
@@ -97,12 +100,15 @@ exports.read = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-    const categoria = { 
-        nome: req.body.nomeCategoria,
-        generoId: req.body.generoCategoria
+    const competidor = { 
+        cpf: req.body.cpfCompetidor,
+        nome: req.body.nomeCompetidor,
+        generoId: req.body.generoCompetidor,
+        nascimento: req.body.dataNascimentoCompetidor,
+        patrocinador: req.body.patrocinadorCompetidor
     }
 
-    Categoria.update(categoria, {
+    Competidor.update(competidor, {
             where: { id: req.params.id }
         })
         .then(num => {
@@ -110,7 +116,7 @@ exports.update = async (req, res) => {
                 res.status(204).send();
             } else {
                 res.status(500).send({
-                    message: `Categoria não encontrado.`
+                    message: `Competidor não encontrado.`
                 });
             }
         })
@@ -123,7 +129,7 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-    Categoria.destroy({
+    Competidor.destroy({
             where: { id: req.params.id }
         })
         .then(num => {
@@ -131,7 +137,7 @@ exports.delete = async (req, res) => {
                 res.status(204).send();
             } else {
                 res.status(500).send({
-                    message: `Categoria não encontrada.`
+                    message: `Competidor não encontrado.`
                 });
             }
         })

@@ -39,7 +39,16 @@ var hbs = exphbs.create({
                     return options.inverse(this);
             }
         },
-        section: sections()
+        section: sections(),
+        getDateOnly: function(fullDate) {
+            const date = new Date(fullDate);
+
+            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yyyy = String(date.getFullYear()).padStart(4, '0');
+
+            return yyyy + '-' + mm + '-' + dd;
+        }
     }
 });
 
@@ -51,6 +60,7 @@ app.set('views', './views');
 const painelController = require('./controllers/painel');
 const campeonatoController = require('./controllers/campeonato');
 const categoriaController = require('./controllers/categoria');
+const competidorController = require('./controllers/competidor');
 
 // Routes
 app.get('/', painelController.index);
@@ -75,18 +85,20 @@ app.get('/api/categorias/:id', categoriaController.read);
 app.put('/api/categorias/:id', categoriaController.update);
 app.delete('/api/categorias/:id', categoriaController.delete);
 
+// Competidores
+app.get('/competidores', competidorController.index);
+app.get('/competidores/new', competidorController.new);
+app.get('/competidores/:id', competidorController.show);
+
+app.post('/api/competidores/create', competidorController.create);
+app.get('/api/competidores/:id', competidorController.read);
+app.put('/api/competidores/:id', competidorController.update);
+app.delete('/api/competidores/:id', competidorController.delete);
+
 
 // Routes without controller
 app.get('/configuracoes', async(req, res) => {
     res.render('pages/configuracoes/index', {viewName: 'configuracoes'});
-});
-
-app.get('/competidores', async(req, res) => {
-    res.render('pages/competidores/index', {viewName: 'competidores'});
-});
-
-app.get('/competidores/:id', async(req, res) => {
-    res.render('pages/competidores/show', {viewName: 'competidores'});
 });
 
 app.get('/etapas', async(req, res) => {
