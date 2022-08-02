@@ -1,13 +1,17 @@
 const { Op } = require("sequelize");
+const SerialService = require('../services/serial');
 const models = require('../models');
 const Configuracao = models.Configuracao;
 
 exports.index = async (req, res) => {
+    const serialPorts = await SerialService.getAvailablePorts();
+
     Configuracao.findByPk(1)
         .then(data => {
             res.render('pages/configuracoes/index', {
                 viewName: 'configuracoes',
-                configuracoes: data
+                configuracoes: data,
+                serialPorts: serialPorts
             });
         });
 };

@@ -5,9 +5,10 @@
             <span class="label-title">Configurações de conexão</span>
             <div class="label-inputs">
                 <select class="input" name="portaCom">
-                    <option val="">Porta COM</option>
-                    <option val="COM1">COM1</option>
-                    <option val="COM2">COM2</option>
+                    <option val="" hidden>Porta COM</option>
+                    {{#each serialPorts}}
+                        <option value="{{ this.path }}" {{#ifCond this.path '==' ../configuracoes.dataValues.portaCom }} selected {{/ifCond}}>{{ this.path }}</option>
+                    {{/each}}
                 </select>
                 <button type="submit" class="button secondary-button" id="btnSelecionarCom">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16.988" height="22.409" viewBox="0 0 16.988 22.409">

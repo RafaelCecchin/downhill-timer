@@ -62,6 +62,7 @@ const campeonatoController = require('./controllers/campeonato');
 const categoriaController = require('./controllers/categoria');
 const competidorController = require('./controllers/competidor');
 const configuracaoController = require('./controllers/configuracao');
+const serialController = require('./controllers/serial');
 
 // Routes
 app.get('/', painelController.index);
@@ -101,6 +102,25 @@ app.get('/configuracoes', configuracaoController.index);
 app.get('/api/configuracoes', configuracaoController.read);
 app.put('/api/configuracoes', configuracaoController.update);
 
+// SerialPort
+app.get('/api/serial/portas', serialController.portas);
+
+/*
+    /api/serial/portas
+
+    /api/serial/central
+    /api/serial/central/rfid
+
+    /api/serial/largada
+    /api/serial/largada/rfid
+    /api/serial/largada/rtc
+    /api/serial/largada/interruptor
+
+    /api/serial/chegada
+    /api/serial/chegada/rfid
+    /api/serial/chegada/rtc
+    /api/serial/chegada/interruptor
+*/
 
 // Routes without controller
 app.get('/etapas', async(req, res) => {

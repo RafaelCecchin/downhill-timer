@@ -67,7 +67,7 @@ exports.create = async (req, res) => {
 
     Categoria.create(categoria)
         .then(data => {
-            res.status(201).send(data);
+                res.status(201).send(data);
             })
             .catch(err => {
             res.status(500).send({
