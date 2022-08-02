@@ -13,10 +13,10 @@
                 </div>
             </div>
 
-            <div class="label filter">
+            <form class="label filter">
                 <div class="label-inputs">
-                    <input class="input" type="text" placeholder="Filtre sua pesquisa..."/>
-                    <button class="button secondary-button" id="btn-filter-competidor">
+                    <input class="input filter" type="search" name="search" placeholder="Filtre sua pesquisa..." value="{{ search }}"/>
+                    <button class="button secondary-button" type="submit" id="btnFilterCompetidor">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <polygon points="0,0 0,128 201.143,329.143 201.143,512 310.857,475.429 310.857,329.143 512,128 512,0 		"/>
@@ -24,7 +24,7 @@
                         <span>Filtrar</span>
                     </button>
                 </div>
-            </div>
+            </form>
             
         </div>
 
@@ -41,31 +41,33 @@
                     </thead>
                     <tbody>
 
-                        <tr data-cod="">
-                            <td>Rafael Francisco Cecchin</td>
-                            <td>347.910.710-93</td>
-                            <td>Red Bull</td>
-                            <td>
-                                <button class="table-button remove-row" data-target="id">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
-                                        <g id="Lixo" transform="translate(-2 -1)">
-                                            <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                            <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                        </g>
-                                    </svg>
-                                </button>
-                                <button class="table-button edit-row" data-target="id">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
-                                        <g id="Editar" transform="translate(-6 -2.6)">
-                                            <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                            <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                        </g>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
+                        {{#each competidores}}
+                            <tr id="competidor-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
+                                <td>{{ this.dataValues.nome }}</td>
+                                <td>{{ this.dataValues.cpf }}</td>
+                                <td>{{ this.dataValues.patrocinador }}</td>
+                                <td>
+                                    <button class="table-button remove-row" data-target="#competidor-{{ this.dataValues.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
+                                            <g id="Lixo" transform="translate(-2 -1)">
+                                                <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                    <a class="table-button edit-row" href="/competidores/{{ this.dataValues.id }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                            <g id="Editar" transform="translate(-6 -2.6)">
+                                                <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        {{/each}}
 
                     </tbody>
                 </table>
@@ -74,3 +76,32 @@
         
     </div>
 </section>
+
+{{#section 'scripts'}}
+<script>
+    function excluirCompetidor(event) {
+        event.preventDefault();
+
+        const row = $( $(this).data('target') );
+        const idCompetidor = row.data('cod');
+
+        showModalOption("Você tem certeza que deseja excluir esse competidor?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api/competidores/` + idCompetidor,
+                dataType: "json",
+                success: function(response){
+                    row.remove();
+                    showModalInformation("Competidor excluído com sucesso.");                    
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });   
+    }
+
+    $('.remove-row').on('click', excluirCompetidor);    
+</script>
+{{/section}}
