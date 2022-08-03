@@ -69,6 +69,9 @@ exports.read = async (req, res) => {
             if (data) {
                 res.status(200).send(data.dataValues);
             } else {
+                res.status(500).send({
+                    message: `Campeonato não encontrado.`
+                });
                 res.status(404).send({
                     message: "Campeonato não encontrado."
                 });
