@@ -34,7 +34,6 @@ void loop() {
 
     switch(device) {
       case 1:
-      
         switch(input["operation"].as<int>()) {
           case 1:
             output["status"] = 1;
@@ -44,8 +43,8 @@ void loop() {
             
             continue;
             break;
-          default:
             
+          default:
             output["status"] = 0;
             output["message"] = "Operação inválida.";
             serializeJson(output, Serial);
@@ -56,6 +55,7 @@ void loop() {
         }
               
         break;
+        
       case 2:
         output["status"] = 0;
         output["message"] = "Em desenvolvimento...";
@@ -64,6 +64,7 @@ void loop() {
       
         continue;
         break;
+        
       case 3:
         output["status"] = 0;
         output["message"] = "Em desenvolvimento...";
@@ -71,7 +72,8 @@ void loop() {
         Serial.println();
         
         continue;
-        break;     
+        break;   
+          
       default:
         output["status"] = 0;
         output["message"] = "Dispositivo inválido.";

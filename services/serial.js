@@ -57,24 +57,23 @@ class SerialService {
         return ports;
     }
 
-    static async timeOut(rejectCallback, mil) {
-        setTimeout(function() {
-            rejectCallback(new Error("Erro: o dispositivo demorou muito tempo para responder"));
-        }, mil);
-    }
+    static async communicate(deviceRequired, operationRequired, timeout = 5000, sendMessage = true) {
 
-    static async testCentralConnection() {
         return new Promise((resolve, reject) => {
-            this.timeOut(reject, 5000);
+            setTimeout(function() {
+                reject(new Error("Erro: o dispositivo demorou muito tempo para responder."));
+            }, timeout);
 
-            serialConnection.write(`{
-                "device": 1, 
-                "operation": 1
-            }`, function(err) {
-                if (err) {
-                    reject(err);
-                }
-            });
+            if (sendMessage) {
+                serialConnection.write(`{
+                    "device":"${deviceRequired}",
+                    "operation":"${operationRequired}"
+                }`, function(err) {
+                    if (err) {
+                        reject(err);
+                    }
+                });
+            }
 
             parser.on('data', function(json) {
                 try {
@@ -84,13 +83,23 @@ class SerialService {
                         reject(new Error(data.message));
                         return;
                     }
+
+                    if ((deviceRequired && deviceRequired != data.device) || 
+                        (operationRequired && operationRequired != data.operation)) {
+                        return;
+                    }
                     
                     resolve(data);
                 } catch(err) {
-                    reject(err);
+                    console.log(err);
                 }
             });                   
         });
+
+    };
+
+    static async centralConnectionTest() {
+        return this.communicate(1, 1);
     }
 }
 

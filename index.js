@@ -104,13 +104,11 @@ app.put('/api/configuracoes', configuracaoController.update);
 
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);
-app.get('/api/serial/central', serialController.centralConnection);
+app.get('/api/serial/central', serialController.centralConnectionTest);
 
 /*
     ---/api/serial/portas
-
     ---/api/serial/central
-    /api/serial/central/rfid
 
     /api/serial/largada
     /api/serial/largada/rfid

@@ -5,8 +5,7 @@ Devices
 
 Operations
     • Central
-        - 1 = Conexão 
-        - 2 = RFID
+        - 1 = Conexão
     • Largada
         - 1 Conexão
         - 2 RFID

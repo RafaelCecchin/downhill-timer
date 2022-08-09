@@ -12,8 +12,8 @@ exports.portas = async (req, res) => {
     }
 };
 
-exports.centralConnection = async (req, res) => {
-    SerialService.testCentralConnection()
+exports.centralConnectionTest = async (req, res) => {
+    SerialService.centralConnectionTest()
         .then(data => {
             res.status(200).send(data);
         })
