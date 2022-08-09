@@ -27,7 +27,7 @@
             <span class="label-title">Dispositivo central</span>
             <div class="label-inputs vertical-flow">
 
-                <button type="button" class="button secondary-button" id="btn-testar-serial">
+                <button type="button" class="button secondary-button" id="btnTestarSerial">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.975" viewBox="0 0 16 14.975">
                         <g transform="translate(-10 -10)">
                             <path d="M68.325,58.319H63.333V54.575a1.248,1.248,0,0,1,1.248-1.248h2.5a1.248,1.248,0,0,1,1.248,1.248Z" transform="translate(-42.325 -35.216)"/>
@@ -163,7 +163,26 @@
             }
         });
     }
-
     $('#btnSelecionarCom').on('click', salvarConfiguracao);
+
+    function testCentralSerialConnection() {
+        showModalTest('Aguarde enquanto o teste de conexão serial está sendo realizado.', async function() {
+            return new Promise((resolve, reject) => {
+                
+                setTimeout(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: url.origin + `/api/serial/central`,
+                        dataType: "json",
+                        complete: function(response){
+                            resolve( JSON.parse(response.responseText) );
+                        }
+                    });
+                }, 1000);
+
+            });
+        }); 
+    }
+    $('#btnTestarSerial').on('click', testCentralSerialConnection);
 </script>
 {{/section}}

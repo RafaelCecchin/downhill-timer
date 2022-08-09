@@ -9,13 +9,13 @@ class SerialService {
 
     static async configure() {    
         if (serialConnection.isOpen) {
-            await this.close();
+            await this.finish();
         }
 
-        this.open();
+        this.start();
     }
 
-    static async close() {
+    static async finish() {
         return new Promise((resolve, reject) => {
             serialConnection.close(function(err) {
                 if (err) {
@@ -30,7 +30,7 @@ class SerialService {
         });
     }
 
-    static async open() {
+    static async start() {
         const port = await ConfiguracaoService.getSelectedPort();
 
         serialConnection = new SerialPort({
