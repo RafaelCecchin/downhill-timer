@@ -17,6 +17,17 @@ exports.portas = async (req, res) => {
               err.message
         });
     }
+};
 
-    
+exports.centralConnection = async (req, res) => {
+    SerialService.testCentralConnection()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
 };
