@@ -101,6 +101,10 @@ class SerialService {
     static async centralConnectionTest() {
         return this.communicate(1, 1);
     }
+
+    static async largadaConnectionTest() {
+        return this.communicate(2, 1);
+    }
 }
 
 SerialService.configure();

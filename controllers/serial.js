@@ -24,3 +24,16 @@ exports.centralConnectionTest = async (req, res) => {
             });
         });
 };
+
+exports.largadaConnectionTest = async (req, res) => {
+    SerialService.largadaConnectionTest()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};
