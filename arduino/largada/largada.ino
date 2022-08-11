@@ -83,10 +83,37 @@ void loop() {
         continue;
       }
 
-      switch(input["operation"].as<int>()) {
+      switch(operation) {
         case 1:
           output["status"] = 1;
           output["message"] = "Conexão realizada com sucesso.";
+          loraSendData(output.as<String>());
+          Serial.println("Enviou via LoRa: "+output.as<String>());
+          
+          continue;
+          break;
+        case 2:
+          output["status"] = 1;
+          output["message"] = "Competidor 34434 identificado com sucesso.";
+          data["rfid"] = "34434"; // Random selected ID
+          loraSendData(output.as<String>());
+          Serial.println("Enviou via LoRa: "+output.as<String>());
+          
+          continue;
+          break;
+        case 3:
+          output["status"] = 1;
+          output["message"] = "Data e hora obtida com sucesso.";
+          data["time"] = "2022-08-10 12:30:04";
+          loraSendData(output.as<String>());
+          Serial.println("Enviou via LoRa: "+output.as<String>());
+          
+          continue;
+          break;
+
+        case 4:
+          output["status"] = 1;
+          output["message"] = "O interruptor foi acionado.";
           loraSendData(output.as<String>());
           Serial.println("Enviou via LoRa: "+output.as<String>());
           

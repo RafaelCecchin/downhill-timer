@@ -37,3 +37,16 @@ exports.largadaConnectionTest = async (req, res) => {
             });
         });
 };
+
+exports.largadaRfidTest = async (req, res) => {
+    SerialService.largadaRfidTest()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};

@@ -105,6 +105,10 @@ class SerialService {
     static async largadaConnectionTest() {
         return this.communicate(2, 1);
     }
+
+    static async largadaRfidTest() {
+        return this.communicate(2, 2);
+    }
 }
 
 SerialService.configure();

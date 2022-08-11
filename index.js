@@ -106,13 +106,14 @@ app.put('/api/configuracoes', configuracaoController.update);
 app.get('/api/serial/portas', serialController.portas);
 app.get('/api/serial/central', serialController.centralConnectionTest);
 app.get('/api/serial/largada', serialController.largadaConnectionTest);
+app.get('/api/serial/largada/rfid', serialController.largadaRfidTest);
 
 /*
     ---/api/serial/portas
     ---/api/serial/central
 
     ---/api/serial/largada
-    /api/serial/largada/rfid
+    ---/api/serial/largada/rfid
     /api/serial/largada/rtc
     /api/serial/largada/interruptor
 

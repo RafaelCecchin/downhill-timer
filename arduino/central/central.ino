@@ -68,7 +68,7 @@ void loop() {
   
       switch(device) {
         case 1: // Central device
-          switch(input["operation"].as<int>()) { 
+          switch(operation) { 
             case 1: // Connection test
               output["status"] = 1;
               output["message"] = "Conexão realizada com sucesso.";
@@ -89,22 +89,19 @@ void loop() {
           break;
           
         case 2: // Start device
-          switch(input["operation"].as<int>()) { 
-            case 1: // Connection test
-              loraSendData(input.as<String>());
-              continue;
-              break;
-              
-            default:
-              output["status"] = 0;
-              output["message"] = "Operação inválida.";
-              serializeJson(output, Serial);
-              Serial.println();
-              
-              continue;
-              break;
+
+          if (operation != 1 && operation != 2 && operation != 3 && operation != 4) {
+            output["status"] = 0;
+            output["message"] = "Dispositivo inválido.";
+            serializeJson(output, Serial);
+            Serial.println();
+            
+            continue;
           }
           
+          loraSendData(input.as<String>());
+          
+          continue;
           break;
           
         case 3: // Finish device
@@ -121,8 +118,6 @@ void loop() {
           output["message"] = "Dispositivo inválido.";
           serializeJson(output, Serial);
           Serial.println();
-          
-          continue;
           break;
       }
     }  
