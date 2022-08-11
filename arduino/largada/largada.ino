@@ -41,11 +41,12 @@ void setup() {
   setupSerial();
 }
 void loop() {
-
+  StaticJsonDocument<500> input;
+  StaticJsonDocument<500> output;
+  JsonObject data = output.createNestedObject("data");
+  
   for ever {
-    StaticJsonDocument<500> input;
-    StaticJsonDocument<500> output;
-    JsonObject data = output.createNestedObject("data");
+    
 
     // Entrada LoRa
     if (LoRa.parsePacket() > 1) {

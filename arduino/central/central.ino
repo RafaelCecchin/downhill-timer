@@ -41,7 +41,7 @@ void setup() {
   setupSerial();
 }
 void loop() {
-
+  
   for ever {
     StaticJsonDocument<500> input;
     StaticJsonDocument<500> output;
