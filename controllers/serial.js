@@ -63,3 +63,16 @@ exports.largadaRtcTest = async (req, res) => {
             });
         });
 };
+
+exports.largadaInterruptorTest = async (req, res) => {
+    SerialService.largadaInterruptorTest()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};
