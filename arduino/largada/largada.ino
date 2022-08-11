@@ -103,8 +103,8 @@ void loop() {
           break;
         case 3:
           output["status"] = 1;
-          output["message"] = "Data e hora obtida com sucesso.";
-          data["time"] = "2022-08-10 12:30:04";
+          output["message"] = "A data e hora atual identificada foi 10/08/2022 12:30:04:300.";
+          data["time"] = "2022-08-10 12:30:04:300";
           loraSendData(output.as<String>());
           Serial.println("Enviou via LoRa: "+output.as<String>());
           
