@@ -90,7 +90,7 @@
                     <span>Testar conexão 2.4 GHz</span>
                 </button>
 
-                <button type="button" class="button secondary-button" id="btn-testar-rfid-chegada">
+                <button type="button" class="button secondary-button" id="btnTestarRfidChegada">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.2" viewBox="0 0 16 11.2">
                         <path d="M93.146,3486.51a.367.367,0,0,0-.052-.064h0a1.687,1.687,0,0,0-2.262,0,1.67,1.67,0,0,0,0,2.224c.007.008.016.008.023.016a.428.428,0,0,0,.053.063h0a1.585,1.585,0,1,0,2.26-2.224c-.007-.008-.016-.008-.023-.016m-3.451-1.176-1.131-1.112a5.115,5.115,0,0,0,.079,6.752l1.131-1.112a3.446,3.446,0,0,1-.079-4.528m-2.262-2.225L86.3,3482a7.877,7.877,0,0,0,.079,11.2l1.131-1.112c-2.262-2.224-2.342-6.752-.079-8.977m7.923,1.112-1.131,1.112a3.446,3.446,0,0,1,.079,4.528l1.131,1.112a5.116,5.116,0,0,0-.079-6.752M97.7,3493.2l-1.131-1.112c2.263-2.224,2.184-6.752-.079-8.977L97.619,3482a7.877,7.877,0,0,1,.079,11.2" transform="translate(-84 -3481.998)" fill-rule="evenodd"/>
                     </svg>
@@ -249,13 +249,35 @@
             });
         }); 
     }
+    function testChegadaRfid() {
+        showModalTest('Aproxime um RFID do leitor de chegada.', async function() {
+            return new Promise((resolve, reject) => {
+                
+                setTimeout(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: url.origin + `/api/serial/chegada/rfid`,
+                        dataType: "json",
+                        complete: function(response){
+                            resolve( JSON.parse(response.responseText) );
+                        }
+                    });
+                }, 1000);
+
+            });
+        }); 
+    }
 
     $('#btnSelecionarCom').on('click', salvarConfiguracao);
+
     $('#btnTestarSerial').on('click', testCentralSerialConnection);
+
     $('#btnTestarConexaoLargada').on('click', testLargadaConnection);
     $('#btnTestarRfidLargada').on('click', testLargadaRfid);
     $('#btnTestarRtcLargada').on('click', testLargadaRtc);
     $('#btnTestarInterruptorLargada').on('click', testLargadaInterruptor);
+    
     $('#btnTestarConexaoChegada').on('click', testChegadaConnection);
+    $('#btnTestarRfidChegada').on('click', testChegadaRfid);
 </script>
 {{/section}}

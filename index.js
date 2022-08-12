@@ -112,6 +112,7 @@ app.get('/api/serial/largada/rtc', serialController.largadaRtcTest);
 app.get('/api/serial/largada/interruptor', serialController.largadaInterruptorTest);
 
 app.get('/api/serial/chegada', serialController.chegadaConnectionTest);
+app.get('/api/serial/chegada/rfid', serialController.chegadaRfidTest);
 
 /*
     ---/api/serial/portas
@@ -123,7 +124,7 @@ app.get('/api/serial/chegada', serialController.chegadaConnectionTest);
     ---/api/serial/largada/interruptor
 
     ---/api/serial/chegada
-    /api/serial/chegada/rfid
+    ---/api/serial/chegada/rfid
     /api/serial/chegada/rtc
     /api/serial/chegada/interruptor
 */

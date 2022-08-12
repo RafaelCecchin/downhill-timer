@@ -121,6 +121,10 @@ class SerialService {
     static async chegadaConnectionTest() {
         return this.communicate(3, 1);
     }
+
+    static async chegadaRfidTest() {
+        return this.communicate(3, 2);
+    }
 }
 
 SerialService.configure();

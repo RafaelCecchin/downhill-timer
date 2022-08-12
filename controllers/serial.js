@@ -89,3 +89,16 @@ exports.chegadaConnectionTest = async (req, res) => {
             });
         });
 };
+
+exports.chegadaRfidTest = async (req, res) => {
+    SerialService.chegadaRfidTest()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};
