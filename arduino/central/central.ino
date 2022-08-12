@@ -1,4 +1,54 @@
-#include <ArduinoJson.h>
+// 2.4GHz
+#include <esp_now.h>
+#include <WiFi.h>
+String dataReceived;
+bool espNowReceivedData = false;
+uint8_t broadcastAddress[] = {0x94, 0xB9, 0x7E, 0xFF, 0x29, 0x64}; //Destination ESP32's MAC Address
+
+void setupEspNow(){ 
+ WiFi.mode(WIFI_STA);
+  
+ while (esp_now_init() != ESP_OK) {
+    Serial.println("Erro ao inicializar o ESP-NOW!");
+ }
+
+ // Register peer
+ esp_now_peer_info_t peerInfo;
+ memset(&peerInfo, 0, sizeof(peerInfo));
+ for (int ii = 0; ii < 6; ++ii )
+ {
+    peerInfo.peer_addr[ii] = (uint8_t) broadcastAddress[ii];
+ }
+ peerInfo.channel = 0;
+ peerInfo.encrypt = false;
+
+ // Add peer
+ while (esp_now_add_peer(&peerInfo) != ESP_OK) {
+    Serial.println("Failed to add peer");
+ }
+
+ esp_now_register_recv_cb(espNowOnReceiveData);
+ //esp_now_register_send_cb(espNowOnDataSent);
+}
+void espNowSendData(String message) {  
+  esp_now_send(broadcastAddress, (uint8_t *) message.c_str(), strlen(message.c_str()) + 10);
+};
+void espNowOnReceiveData(const uint8_t * mac, const uint8_t *incomingData, int len) {
+  char* buff = (char*) incomingData;        //char buffer
+  dataReceived = String(buff);                  //converting into STRING
+  espNowReceivedData = true;
+  Serial.println(dataReceived);
+}
+/*void espNowOnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  espNowReceivedData = false;
+  dataReceived = "";
+}*/
+void resetEspNowVars() {
+  espNowReceivedData = false;
+  dataReceived = "";
+}
+
+// LoRa
 #include <SPI.h>
 #include <LoRa.h>
 
@@ -9,8 +59,6 @@
 #define RST 14  // GPIO14 RESET
 #define DI00 26 // GPIO26 IRQ(Interrupt Request)
 #define BAND 915E6 //Frequência do radio - exemplo: 433E6, 868E6, 915E6
-
-#define ever (;;)
 
 void setupLoRa(){ 
   SPI.begin(SCK, MISO, MOSI, SS);
@@ -23,6 +71,27 @@ void setupLoRa(){
   LoRa.enableCrc();
   LoRa.receive();
 }
+
+void loraSendData(String message){
+    LoRa.beginPacket();
+    LoRa.print(message);
+    LoRa.endPacket();
+}
+void loraReceiveData() {
+  if (LoRa.parsePacket() > 1) {
+      String received = "";
+      
+      while(LoRa.available()){
+        received += (char) LoRa.read();
+      }
+
+      Serial.println(received);
+   }
+}
+
+// Helper
+#include <ArduinoJson.h>
+#define ever (;;)
 void setupSerial(){
   Serial.begin(9600);
   
@@ -30,22 +99,20 @@ void setupSerial(){
     Serial.println("Erro ao inicializar o LoRa!");
   }
 }
-void loraSendData(String message){
-    LoRa.beginPacket();
-    LoRa.print(message);
-    LoRa.endPacket();
-}
 
 void setup() {
-  setupLoRa();
   setupSerial();
+  setupLoRa();
+  setupEspNow();
 }
 void loop() {
-  
   for ever {
     StaticJsonDocument<500> input;
     StaticJsonDocument<500> output;
     JsonObject data = output.createNestedObject("data");
+
+    // Entrada LoRa
+    loraReceiveData();
 
     // Entrada serial
     if (Serial.available() > 1) {
@@ -92,7 +159,7 @@ void loop() {
 
           if (operation != 1 && operation != 2 && operation != 3 && operation != 4) {
             output["status"] = 0;
-            output["message"] = "Dispositivo inválido.";
+            output["message"] = "Operação inválida.";
             serializeJson(output, Serial);
             Serial.println();
             
@@ -105,13 +172,19 @@ void loop() {
           break;
           
         case 3: // Finish device
-          output["status"] = 0;
-          output["message"] = "Em desenvolvimento...";
-          serializeJson(output, Serial);
-          Serial.println();
+          if (operation != 1 && operation != 2 && operation != 3 && operation != 4) {
+            output["status"] = 0;
+            output["message"] = "Operação inválida.";
+            serializeJson(output, Serial);
+            Serial.println();
+            
+            continue;
+          }
+          
+          espNowSendData(input.as<String>());
           
           continue;
-          break;   
+          break;
             
         default:
           output["status"] = 0;
@@ -120,17 +193,6 @@ void loop() {
           Serial.println();
           break;
       }
-    }  
-
-    // Entrada LoRa
-    if (LoRa.parsePacket() > 1) {
-      String received = "";
-      
-      while(LoRa.available()){
-        received += (char) LoRa.read();
-      }
-
-      Serial.println(received);
     }
   }
 }
