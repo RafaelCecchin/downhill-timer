@@ -3,7 +3,7 @@
 #include <WiFi.h>
 String dataReceived;
 bool espNowReceivedData = false;
-uint8_t broadcastAddress[] = {0x94, 0xB9, 0x7E, 0xFF, 0x29, 0x64}; //Destination ESP32's MAC Address
+uint8_t broadcastAddress[] = {0xC8, 0xC9, 0xA3, 0xC8, 0xBD, 0x60}; //Destination ESP32's MAC Address
 
 void setupEspNow(){ 
  WiFi.mode(WIFI_STA);
