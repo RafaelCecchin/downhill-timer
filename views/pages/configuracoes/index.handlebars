@@ -97,7 +97,7 @@
                     <span>Testar RFID</span>
                 </button>
 
-                <button type="button" class="button secondary-button" id="btn-testar-rtc-chegada">
+                <button type="button" class="button secondary-button" id="btnTestarRtcChegada">
                     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="16" height="14.665" viewBox="0 0 16 14.665">
                         <path d="M15.806,7.565l-1.332-1.7a.689.689,0,0,0-1.049,0l-1.332,1.7a.666.666,0,0,0,1.049.819l.047-.062a6,6,0,1,1-1.621-5.211.667.667,0,0,0,.952-.932A7.332,7.332,0,1,0,14.564,8.14l.192.25a.666.666,0,0,0,1.049-.819Z" transform="translate(0.053 0.026)"/>
                         <path d="M27.346,10.67a.678.678,0,0,0-.676.676v4.065a.559.559,0,0,0,.02.158.483.483,0,0,0,.053.142.422.422,0,0,0,.074.122s.015.02.02.025a.536.536,0,0,0,.1.089h0l.028.02,1.062.8,1.626,1.219a.658.658,0,0,0,.406.135.678.678,0,0,0,.406-1.219l-.216-.163-.869-.65-.9-.678-.455-.338V11.346A.678.678,0,0,0,27.346,10.67Z" transform="translate(-20.032 -8.043)"/>
@@ -267,6 +267,24 @@
             });
         }); 
     }
+    function testChegadaRtc() {
+        showModalTest('Aguarde enquanto a data e hora são obtidas.', async function() {
+            return new Promise((resolve, reject) => {
+                
+                setTimeout(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: url.origin + `/api/serial/chegada/rtc`,
+                        dataType: "json",
+                        complete: function(response){
+                            resolve( JSON.parse(response.responseText) );
+                        }
+                    });
+                }, 1000);
+
+            });
+        }); 
+    }
 
     $('#btnSelecionarCom').on('click', salvarConfiguracao);
 
@@ -279,5 +297,7 @@
     
     $('#btnTestarConexaoChegada').on('click', testChegadaConnection);
     $('#btnTestarRfidChegada').on('click', testChegadaRfid);
+    $('#btnTestarRtcChegada').on('click', testChegadaRtc);
+    
 </script>
 {{/section}}
