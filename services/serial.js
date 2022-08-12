@@ -129,6 +129,10 @@ class SerialService {
     static async chegadaRtcTest() {
         return this.communicate(3, 3);
     }
+
+    static async chegadaInterruptorTest() {
+        return this.communicate(3, 4);
+    }
 }
 
 SerialService.configure();

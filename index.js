@@ -114,21 +114,7 @@ app.get('/api/serial/largada/interruptor', serialController.largadaInterruptorTe
 app.get('/api/serial/chegada', serialController.chegadaConnectionTest);
 app.get('/api/serial/chegada/rfid', serialController.chegadaRfidTest);
 app.get('/api/serial/chegada/rtc', serialController.chegadaRtcTest);
-
-/*
-    ---/api/serial/portas
-    ---/api/serial/central
-
-    ---/api/serial/largada
-    ---/api/serial/largada/rfid
-    ---/api/serial/largada/rtc
-    ---/api/serial/largada/interruptor
-
-    ---/api/serial/chegada
-    ---/api/serial/chegada/rfid
-    ---/api/serial/chegada/rtc
-    /api/serial/chegada/interruptor
-*/
+app.get('/api/serial/chegada/interruptor', serialController.chegadaInterruptorTest);
 
 // Routes without controller
 app.get('/etapas', async(req, res) => {

@@ -105,7 +105,7 @@
                     <span>Testar RTC</span>
                 </button>
 
-                <button type="button" class="button secondary-button" id="btn-testar-sensor-fotoeletrico-chegada">
+                <button type="button" class="button secondary-button" id="btnTestarInterruptorChegada">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20.427" viewBox="0 0 16 20.427">
                         <path d="M20.636,4.013a.661.661,0,0,0-.727,0c-2.545,1.6-4.436.582-6.545-.582-2.182-1.164-4.727-2.473-8-.509A1.01,1.01,0,0,0,5,3.649V21.613a.687.687,0,0,0,.727.727.687.687,0,0,0,.727-.727V14.267c2.4-1.309,4.145-.364,6.182.727a10.092,10.092,0,0,0,4.655,1.527A6.327,6.327,0,0,0,20.636,15.5.764.764,0,0,0,21,14.849V4.667A.764.764,0,0,0,20.636,4.013Z" transform="translate(-5 -1.913)"/>
                     </svg>
@@ -285,6 +285,24 @@
             });
         }); 
     }
+    function testChegadaInterruptor() {
+        showModalTest('Acione o interruptor de chegada.', async function() {
+            return new Promise((resolve, reject) => {
+                
+                setTimeout(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: url.origin + `/api/serial/chegada/interruptor`,
+                        dataType: "json",
+                        complete: function(response){
+                            resolve( JSON.parse(response.responseText) );
+                        }
+                    });
+                }, 1000);
+
+            });
+        }); 
+    }
 
     $('#btnSelecionarCom').on('click', salvarConfiguracao);
 
@@ -298,6 +316,7 @@
     $('#btnTestarConexaoChegada').on('click', testChegadaConnection);
     $('#btnTestarRfidChegada').on('click', testChegadaRfid);
     $('#btnTestarRtcChegada').on('click', testChegadaRtc);
-    
+    $('#btnTestarInterruptorChegada').on('click', testChegadaInterruptor);
+
 </script>
 {{/section}}

@@ -115,3 +115,16 @@ exports.chegadaRtcTest = async (req, res) => {
             });
         });
 };
+
+exports.chegadaInterruptorTest = async (req, res) => {
+    SerialService.chegadaInterruptorTest()
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};
