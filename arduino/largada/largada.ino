@@ -1,4 +1,29 @@
-#include <ArduinoJson.h>
+// RTC
+#include <Wire.h>
+#include "RTClib.h"
+/*
+  SDA = 21
+  SCL = 22
+*/
+RTC_DS1307 rtc;
+
+void setupRTC() {
+    while (!rtc.begin()) {
+      Serial.println("Erro ao inicializar o módulo RTC!");
+    }
+
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+}
+String getHour() {
+  DateTime now = rtc.now();
+  
+  char time[20];
+  sprintf( time, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second() );
+  
+  return time;
+}
+
+// LoRa
 #include <SPI.h>
 #include <LoRa.h>
 
@@ -9,8 +34,6 @@
 #define RST 14  // GPIO14 RESET
 #define DI00 26 // GPIO26 IRQ(Interrupt Request)
 #define BAND 915E6 //Frequência do radio - exemplo: 433E6, 868E6, 915E6
-
-#define ever (;;)
 
 void setupLoRa(){ 
   SPI.begin(SCK, MISO, MOSI, SS);
@@ -36,8 +59,13 @@ void loraSendData(String message){
     LoRa.endPacket();
 }
 
+// Helper
+#include <ArduinoJson.h>
+#define ever (;;)
+
 void setup() {
   setupLoRa();
+  setupRTC();
   setupSerial();
 }
 void loop() {
@@ -46,8 +74,6 @@ void loop() {
   JsonObject data = output.createNestedObject("data");
   
   for ever {
-    
-
     // Entrada LoRa
     if (LoRa.parsePacket() > 1) {
       String received = "";
@@ -104,8 +130,8 @@ void loop() {
           break;
         case 3:
           output["status"] = 1;
-          output["message"] = "A data e hora atual identificada foi 10/08/2022 12:30:04:300.";
-          data["time"] = "2022-08-10 12:30:04:300";
+          output["message"] = "A data e hora identificada foi " + getHour();
+          data["time"] = getHour();
           loraSendData(output.as<String>());
           Serial.println("Enviou via LoRa: "+output.as<String>());
           
