@@ -1,3 +1,29 @@
+// RTC
+#include <Wire.h>
+#include "RTClib.h"
+/*
+  SDA = 21
+  SCL = 22
+*/
+RTC_DS1307 rtc;
+
+void setupRTC() {
+    while (!rtc.begin()) {
+      Serial.println("Erro ao inicializar o módulo RTC!");
+    }
+
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+}
+String getHour() {
+  DateTime now = rtc.now();
+  
+  char time[20];
+  sprintf( time, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second() );
+  
+  return time;
+}
+
+
 // 2.4GHz
 #include <esp_now.h>
 #include <WiFi.h>
@@ -59,6 +85,7 @@ void setupSerial(){
 }
 
 void setup() {
+  setupRTC();
   setupEspNow();
   setupSerial();
 }
@@ -124,8 +151,8 @@ void loop() {
           break;
         case 3:
           output["status"] = 1;
-          output["message"] = "A data e hora atual identificada foi 10/08/2022 12:30:04:300.";
-          data["time"] = "2022-08-10 12:30:04:300";
+          output["message"] = "A data e hora identificada foi " + getHour();
+          data["time"] = getHour();
           espNowSendData(output.as<String>());
           Serial.println("Enviou via ESP-NOW: "+output.as<String>());
           resetEspNowVars();
