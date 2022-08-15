@@ -39,6 +39,9 @@ var hbs = exphbs.create({
                     return options.inverse(this);
             }
         },
+        get: function(obj, data) {
+            return obj.get(data);
+        },
         section: sections(),
         getDate: function(fullDate) {
             const date = new Date(fullDate);

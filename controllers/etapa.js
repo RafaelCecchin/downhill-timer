@@ -69,7 +69,8 @@ exports.create = async (req, res) => {
     const etapa = { 
         campeonatoId: req.body.campeonatoEtapa,
         numero: req.body.numeroEtapa,
-        data: req.body.dataEtapa
+        data: req.body.dataEtapa,
+        status: 0
     }
 
     Etapa.create(etapa)

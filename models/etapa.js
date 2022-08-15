@@ -30,13 +30,30 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      validate: {
+        notNull: false,
+        notEmpty: true,
+        isIn: [['0', '1', '2']],
+      },
+      get() {
+        switch (this.getDataValue('status')) {
+          case 0:
+            return 'Aguardando';
+            break;
+          case 1:
+            return 'Descida classificatória finalizada';
+            break;
+          case 2:
+            return 'Prova finalizada';
+            break;
+        }
+      }
+    },
     data: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty: true
-      }
     }
   }, {
     sequelize,
