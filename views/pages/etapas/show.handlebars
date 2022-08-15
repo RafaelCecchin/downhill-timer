@@ -8,7 +8,7 @@
                         <select class="input" name="campeonatoEtapa">
                             <option value="" hidden>Selecione o campeonato</option>
                             {{#each campeonatos}}
-                                <option value="{{ this.dataValues.id }}" {{#ifCond this.dataValues.id '==' ../etapa.dataValues.campeonatoId}} selected {{/ifCond}}>{{ this.dataValues.nome }}</option>
+                                <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../etapa 'campeonatoId')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
                             {{/each}}
                         </select>
                     </div>
@@ -16,13 +16,13 @@
 
                 <div class="label numero-da-etapa">
                     <div class="label-inputs">  
-                        <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{ etapa.dataValues.numero }}"/>
+                        <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{get etapa 'numero'}}"/>
                     </div>
                 </div>
 
                 <div class="label data-do-etapa">
                     <div class="label-inputs">                
-                        <input class="input" type="datetime-local" name="dataEtapa" value="{{getDateTime etapa.dataValues.data }}"/>
+                        <input class="input" type="datetime-local" name="dataEtapa" value="{{getDateTime (get etapa 'data')}}"/>
                     </div>
                 </div>
 

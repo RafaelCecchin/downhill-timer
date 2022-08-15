@@ -31,7 +31,7 @@
 
             {{#each generos}}
                 <div class="table-container">
-                    <h2 class="table-title">{{this.dataValues.nome}}</h2>
+                    <h2 class="table-title">{{get this 'nome'}}</h2>
 
                     <table class="table" data-number-columns="2">
                         <thead>
@@ -42,12 +42,12 @@
                         </thead>
                         <tbody>
                             {{#each ../categorias}}
-                                {{#ifCond this.dataValues.generoId '==' ../this.dataValues.id}}
+                                {{#ifCond (get this 'generoId') '==' (get ../this 'id')}}
 
-                                    <tr id="categoria-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
-                                        <td>{{ this.dataValues.nome }}</td>
+                                    <tr id="categoria-{{get this 'id'}}" data-cod="{{get this 'id'}}">
+                                        <td>{{get this 'nome'}}</td>
                                         <td>
-                                            <button class="table-button remove-row" data-target="#categoria-{{ this.dataValues.id }}">
+                                            <button class="table-button remove-row" data-target="#categoria-{{get this 'id'}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
                                                     <g id="Lixo" transform="translate(-2 -1)">
                                                         <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -57,7 +57,7 @@
                                                     </g>
                                                 </svg>
                                             </button>
-                                            <a  class="table-button edit-row" href="/categorias/{{ this.dataValues.id }}">
+                                            <a  class="table-button edit-row" href="/categorias/{{get this 'id'}}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
                                                     <g id="Editar" transform="translate(-6 -2.6)">
                                                         <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>

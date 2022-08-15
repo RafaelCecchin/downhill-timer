@@ -42,12 +42,12 @@
                     <tbody>
 
                         {{#each etapas}}
-                            <tr id="etapa-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
-                                <td>{{ this.dataValues.numero }}ª Etapa / <a href="/campeonatos/{{ this.dataValues.campeonato.dataValues.id }}">{{ this.dataValues.campeonato.dataValues.nome }}</a></td>
-                                <td>Aguardando</td>
-                                <td>{{ getFormatedDateTime this.dataValues.data }}</td>
+                            <tr id="etapa-{{get this 'id'}}" data-cod="{{get this 'id'}}">
+                                <td>{{get this 'numero'}}ª Etapa / <a href="/campeonatos/{{get (get this 'campeonato') 'id'}}">{{get (get this 'campeonato') 'nome'}}</a></td>
+                                <td>{{get this 'status'}}</td>
+                                <td>{{getFormatedDateTime (get this 'data')}}</td>
                                 <td>
-                                    <button class="table-button remove-row" data-target="#etapa-{{ this.dataValues.id }}">
+                                    <button class="table-button remove-row" data-target="#etapa-{{get this 'id'}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
                                             <g id="Lixo" transform="translate(-2 -1)">
                                                 <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -57,7 +57,7 @@
                                             </g>
                                         </svg>
                                     </button>
-                                    <a class="table-button edit-row" href="/etapas/{{ this.dataValues.id }}">
+                                    <a class="table-button edit-row" href="/etapas/{{get this 'id'}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
                                             <g id="Editar" transform="translate(-6 -2.6)">
                                                 <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>

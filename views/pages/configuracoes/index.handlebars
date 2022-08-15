@@ -7,7 +7,7 @@
                 <select class="input" name="portaCom">
                     <option val="" hidden>Porta COM</option>
                     {{#each serialPorts}}
-                        <option value="{{ this.path }}" {{#ifCond this.path '==' ../configuracoes.dataValues.portaCom }} selected {{/ifCond}}>{{ this.path }}</option>
+                        <option value="{{ this.path }}" {{#ifCond this.path '==' (get ../configuracoes 'portaCom')}} selected {{/ifCond}}>{{ this.path }}</option>
                     {{/each}}
                 </select>
                 <button type="submit" class="button secondary-button" id="btnSelecionarCom">

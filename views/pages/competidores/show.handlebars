@@ -6,14 +6,14 @@
                 <div class="label cpf">
                     <span class="label-title">CPF</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="cpfCompetidor" value="{{ competidor.dataValues.cpf }}"/>
+                        <input class="input" type="text" name="cpfCompetidor" value="{{get competidor 'cpf'}}"/>
                     </div>
                 </div>
 
                 <div class="label nome-do-competidor">
                     <span class="label-title">Nome do competidor</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="nomeCompetidor" value="{{ competidor.dataValues.nome }}"/>
+                        <input class="input" type="text" name="nomeCompetidor" value="{{get competidor 'nome'}}"/>
                     </div>
                 </div>
 
@@ -23,7 +23,7 @@
                         <select class="input" name="generoCompetidor">
                             <option value="" hidden>Selecione o gênero</option>
                             {{#each generos}}
-                                <option value="{{ this.dataValues.id }}" {{#ifCond this.dataValues.id '==' ../competidor.dataValues.generoId}} selected {{/ifCond}}>{{ this.dataValues.nome }}</option>
+                                <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../competidor 'generoId')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
                             {{/each}}
                         </select>         
                     </div>
@@ -32,14 +32,14 @@
                 <div class="label data-de-nascimento-do-competidor">
                     <span class="label-title">Data de nascimento</span>
                     <div class="label-inputs">                
-                        <input class="input" type="date" name="dataNascimentoCompetidor" value="{{getDate competidor.dataValues.nascimento }}"/>
+                        <input class="input" type="date" name="dataNascimentoCompetidor" value="{{getDate (get competidor 'nascimento')}}"/>
                     </div>
                 </div>
 
                 <div class="label patrocinador-do-competidor">
                     <span class="label-title">Patrocinador</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="patrocinadorCompetidor" value="{{ competidor.dataValues.patrocinador }}"/>
+                        <input class="input" type="text" name="patrocinadorCompetidor" value="{{get competidor 'patrocinador'}}"/>
                     </div>
                 </div>
             </div>        

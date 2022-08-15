@@ -40,10 +40,10 @@
                     <tbody>
                         
                         {{#each campeonatos}}
-                            <tr id="campeonato-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
-                                <td>{{ this.dataValues.nome }}</td>
+                            <tr id="campeonato-{{get this 'id'}}" data-cod="{{get this 'id'}}">
+                                <td>{{get this 'nome'}}</td>
                                 <td>
-                                    <button class="table-button remove-row" data-target="#campeonato-{{ this.dataValues.id }}">
+                                    <button class="table-button remove-row" data-target="#campeonato-{{get this 'id' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
                                             <g id="Lixo" transform="translate(-2 -1)">
                                                 <path d="M3,6H26.44" transform="translate(0 1.2009)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -53,7 +53,7 @@
                                             </g>
                                         </svg>
                                     </button>
-                                    <a class="table-button edit-row" href="/campeonatos/{{ this.dataValues.id }}">
+                                    <a class="table-button edit-row" href="/campeonatos/{{get this 'id' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
                                             <g id="Editar" transform="translate(-6 -2.6)">
                                                 <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
