@@ -13,10 +13,10 @@
                 </div>
             </div>
 
-            <div class="label filter">
+            <form class="label filter">
                 <div class="label-inputs">
-                    <input class="input" type="text" placeholder="Filtre sua pesquisa..."/>
-                    <button class="button secondary-button" id="btnFilterEtapa">
+                    <input class="input filter" type="search" name="search" placeholder="Filtre sua pesquisa..." value="{{ search }}"/>
+                    <button class="button secondary-button" type="submit" id="btnFilterEtapa">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <polygon points="0,0 0,128 201.143,329.143 201.143,512 310.857,475.429 310.857,329.143 512,128 512,0 		"/>
@@ -24,7 +24,7 @@
                         <span>Filtrar</span>
                     </button>
                 </div>
-            </div>
+            </form>
             
         </div>
 

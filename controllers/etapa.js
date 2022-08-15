@@ -1,4 +1,6 @@
-const { Op } = require("sequelize");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 const models = require('../models');
 const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
@@ -10,12 +12,20 @@ exports.index = async (req, res) => {
                 association: 'campeonato',
                 attributes: ['id','nome' ],
             }
-        ]
+        ],
+        where: {
+            [Op.or]: [
+                Sequelize.where(Sequelize.literal("numero || 'ª Etapa / ' || `campeonato`.`nome`"), 
+                    Op.like, `%${req.query.search ?? ''}%`
+                )
+            ]
+        }
     })
         .then(data => {
             res.render('pages/etapas/index', {
                 viewName: 'etapas',
                 etapas: data,
+                search: req.query.search ?? ''
             });
         });
 };
