@@ -175,7 +175,7 @@ void loop() {
       output["status"] = 1;
       output["message"] = "O interruptor de largada foi acionado.";
       data["time"] = getHour();
-      
+      loraSendData(output.as<String>());
       serializeJson(output, Serial);
       Serial.println();
     }

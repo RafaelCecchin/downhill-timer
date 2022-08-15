@@ -73,6 +73,16 @@ void resetEspNowVars() {
   dataReceived = "";
 }
 
+// Interruptor
+#define SWITCH 13
+
+void setupSwitch() {
+  pinMode(SWITCH,INPUT);
+}
+bool switchPush() {
+    return digitalRead(SWITCH) == HIGH;
+}
+
 // Helper
 #include <ArduinoJson.h>
 #define ever (;;)
@@ -180,6 +190,18 @@ void loop() {
           continue;
           break;
       }
+    }
+
+    // Interruptor
+    if (switchPush()) {
+      output["device"] = 3;
+      output["operation"] = 4;
+      output["status"] = 1;
+      output["message"] = "O interruptor de chegada foi acionado.";
+      data["time"] = getHour();
+      espNowSendData(output.as<String>());
+      serializeJson(output, Serial);
+      Serial.println();
     }
   }
 }
