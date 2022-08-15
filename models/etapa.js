@@ -32,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     data: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     }
   }, {
     sequelize,

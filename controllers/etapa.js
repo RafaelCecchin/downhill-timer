@@ -4,9 +4,20 @@ const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
 
 exports.index = async (req, res) => {
-    res.render('pages/etapas/index', {
-        viewName: 'etapas',
-    });
+    Etapa.findAll({
+        include: [
+            {
+                association: 'campeonato',
+                attributes: ['id','nome' ],
+            }
+        ]
+    })
+        .then(data => {
+            res.render('pages/etapas/index', {
+                viewName: 'etapas',
+                etapas: data,
+            });
+        });
 };
 
 exports.new = async (req, res) => {
