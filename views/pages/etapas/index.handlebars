@@ -45,7 +45,7 @@
                             <tr id="etapa-{{ this.dataValues.id }}" data-cod="{{ this.dataValues.id }}">
                                 <td>{{ this.dataValues.numero }}ª Etapa / <a href="/campeonatos/{{ this.dataValues.campeonato.dataValues.id }}">{{ this.dataValues.campeonato.dataValues.nome }}</a></td>
                                 <td>Aguardando</td>
-                                <td>17/06/2022 22:50</td>
+                                <td>{{ getFormatedDateTime this.dataValues.data }}</td>
                                 <td>
                                     <button class="table-button remove-row" data-target="#etapa-{{ this.dataValues.id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">

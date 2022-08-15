@@ -40,7 +40,7 @@ var hbs = exphbs.create({
             }
         },
         section: sections(),
-        getDateOnly: function(fullDate) {
+        getDate: function(fullDate) {
             const date = new Date(fullDate);
 
             const dd = String(date.getDate() + 1).padStart(2, '0');
@@ -48,6 +48,30 @@ var hbs = exphbs.create({
             const yyyy = String(date.getFullYear()).padStart(4, '0');
 
             return yyyy + '-' + mm + '-' + dd;
+        },
+        getDateTime: function(fullDate) {
+            const date = new Date(fullDate);
+
+            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yyyy = String(date.getFullYear()).padStart(4, '0');
+
+            let h = String(date.getHours()).padStart(2, '0');
+            let m = String(date.getMinutes()).padStart(2, '0');
+
+            return yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + m;
+        },
+        getFormatedDateTime: function(fullDate) {
+            const date = new Date(fullDate);
+
+            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const yyyy = String(date.getFullYear()).padStart(4, '0');
+
+            let h = String(date.getHours()).padStart(2, '0');
+            let m = String(date.getMinutes()).padStart(2, '0');
+
+            return dd + '/' + mm + '/' + yyyy + ' ' + h + ':' + m;
         }
     }
 });
