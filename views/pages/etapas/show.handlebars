@@ -16,13 +16,13 @@
 
                 <div class="label numero-da-etapa">
                     <div class="label-inputs">  
-                        <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa"/>
+                        <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{ etapa.dataValues.numero }}"/>
                     </div>
                 </div>
 
                 <div class="label data-do-etapa">
                     <div class="label-inputs">                
-                        <input class="input" type="date" name="dataEtapa"/>
+                        <input class="input" type="date" name="dataEtapa" value="{{getDateOnly etapa.dataValues.data }}"/>
                     </div>
                 </div>
 
@@ -448,7 +448,45 @@
             }
         });    
     }
+    function salvarEtapa(event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: url.origin + `/api` + url.pathname,
+            dataType: "json",
+            data: $('#formEtapa').serialize(),
+            success: function(response){
+                showModalInformation("Etapa atualizada com sucesso.");
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    function excluirEtapa(event) {
+        event.preventDefault();
+
+        showModalOption("Você tem certeza que deseja excluir essa etapa?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                success: function(response){
+                    const etapaUrl = url.origin + `/etapas`;
+                    showModalInformation("Etapa excluída com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });        
+    }
 
     $('#btnAdicionarEtapa').on('click', adicionarEtapa);
+    $('#btnSalvarEtapa').on('click', salvarEtapa);
+    $('#btnExcluirEtapa').on('click', excluirEtapa);  
 </script>
 {{/section}}

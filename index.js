@@ -111,6 +111,9 @@ app.get('/etapas/new', etapaController.new);
 app.get('/etapas/:id', etapaController.show);
 
 app.post('/api/etapas/create', etapaController.create);
+app.get('/api/etapas/:id', etapaController.read);
+app.put('/api/etapas/:id', etapaController.update);
+app.delete('/api/etapas/:id', etapaController.delete);
 
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);

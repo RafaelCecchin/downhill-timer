@@ -29,7 +29,7 @@ exports.show = async (req, res) => {
                 {
                     viewName: 'etapas', 
                     formAction: 'update',
-                    etapas: data,
+                    etapa: data,
                     campeonatos: campeonatos
                 });
             } else {
@@ -55,7 +55,7 @@ exports.create = async (req, res) => {
         .then(data => {
                 res.status(201).send(data);
             })
-            .catch(err => {
+        .catch(err => {
             res.status(500).send({
                 message:
                   err.message
@@ -64,13 +64,68 @@ exports.create = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    
+    Etapa.findByPk( req.params.id )
+        .then(data => {
+            if (data) {
+                res.status(200).send(data.dataValues);
+            } else {
+                res.status(404).send({
+                    message: "Etapa não encontrada."
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
 };
 
 exports.update = async (req, res) => {
-    
+    const etapa = { 
+        campeonatoId: req.body.campeonatoEtapa,
+        numero: req.body.numeroEtapa,
+        data: req.body.dataEtapa
+    }
+
+    Etapa.update(etapa, {
+            where: { id: req.params.id }
+        })
+        .then(num => {
+            if (num == 1) {
+                res.status(204).send();
+            } else {
+                res.status(500).send({
+                    message: `Etapa não encontrada.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message
+            });
+        });
 };
 
 exports.delete = async (req, res) => {
-    
+    Etapa.destroy({
+            where: { id: req.params.id }
+        })
+        .then(num => {
+            if (num == 1) {
+                res.status(204).send();
+            } else {
+                res.status(500).send({
+                    message: `Etapa não encontrada.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message
+            });
+        });
 };
