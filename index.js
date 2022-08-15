@@ -40,6 +40,9 @@ var hbs = exphbs.create({
             }
         },
         get: function(obj, data) {
+            if (!obj || !data) {
+                return '';
+            }
             return obj.get(data);
         },
         section: sections(),
