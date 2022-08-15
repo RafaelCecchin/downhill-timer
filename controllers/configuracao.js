@@ -17,10 +17,10 @@ exports.index = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    Configuracao.findByPk( 1 )
+    Configuracao.findByPk( 1, {raw: true} )
         .then(data => {
             if (data) {
-                res.status(200).send(data.dataValues);
+                res.status(200).send(data);
             } else {
                 res.status(404).send({
                     message: "Configuração não encontrada."

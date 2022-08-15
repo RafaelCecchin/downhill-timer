@@ -86,10 +86,10 @@ exports.create = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    Etapa.findByPk( req.params.id )
+    Etapa.findByPk( req.params.id, {raw: true} )
         .then(data => {
             if (data) {
-                res.status(200).send(data.dataValues);
+                res.status(200).send(data);
             } else {
                 res.status(404).send({
                     message: "Etapa não encontrada."

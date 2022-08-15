@@ -64,10 +64,10 @@ exports.create = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-    Campeonato.findByPk( req.params.id )
+    Campeonato.findByPk( req.params.id, {raw: true} )
         .then(data => {
             if (data) {
-                res.status(200).send(data.dataValues);
+                res.status(200).send(data);
             } else {
                 res.status(500).send({
                     message: `Campeonato não encontrado.`
