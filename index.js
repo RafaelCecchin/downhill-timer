@@ -61,10 +61,13 @@ const painelController = require('./controllers/painel');
 const campeonatoController = require('./controllers/campeonato');
 const categoriaController = require('./controllers/categoria');
 const competidorController = require('./controllers/competidor');
+const etapaController = require('./controllers/etapa');
 const configuracaoController = require('./controllers/configuracao');
 const serialController = require('./controllers/serial');
 
-// Routes
+/***************************** Routes *****************************/
+
+// Início
 app.get('/', painelController.index);
 
 // Campeonatos
@@ -102,6 +105,13 @@ app.get('/configuracoes', configuracaoController.index);
 app.get('/api/configuracoes', configuracaoController.read);
 app.put('/api/configuracoes', configuracaoController.update);
 
+// Etapas
+app.get('/etapas', etapaController.index);
+app.get('/etapas/new', etapaController.new);
+app.get('/etapas/:id', etapaController.show);
+
+app.post('/api/etapas/create', etapaController.create);
+
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);
 app.get('/api/serial/central', serialController.centralConnectionTest);
@@ -115,15 +125,6 @@ app.get('/api/serial/chegada', serialController.chegadaConnectionTest);
 app.get('/api/serial/chegada/rfid', serialController.chegadaRfidTest);
 app.get('/api/serial/chegada/rtc', serialController.chegadaRtcTest);
 app.get('/api/serial/chegada/interruptor', serialController.chegadaInterruptorTest);
-
-// Routes without controller
-app.get('/etapas', async(req, res) => {
-    res.render('pages/etapas/index', {viewName: 'etapas'});
-});
-
-app.get('/etapas/:id', async(req, res) => {
-    res.render('pages/etapas/show', {viewName: 'etapas'});
-});
 
 // Server
 let port = process.env.PORT || 3000;
