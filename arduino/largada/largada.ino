@@ -27,12 +27,12 @@ String getHour() {
 #include <SPI.h>
 #include <LoRa.h>
 
-#define SCK 5   // GPIO5  SCK
-#define MISO 19 // GPIO19 MISO
-#define MOSI 27 // GPIO27 MOSI
-#define SS 18   // GPIO18 CS
-#define RST 14  // GPIO14 RESET
-#define DI00 26 // GPIO26 IRQ(Interrupt Request)
+#define SCK 5      // GPIO5  SCK
+#define MISO 19    // GPIO19 MISO
+#define MOSI 27    // GPIO27 MOSI
+#define SS 18      // GPIO18 CS
+#define RST 14     // GPIO14 RESET
+#define DI00 26    // GPIO26 IRQ(Interrupt Request)
 #define BAND 915E6 //Frequência do radio - exemplo: 433E6, 868E6, 915E6
 
 void setupLoRa(){ 
@@ -59,6 +59,16 @@ void loraSendData(String message){
     LoRa.endPacket();
 }
 
+// Interruptor
+#define SWITCH 13
+
+void setupSwitch() {
+  pinMode(SWITCH,INPUT);
+}
+bool switchPush() {
+    return digitalRead(SWITCH) == HIGH;
+}
+
 // Helper
 #include <ArduinoJson.h>
 #define ever (;;)
@@ -73,7 +83,7 @@ void loop() {
   StaticJsonDocument<500> output;
   JsonObject data = output.createNestedObject("data");
   
-  for ever {
+  for ever {    
     // Entrada LoRa
     if (LoRa.parsePacket() > 1) {
       String received = "";
@@ -156,6 +166,18 @@ void loop() {
           continue;
           break;
       }
-    }    
+    } 
+  
+    // Interruptor
+    if (switchPush()) {
+      output["device"] = 2;
+      output["operation"] = 4;
+      output["status"] = 1;
+      output["message"] = "O interruptor de largada foi acionado.";
+      data["time"] = getHour();
+      
+      serializeJson(output, Serial);
+      Serial.println();
+    }
   }
 }
