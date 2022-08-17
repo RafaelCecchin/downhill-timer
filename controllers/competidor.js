@@ -87,7 +87,26 @@ exports.read = async (req, res) => {
                 res.status(200).send(data);
             } else {
                 res.status(404).send({
-                    message: "Competidor não encontrada."
+                    message: "Competidor não encontrado."
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                  err.message
+            });
+        });
+};
+
+exports.readByCpf = async (req, res) => {
+    Competidor.findOne({ where: { cpf: req.params.cpf } })
+        .then(data => {
+            if (data) {
+                res.status(200).send(data);
+            } else {
+                res.status(404).send({
+                    message: "Competidor não encontrado."
                 });
             }
         })

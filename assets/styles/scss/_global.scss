@@ -127,6 +127,10 @@ body {
     color: $gray;
     border: 1px solid;
     margin: 1px;
+
+    &[disabled] {
+        background-color: #EEEEEE;
+    }
 }
 
 .hidden {

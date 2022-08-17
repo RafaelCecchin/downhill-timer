@@ -71,27 +71,31 @@
                 
                 <div class="actions-competidores">
 
-                    <div class="label add">
-                        <div class="label-inputs">
-                            <button class="button primary-button" id="btn-add-etapas-competidor">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                                    <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
-                                </svg>
-                                <span>Adicionar etapa</span>
-                            </button>
+                    {{#ifCond etapa.dataValues.status '==' 0}}
+                        <div class="label modal-competidor">
+                            <div class="label-inputs">
+                                <button class="button primary-button" id="btnModalCompetidor" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                        <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
+                                    </svg>
+                                    <span>Adicionar competidor</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    {{/ifCond}}
 
-                    <div class="label importar-backup">
-                        <div class="label-inputs">
-                            <button class="button secondary-button" id="btn-importar-backup">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
-                                    <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
-                                </svg>
-                                <span>Importar backup</span>
-                            </button>
+                    {{#ifCond etapa.dataValues.status '!=' 0}}
+                        <div class="label importar-backup">
+                            <div class="label-inputs">
+                                <button class="button secondary-button" id="btn-importar-backup">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
+                                        <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
+                                    </svg>
+                                    <span>Importar backup</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    {{/ifCond}}
 
                     <div class="label filter">
                         <div class="label-inputs">
@@ -395,33 +399,40 @@
             <div class="actions-etapa">
                 <span class="status" id="status">{{get etapa 'status'}}</span>
                 
-                <button type="button" class="button secondary-button" id="btn-limpar-dc">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
-                        <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
-                    </svg>
-                    <span>Limpar DC</span>
-                </button>
+                {{#ifCond etapa.dataValues.status '==' 0}}
+                    <button type="button" class="button primary-button" id="btn-iniciar-dc">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
+                            <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
+                        </svg>
+                        <span>Iniciar DC</span>
+                    </button>
+                {{/ifCond}}
 
-                <button type="button" class="button primary-button" id="btn-iniciar-dc">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
-                        <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
-                    </svg>
-                    <span>Iniciar DC</span>
-                </button>
+                {{#ifCond etapa.dataValues.status '==' 1}}
+                    <button type="button" class="button secondary-button" id="btn-limpar-dc">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
+                            <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
+                        </svg>
+                        <span>Limpar DC</span>
+                    </button>
 
-                <button type="button" class="button secondary-button" id="btn-limpar-prova">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
-                        <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
-                    </svg>
-                    <span>Limpar Prova</span>
-                </button>
+                    <button type="button" class="button primary-button" id="btn-iniciar-prova">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
+                            <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
+                        </svg>
+                        <span>Iniciar Prova</span>
+                    </button>
+                {{/ifCond}}
 
-                <button type="button" class="button primary-button" id="btn-iniciar-prova">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
-                        <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
-                    </svg>
-                    <span>Iniciar Prova</span>
-                </button>
+                {{#ifCond etapa.dataValues.status '==' 2}}
+                    <button type="button" class="button secondary-button" id="btn-limpar-prova">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
+                            <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
+                        </svg>
+                        <span>Limpar Prova</span>
+                    </button>
+                {{/ifCond}}
+                
             </div>
         {{/ifCond}}
     </div>
@@ -487,5 +498,44 @@
     $('#btnAdicionarEtapa').on('click', adicionarEtapa);
     $('#btnSalvarEtapa').on('click', salvarEtapa);
     $('#btnExcluirEtapa').on('click', excluirEtapa);  
+
+    function showModalCompetidor() {
+        $('#modalCompetitor').addClass('show');
+        $('#modalCompetitor').find('#btnCancelar').off('click').on('click', closeModal);
+        $('#modalCompetitor').find('.close-modal').off('click').on('click', closeModal);
+    }
+    $('#btnModalCompetidor').on('click', showModalCompetidor);  
+
+    function buscarCompetidor() {
+        const cpfCompetidor = $('input[name="cpfCompetidor"]').val();
+
+        if (!cpfCompetidor) {
+            showModalInformation("Informe o CPF do competidor.");
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url.origin + `/api/competidores/cpf/` + cpfCompetidor,
+            dataType: "json",
+            success: function(response){
+                $('input[name="nomeCompetidor"]').val(response.nome);
+                $('input[name="placaCompetidor"]').removeAttr('disabled');
+                $('input[name="rfidCompetidor"]').removeAttr('disabled');
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    $('#btnBuscarCompetidor').on('click', buscarCompetidor);
+
+    function clearCompetidorInputs() {
+        $('input[name="nomeCompetidor"]').val("").attr("disabled", "");
+        $('input[name="placaCompetidor"]').attr("disabled", "");
+        $('input[name="rfidCompetidor"]').attr("disabled", "");
+    }
+    $('input[name="cpfCompetidor"]').on("keyup keydown keypress click", clearCompetidorInputs);
 </script>
 {{/section}}

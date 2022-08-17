@@ -122,4 +122,35 @@
 
         }
     }
+
+    &.modal-competitor {
+        .modal-container {
+            min-width: 36rem;
+
+            .form {
+                display: grid;
+                gap: 1rem;
+                width: 100%;
+    
+                .data {
+                    display: grid;
+                    gap: 1rem;
+                    width: 100%;
+        
+                    .label {
+                        width: 100%;
+    
+                        .label-title {
+                            margin-bottom: .5rem;
+                        }
+                
+                        .input {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 }

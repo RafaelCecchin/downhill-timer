@@ -127,6 +127,7 @@ app.get('/competidores/:id', competidorController.show);
 
 app.post('/api/competidores/create', competidorController.create);
 app.get('/api/competidores/:id', competidorController.read);
+app.get('/api/competidores/cpf/:cpf', competidorController.readByCpf);
 app.put('/api/competidores/:id', competidorController.update);
 app.delete('/api/competidores/:id', competidorController.delete);
 
