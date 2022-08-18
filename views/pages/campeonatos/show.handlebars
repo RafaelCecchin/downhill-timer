@@ -55,7 +55,7 @@
 
         $.ajax({
             type: "POST",
-            url: url.origin + `/api/campeonatos/create`,
+            url: url.origin + `/api/campeonatos`,
             dataType: "json",
             data: $('#formCampeonato').serialize(),
             success: function(response){

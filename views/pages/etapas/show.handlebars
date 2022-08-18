@@ -543,7 +543,7 @@
 
         $.ajax({
             type: "POST",
-            url: url.origin + `/api/etapas/create`,
+            url: url.origin + `/api/etapas`,
             dataType: "json",
             data: $('#formEtapa').serialize(),
             success: function(response){
@@ -682,7 +682,7 @@
 
         $.ajax({
             type: "POST",
-            url: url.origin + `/api` + url.pathname + `/competidores/create`,
+            url: url.origin + `/api` + url.pathname + `/competidores`,
             data: {
                 idCompetidor: idCompetidor,
                 categoriaCompetidor: categoriaCompetidor,

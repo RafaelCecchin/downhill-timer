@@ -68,7 +68,7 @@
 
         $.ajax({
             type: "POST",
-            url: url.origin + `/api/categorias/create`,
+            url: url.origin + `/api/categorias`,
             dataType: "json",
             data: $('#formCategoria').serialize(),
             success: function(response){

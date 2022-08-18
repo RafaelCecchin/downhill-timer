@@ -106,7 +106,7 @@ app.get('/campeonatos', campeonatoController.index);
 app.get('/campeonatos/new', campeonatoController.new);
 app.get('/campeonatos/:id', campeonatoController.show);
 
-app.post('/api/campeonatos/create', campeonatoController.create);
+app.post('/api/campeonatos', campeonatoController.create);
 app.get('/api/campeonatos/:id', campeonatoController.read);
 app.put('/api/campeonatos/:id', campeonatoController.update);
 app.delete('/api/campeonatos/:id', campeonatoController.delete);
@@ -116,7 +116,7 @@ app.get('/categorias', categoriaController.index);
 app.get('/categorias/new', categoriaController.new);
 app.get('/categorias/:id', categoriaController.show);
 
-app.post('/api/categorias/create', categoriaController.create);
+app.post('/api/categorias', categoriaController.create);
 app.get('/api/categorias/:id', categoriaController.read);
 app.put('/api/categorias/:id', categoriaController.update);
 app.delete('/api/categorias/:id', categoriaController.delete);
@@ -126,7 +126,7 @@ app.get('/competidores', competidorController.index);
 app.get('/competidores/new', competidorController.new);
 app.get('/competidores/:id', competidorController.show);
 
-app.post('/api/competidores/create', competidorController.create);
+app.post('/api/competidores', competidorController.create);
 app.get('/api/competidores/:id', competidorController.read);
 app.get('/api/competidores/cpf/:cpf', competidorController.readByCpf);
 app.put('/api/competidores/:id', competidorController.update);
@@ -142,12 +142,12 @@ app.get('/etapas', etapaController.index);
 app.get('/etapas/new', etapaController.new);
 app.get('/etapas/:id', etapaController.show);
 
-app.post('/api/etapas/create', etapaController.create);
+app.post('/api/etapas', etapaController.create);
 app.get('/api/etapas/:id', etapaController.read);
 app.put('/api/etapas/:id', etapaController.update);
 app.delete('/api/etapas/:id', etapaController.delete);
 
-app.post('/api/etapas/:etapa/competidores/create', etapaCompetidorController.create);
+app.post('/api/etapas/:etapa/competidores', etapaCompetidorController.create);
 
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);

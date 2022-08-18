@@ -89,7 +89,7 @@
 
         $.ajax({
             type: "POST",
-            url: url.origin + `/api/competidores/create`,
+            url: url.origin + `/api/competidores`,
             dataType: "json",
             data: $('#formCompetidor').serialize(),
             success: function(response){
