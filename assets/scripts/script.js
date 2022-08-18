@@ -2,7 +2,7 @@
 const url = new URL(window.location.href);
 
 // Modal
-function closeModal() {
+function closeModal(modal = false) {
     $(this).parents('.modal').removeClass('show');
 }
 function showModalOption(message, yesCallback, noCallback = closeModal, closeCallback = closeModal) {

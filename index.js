@@ -92,6 +92,7 @@ const campeonatoController = require('./controllers/campeonato');
 const categoriaController = require('./controllers/categoria');
 const competidorController = require('./controllers/competidor');
 const etapaController = require('./controllers/etapa');
+const etapaCompetidorController = require('./controllers/etapaCompetidor');
 const configuracaoController = require('./controllers/configuracao');
 const serialController = require('./controllers/serial');
 
@@ -145,6 +146,8 @@ app.post('/api/etapas/create', etapaController.create);
 app.get('/api/etapas/:id', etapaController.read);
 app.put('/api/etapas/:id', etapaController.update);
 app.delete('/api/etapas/:id', etapaController.delete);
+
+app.post('/api/etapas/:etapa/competidores/create', etapaCompetidorController.create);
 
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);

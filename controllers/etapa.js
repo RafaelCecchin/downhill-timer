@@ -4,6 +4,7 @@ const Op = Sequelize.Op;
 const models = require('../models');
 const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
+const Categoria = models.Categoria;
 
 exports.index = async (req, res) => {
     Etapa.findAll({
@@ -42,6 +43,7 @@ exports.new = async (req, res) => {
 
 exports.show = async (req, res) => {
     const campeonatos = await Campeonato.findAll();
+    const categorias = await Categoria.findAll();
 
     Etapa.findByPk( req.params.id )
         .then(data => {
@@ -51,7 +53,8 @@ exports.show = async (req, res) => {
                     viewName: 'etapas', 
                     formAction: 'update',
                     etapa: data,
-                    campeonatos: campeonatos
+                    campeonatos: campeonatos,
+                    categorias: categorias
                 });
             } else {
                 res.redirect('/etapas/new');

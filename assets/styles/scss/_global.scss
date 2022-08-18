@@ -83,6 +83,11 @@ body {
         &:hover, &:active, &:focus {
             background-color: #6dc758;
         }
+
+        &:disabled {
+            background-color: $gray;
+            box-shadow: 0 0 0 1px $gray;
+        }
     }
 
     &.secondary-button {
@@ -96,6 +101,11 @@ body {
 
         &:hover, &:active, &:focus {
             background-color: #f6fff4;
+        }
+
+        &:disabled {
+            box-shadow: 0 0 0 1px $gray;
+            color: $gray;
         }
     }
 
@@ -111,12 +121,12 @@ body {
         &:hover, &:active, &:focus {
             background-color: #e13737;
         }
+
+        &:disabled {
+            background-color: $gray;
+            box-shadow: 0 0 0 1px $gray;
+        }
     }
-
-    &:disabled {
-
-    }
-
 }
 
 .input {
