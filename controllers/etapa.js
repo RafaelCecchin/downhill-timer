@@ -5,6 +5,7 @@ const models = require('../models');
 const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
 const Categoria = models.Categoria;
+const EtapaCompetidor = models.EtapaCompetidor;
 
 exports.index = async (req, res) => {
     Etapa.findAll({
@@ -42,8 +43,53 @@ exports.new = async (req, res) => {
 };
 
 exports.show = async (req, res) => {
+    
     const campeonatos = await Campeonato.findAll();
     const categorias = await Categoria.findAll();
+    const competidores = await new Promise(
+        async function(resolve, reject) {
+
+            let competidoresArray = [];
+            const etapaCompetidoresObjs = await EtapaCompetidor.findAll({
+                include: [ 
+                    {
+                        association: 'competidor',
+                        include: ['genero']
+                    }, 
+                    {
+                        association: 'categoria'
+                    } 
+                ],
+                where: {
+                    etapaId: req.params.id
+                }
+            });            
+            
+            for (etapaCompetidor of etapaCompetidoresObjs) {
+                const genero = etapaCompetidor.get('competidor').get('genero');
+                const categoria = etapaCompetidor.get('categoria');
+                
+                if (!competidoresArray[genero.get('id')]) {
+                     competidoresArray[genero.get('id')] = new Object();
+                     competidoresArray[genero.get('id')].genero = genero;
+                     competidoresArray[genero.get('id')].categorias = [];
+                }
+
+                if (!competidoresArray[genero.get('id')].categorias[categoria.get('id')]) {
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')] = new Object();
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')].categoria = categoria;
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')].competidores = [];                    
+                }
+
+                competidoresArray[genero.get('id')]
+                    .categorias[categoria.get('id')]
+                    .competidores
+                    .push(etapaCompetidor);
+            }
+
+            resolve(competidoresArray);
+        }
+    );   
 
     Etapa.findByPk( req.params.id )
         .then(data => {
@@ -54,7 +100,8 @@ exports.show = async (req, res) => {
                     formAction: 'update',
                     etapa: data,
                     campeonatos: campeonatos,
-                    categorias: categorias
+                    categorias: categorias,
+                    competidores: competidores
                 });
             } else {
                 res.redirect('/etapas/new');

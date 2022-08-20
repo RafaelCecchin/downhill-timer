@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      EtapaCompetidor.belongsTo(models.Etapa, {foreignKey: 'etapaId', as: 'etapa'}),
+      EtapaCompetidor.belongsTo(models.Competidor, {foreignKey: 'competidorId', as: 'competidor'}),
+      EtapaCompetidor.belongsTo(models.Categoria, {foreignKey: 'categoriaId', as: 'categoria'})
     }
   }
   EtapaCompetidor.init({
@@ -56,15 +58,39 @@ module.exports = (sequelize, DataTypes) => {
     },
     dci:{
       type: DataTypes.DATE,
+      get() {
+        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+      }
     },
     dcf: {
       type: DataTypes.DATE,
+      get() {
+        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+      }
+    },
+    dct: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return '00:00:00:000';
+      }
     },
     pi: {
       type: DataTypes.DATE,
+      get() {
+        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+      }
     },
     pf: {
       type: DataTypes.DATE,
+      get() {
+        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+      }
+    },
+    pt: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return '00:00:00:000';
+      }
     }
   }, {
     sequelize,
