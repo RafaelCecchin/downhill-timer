@@ -496,7 +496,6 @@
     $('#btnSalvarEtapa').on('click', salvarEtapa);
     $('#btnExcluirEtapa').on('click', excluirEtapa);  
 
-    // Modal adicionar competidor
     function showModalAdicionarCompetidor() {
         $('#modalAdicionarCompetidor').addClass('show');
     }
@@ -602,7 +601,6 @@
     $('input[name="cpfCompetidor"]').on("keyup keydown keypress click", clearCompetidorInputs);
     $('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
 
-    // Modal editar competidor
     function showModalEditarCompetidor() {
         $('#modalEditarCompetidor').addClass('show');
 
@@ -681,9 +679,30 @@
     $('.edit-row').on('click', showModalEditarCompetidor);
     $('#btnEditarCompetidor').on('click', editarCompetidor);
 
-    // Modais de competidor
+    function excluirCompetidor() {
+
+        const row = $( $(this).data('target') );
+
+        const idCompetidor = row.data('competidor-id');
+
+        showModalOption("Você tem certeza que deseja remover esse competidor da etapa?", function () {
+            $.ajax({
+                type: "DELETE",
+                url: url.origin + `/api` + url.pathname + `/competidores/` + idCompetidor,
+                dataType: "json",
+                success: function(response){
+                    showModalInformation("Competidor removido da etapa com sucesso.", () => { document.location.reload(); }, () => { document.location.reload(); });                    
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+        });
+    }
+    $('.remove-row').on('click', excluirCompetidor);  
+
     $('.modal-competidor').find('#btnCancelar').on('click', closeModal);
     $('.modal-competidor').find('.close-modal').on('click', closeModal);
-    
 </script>
 {{/section}}

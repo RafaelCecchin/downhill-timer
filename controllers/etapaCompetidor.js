@@ -45,7 +45,7 @@ exports.update = async (req, res) => {
                 res.status(204).send();
             } else {
                 res.status(500).send({
-                    message: `Dado não encontrado.`
+                    message: `Competidor não encontrado na etapa informada.`
                 });
             }
         })
@@ -58,5 +58,25 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-    
+    EtapaCompetidor.destroy({
+            where: { 
+                etapaId: req.params.etapa,
+                competidorId: req.params.competidor
+            }
+        })
+        .then(num => {
+            if (num == 1) {
+                res.status(204).send();
+            } else {
+                res.status(500).send({
+                    message: `Competidor não encontrado na etapa informada.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message
+            });
+        });
 };

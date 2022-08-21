@@ -149,6 +149,7 @@ app.delete('/api/etapas/:id', etapaController.delete);
 
 app.post('/api/etapas/:etapa/competidores', etapaCompetidorController.create);
 app.put('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.update);
+app.delete('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.delete);
 
 // SerialPort
 app.get('/api/serial/portas', serialController.portas);
