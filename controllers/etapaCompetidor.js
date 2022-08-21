@@ -28,7 +28,33 @@ exports.read = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-    
+    const competidor = {
+        categoriaId: req.body.categoriaCompetidor,
+        placa: req.body.placaCompetidor,
+        rfid: req.body.rfidCompetidor
+    }
+
+    EtapaCompetidor.update(competidor, {
+            where: { 
+                etapaId: req.params.etapa,
+                competidorId: req.params.competidor
+            }
+        })
+        .then(num => {
+            if (num == 1) {
+                res.status(204).send();
+            } else {
+                res.status(500).send({
+                    message: `Dado não encontrado.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message
+            });
+        });
 };
 
 exports.delete = async (req, res) => {

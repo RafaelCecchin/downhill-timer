@@ -123,7 +123,8 @@
         }
     }
 
-    &.modal-competitor {
+    &.modal-competidor {
+
         .modal-container {
             min-width: 36rem;
 
@@ -149,6 +150,22 @@
                         }
                     }
                 }
+            }
+        }
+
+        &.add {
+            #btnEditarCompetidor {
+                display: none;
+            }
+        }
+
+        &.edit {
+            #btnBuscarCompetidor{
+                display: none;
+            }
+
+            #btnAdicionarCompetidor {
+                display: none;
             }
         }
 

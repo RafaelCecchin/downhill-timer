@@ -41,12 +41,8 @@
                             </button>
 
                             <button type="button" class="button secondary-button save-button" id="btnSalvarEtapa">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                                    <g transform="translate(-2 -2)">
-                                        <path d="M19,21H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3H16l5,5V19A2,2,0,0,1,19,21Z" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                        <path d="M17,21V13H7v8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                        <path d="M7,3V8h8" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                    </g>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
+                                    <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
                                 </svg>
                                 <span>Salvar</span>
                             </button>
@@ -145,7 +141,22 @@
 
                                             {{#each this.competidores}}
 
-                                                <tr data-cod="competidor-{{get this 'id'}}">
+                                                <tr id="competidor-{{get this 'id'}}"
+                                                    data-cod="{{get this 'id'}}"
+                                                    data-competidor-id="{{get (get this 'competidor') 'id'}}"
+                                                    data-competidor-nome="{{get (get this 'competidor') 'nome'}}"
+                                                    data-competidor-genero-id="{{get (get this 'competidor') 'generoId'}}"
+                                                    data-competidor-cpf="{{get (get this 'competidor') 'cpf'}}"
+                                                    data-categoria-id="{{get this 'categoriaId'}}"
+                                                    data-rfid="{{get this 'rfid'}}"
+                                                    data-placa="{{get this 'placa'}}"
+                                                    data-dci="{{get this 'dci'}}"
+                                                    data-dcf="{{get this 'dcf'}}"
+                                                    data-dct="{{get this 'dct'}}"
+                                                    data-pi="{{get this 'pi'}}"
+                                                    data-pf="{{get this 'pf'}}"
+                                                    data-pt="{{get this 'pt'}}">
+
                                                     <td>{{get (get this 'competidor') 'nome'}}</td>
                                                     <td>RFID: {{get this 'rfid'}}</td>
                                                     <td>PLACA: {{get this 'placa'}}</td>
@@ -238,8 +249,9 @@
 </section>
 
 {{#section 'footer'}}
-<!-- MODAL COMPETIDOR -->
-<div class="modal modal-competitor" id="modalCompetidor">
+
+<!-- MODAL ADICIONAR COMPETIDOR -->
+<div class="modal modal-competidor" id="modalAdicionarCompetidor">
     <div class="modal-container">
         <button class="close-modal">
             <svg xmlns="http://www.w3.org/2000/svg" width="19.207" height="19.207" viewBox="0 0 19.207 19.207">
@@ -250,7 +262,7 @@
             </svg>
         </button>
 
-        <form class="form" id="formCompetidor">
+        <form class="form" id="formAdicionarCompetidor">
 
             <div class="data">
                 <div class="label cpf-do-competidor">
@@ -333,6 +345,94 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL EDITAR COMPETIDOR -->
+<div class="modal modal-competidor" id="modalEditarCompetidor">
+    <div class="modal-container">
+        <button class="close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19.207" height="19.207" viewBox="0 0 19.207 19.207">
+                <g transform="translate(0.707 0.707)">
+                    <path d="M0,0H25.163" transform="translate(0 0) rotate(45)" stroke="#707070" stroke-width="2"/>
+                    <path d="M0,0H25.163" transform="translate(0 17.793) rotate(-45)" stroke="#707070" stroke-width="2"/>
+                </g>
+            </svg>
+        </button>
+
+        <form class="form" id="formEditarCompetidor">
+
+            <div class="data">
+                <div class="label cpf-do-competidor">
+                    <span class="label-title">CPF do competidor</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="cpfCompetidor" disabled/>
+                    </div>
+                </div>
+
+                <div class="label nome-do-competidor">
+                    <span class="label-title">Nome do competidor</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="nomeCompetidor" disabled/>
+                    </div>
+                </div>
+
+                <div class="label categoria-do-competidor">
+                    <span class="label-title">Categoria do competidor</span>
+                    <div class="label-inputs">                
+                        <select class="input" name="categoriaCompetidor">
+                            <option value="" hidden>Selecione a categoria</option>
+                            <optgroup class="catMasculina" label="Masculina">
+                                {{#each categorias}}
+                                    {{#ifCond (get this 'generoId') '==' 1}}
+                                        <option value="{{get this 'id'}}">{{get this 'nome'}}</option>                                            
+                                    {{/ifCond}}
+                                {{/each}}
+                            </optgroup>
+                            <optgroup class="catFeminina" label="Feminina">
+                                {{#each categorias}}
+                                    {{#ifCond (get this 'generoId') '==' 2}}
+                                        <option value="{{get this 'id'}}">{{get this 'nome'}}</option>                                            
+                                    {{/ifCond}}
+                                {{/each}}
+                            </optgroup>
+                        </select>    
+                    </div>
+                </div>
+
+                <div class="label placa-do-competidor">
+                    <span class="label-title">Placa do competidor</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="placaCompetidor"/>
+                    </div>
+                </div>
+
+                <div class="label rfid-do-competidor">
+                    <span class="label-title">RFID</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="rfidCompetidor"/>
+                    </div>
+                </div>
+
+                <input type="hidden" name="idCompetidor"/>
+            </div>
+
+        </form>
+
+        <div class="modal-actions">
+            <button class="button secondary-button" id="btnCancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16.245" height="16.212" viewBox="0 0 16.245 16.212">
+                    <path d="M15.88,14.086l-6-6,5.963-5.963A1.246,1.246,0,0,0,14.085.365L8.122,6.328,2.159.365A1.246,1.246,0,0,0,.4,2.127L6.361,8.09l-6,6a1.246,1.246,0,0,0,1.762,1.762l6-6,6,6a1.246,1.246,0,1,0,1.762-1.762Z" transform="translate(0 0)"/>
+                </svg>
+                <span>Cancelar</span>
+            </button>
+            <button class="button primary-button" id="btnEditarCompetidor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
+                    <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
+                </svg>
+                <span>Editar</span>
+            </button>
+        </div>
+    </div>
+</div>
 {{/section}}
 
 {{#section 'scripts'}}
@@ -396,16 +496,15 @@
     $('#btnSalvarEtapa').on('click', salvarEtapa);
     $('#btnExcluirEtapa').on('click', excluirEtapa);  
 
-    function showModalCompetidor() {
-        $('#modalCompetidor').addClass('show');
-        $('#modalCompetidor').find('#btnCancelar').off('click').on('click', closeModal);
-        $('#modalCompetidor').find('.close-modal').off('click').on('click', closeModal);
+    // Modal adicionar competidor
+    function showModalAdicionarCompetidor() {
+        $('#modalAdicionarCompetidor').addClass('show');
     }
-    function closeModalCompetidor() {
-        $('#modalCompetidor').removeClass('show');
+    function closeModalAdicionarCompetidor() {
+        $('#modalAdicionarCompetidor').removeClass('show');
     }
     function buscarCompetidor() {
-        const cpfCompetidor = $('input[name="cpfCompetidor"]').val();
+        const cpfCompetidor = $('#modalAdicionarCompetidor').find('input[name="cpfCompetidor"]').val();
 
         if (!cpfCompetidor) {
             showModalInformation("Informe o CPF do competidor.");
@@ -417,21 +516,21 @@
             url: url.origin + `/api/competidores/cpf/` + cpfCompetidor,
             dataType: "json",
             success: function(response){
-                $('input[name="idCompetidor"]').val(response.id);
-                $('input[name="nomeCompetidor"]').val(response.nome);
-                $('select[name="categoriaCompetidor"]').removeAttr('disabled');
-                $('input[name="placaCompetidor"]').removeAttr('disabled');
-                $('input[name="rfidCompetidor"]').removeAttr('disabled');
-                $('#btnAdicionarCompetidor').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val(response.id);
+                $('#modalAdicionarCompetidor').find('input[name="nomeCompetidor"]').val(response.nome);
+                $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').removeAttr('disabled');
 
                 switch(response.generoId) {
                     case 1:
-                        $('.catMasculina').removeAttr('hidden');
-                        $('.catFeminina').attr('hidden', '');
+                        $('#modalAdicionarCompetidor').find('.catMasculina').removeAttr('hidden');
+                        $('#modalAdicionarCompetidor').find('.catFeminina').attr('hidden', '');
                         break;
                     case 2:
-                        $('.catMasculina').attr('hidden', '');
-                        $('.catFeminina').removeAttr('hidden');
+                        $('#modalAdicionarCompetidor').find('.catMasculina').attr('hidden', '');
+                        $('#modalAdicionarCompetidor').find('.catFeminina').removeAttr('hidden');
                         break;
                 }
             },
@@ -443,21 +542,21 @@
     }
     function clearCompetidorInputs(event, cpf = false) {
         if (cpf) {
-            $('input[name="cpfCompetidor"]').val("");
+            $('#modalAdicionarCompetidor').find('input[name="cpfCompetidor"]').val("");
         }
 
-        $('input[name="idCompetidor"]').val("");
-        $('input[name="nomeCompetidor"]').val("").attr("disabled", "");
-        $('select[name="categoriaCompetidor"]').val("").attr("disabled", "");
-        $('input[name="placaCompetidor"]').val("").attr("disabled", "");
-        $('input[name="rfidCompetidor"]').val("").attr("disabled", "");
-        $('#btnAdicionarCompetidor').attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val("");
+        $('#modalAdicionarCompetidor').find('input[name="nomeCompetidor"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').attr("disabled", "");
     }
     function adicionarCompetidor() {
-        const idCompetidor = $('input[name="idCompetidor"]').val();
-        const categoriaCompetidor = $('select[name="categoriaCompetidor"]').val();
-        const placaCompetidor = $('input[name="placaCompetidor"]').val();
-        const rfidCompetidor = $('input[name="rfidCompetidor"]').val();
+        const idCompetidor = $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val();
+        const categoriaCompetidor = $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val();
+        const placaCompetidor = $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').val();
+        const rfidCompetidor = $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').val();
         
         if (!idCompetidor) {
             showModalInformation("Nenhum competidor selecionado.");
@@ -498,10 +597,93 @@
             }
         });
     }
-
-    $('#btnModalCompetidor').on('click', showModalCompetidor);  
+    $('#btnModalCompetidor').on('click', showModalAdicionarCompetidor);  
     $('#btnBuscarCompetidor').on('click', buscarCompetidor);
     $('input[name="cpfCompetidor"]').on("keyup keydown keypress click", clearCompetidorInputs);
     $('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
+
+    // Modal editar competidor
+    function showModalEditarCompetidor() {
+        $('#modalEditarCompetidor').addClass('show');
+
+        const row = $( $(this).data('target') );
+
+        const idCompetidor = row.data('competidor-id');
+        const cpfCompetidor = row.data('competidor-cpf');
+        const nomeCompetidor = row.data('competidor-nome');
+        const generoCompetidor = row.data('competidor-genero-id');
+        const idCategoria = row.data('categoria-id');
+        const rfid = row.data('rfid');
+        const placa = row.data('placa');
+
+        $('#modalEditarCompetidor').find('input[name="idCompetidor"]').val(idCompetidor);
+        $('#modalEditarCompetidor').find('input[name="cpfCompetidor"]').val(cpfCompetidor);
+        $('#modalEditarCompetidor').find('input[name="nomeCompetidor"]').val(nomeCompetidor);
+        $('#modalEditarCompetidor').find('select[name="categoriaCompetidor"]').val(idCategoria).change();
+        $('#modalEditarCompetidor').find('input[name="rfidCompetidor"]').val(rfid);
+        $('#modalEditarCompetidor').find('input[name="placaCompetidor"]').val(placa);
+        
+        switch(generoCompetidor) {
+            case 1:
+                $('#modalEditarCompetidor').find('.catMasculina').removeAttr('hidden');
+                $('#modalEditarCompetidor').find('.catFeminina').attr('hidden', '');
+                break;
+            case 2:
+                $('#modalEditarCompetidor').find('.catMasculina').attr('hidden', '');
+                $('#modalEditarCompetidor').find('.catFeminina').removeAttr('hidden');
+                break;
+        }
+    }
+    function editarCompetidor() {
+        const idCompetidor = $('#modalEditarCompetidor').find('input[name="idCompetidor"]').val();
+        const categoriaCompetidor = $('#modalEditarCompetidor').find('select[name="categoriaCompetidor"]').val();
+        const placaCompetidor = $('#modalEditarCompetidor').find('input[name="placaCompetidor"]').val();
+        const rfidCompetidor = $('#modalEditarCompetidor').find('input[name="rfidCompetidor"]').val();
+        
+        if (!idCompetidor) {
+            showModalInformation("Nenhum competidor selecionado.");
+            return;
+        }
+
+        if (!categoriaCompetidor) {
+            showModalInformation("Informe a categoria do competidor.");
+            return;
+        }
+
+        if (!placaCompetidor) {
+            showModalInformation("Informe a placa do competidor.");
+            return;
+        }
+
+        if (!rfidCompetidor) {
+            showModalInformation("Informe o RFID do competidor.");
+            return;
+        }
+
+        $.ajax({
+            type: "PUT",
+            url: url.origin + `/api` + url.pathname + `/competidores/` + idCompetidor,
+            data: {
+                categoriaCompetidor: categoriaCompetidor,
+                placaCompetidor: placaCompetidor,
+                rfidCompetidor: rfidCompetidor
+            },
+            dataType: "json",
+            success: function(response){
+                document.location.reload();
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    $('.edit-row').on('click', showModalEditarCompetidor);
+    $('#btnEditarCompetidor').on('click', editarCompetidor);
+
+    // Modais de competidor
+    $('.modal-competidor').find('#btnCancelar').on('click', closeModal);
+    $('.modal-competidor').find('.close-modal').on('click', closeModal);
+    
 </script>
 {{/section}}
