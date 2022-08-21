@@ -61,6 +61,24 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addConstraint('EtapaCompetidores', {
+      type: 'unique',
+      name: 'unique_etapa_competidor',
+      fields: ['etapaId', 'competidorId']
+    });
+
+    await queryInterface.addConstraint('EtapaCompetidores', {
+      type: 'unique',
+      name: 'unique_etapa_rfid',
+      fields: ['etapaId', 'rfid']
+    });
+
+    await queryInterface.addConstraint('EtapaCompetidores', {
+      type: 'unique',
+      name: 'unique_etapa_placa',
+      fields: ['etapaId', 'placa']
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('EtapaCompetidores');
