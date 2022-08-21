@@ -9,6 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    static async findCompetidoresByEtapaId(etapaId) {
+      return new Promise(
+        async function(resolve, reject) {
+            let competidoresArray = [];
+            const etapaCompetidoresObjs = await EtapaCompetidor.findAll({
+                include: [ 
+                    {
+                        association: 'competidor',
+                        include: ['genero']
+                    }, 
+                    {
+                        association: 'categoria'
+                    } 
+                ],
+                where: {
+                    etapaId: etapaId
+                }
+            });            
+            
+            for (const etapaCompetidor of etapaCompetidoresObjs) {
+                const genero = etapaCompetidor.get('competidor').get('genero');
+                const categoria = etapaCompetidor.get('categoria');
+                
+                if (!competidoresArray[genero.get('id')]) {
+                     competidoresArray[genero.get('id')] = new Object();
+                     competidoresArray[genero.get('id')].genero = genero;
+                     competidoresArray[genero.get('id')].categorias = [];
+                }
+
+                if (!competidoresArray[genero.get('id')].categorias[categoria.get('id')]) {
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')] = new Object();
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')].categoria = categoria;
+                     competidoresArray[genero.get('id')].categorias[categoria.get('id')].competidores = [];                    
+                }
+
+                competidoresArray[genero.get('id')]
+                    .categorias[categoria.get('id')]
+                    .competidores
+                    .push(etapaCompetidor);
+            }
+
+            resolve(competidoresArray);
+        }
+      );   
+    }
     static associate(models) {
       EtapaCompetidor.belongsTo(models.Etapa, {foreignKey: 'etapaId', as: 'etapa'}),
       EtapaCompetidor.belongsTo(models.Competidor, {foreignKey: 'competidorId', as: 'competidor'}),
