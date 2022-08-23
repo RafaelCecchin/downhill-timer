@@ -2,8 +2,13 @@
 const url = new URL(window.location.href);
 
 // Modal
-function closeModal(modal = false) {
-    $(this).parents('.modal').removeClass('show');
+function closeModal(event, modal = false) {
+    if (event) {
+        $(this).parents('.modal').removeClass('show');
+        return;
+    }
+
+    modal.removeClass('show');
 }
 function showModalOption(message, yesCallback, noCallback = closeModal, closeCallback = closeModal) {
     $('#modalOption').addClass('show');
@@ -47,4 +52,10 @@ async function showModalTest(loadingMessage, testCallback, finishCallback = clos
             $('#modalTest').find('.information-text').text(testReturn.message ?? "Ocorreu um erro ao realizar o teste.");
         }
     }        
+}
+
+// Helper
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

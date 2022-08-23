@@ -196,7 +196,7 @@
                 <span class="status" id="status">{{get etapa 'status'}}</span>
                 
                 {{#ifCond etapa.dataValues.status '==' 0}}
-                    <button type="button" class="button primary-button" id="btn-iniciar-dc">
+                    <button type="button" class="button primary-button" id="btnIniciarDc">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
                             <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
                         </svg>
@@ -419,6 +419,48 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL DE LOG -->
+<div class="modal modal-log" id="modalLog">
+    <div class="modal-container">
+        <button class="close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19.207" height="19.207" viewBox="0 0 19.207 19.207">
+                <g transform="translate(0.707 0.707)">
+                    <path d="M0,0H25.163" transform="translate(0 0) rotate(45)" stroke="#707070" stroke-width="2"/>
+                    <path d="M0,0H25.163" transform="translate(0 17.793) rotate(-45)" stroke="#707070" stroke-width="2"/>
+                </g>
+            </svg>
+        </button>
+
+        <div class="log">
+            <svg xmlns="http://www.w3.org/2000/svg" width="111.802" height="127.638" viewBox="0 0 111.802 127.638">
+                <path id="Caminho_124" data-name="Caminho 124" d="M16.37,15.057V10.231H69.633V31.859H91.073V70.293h10.392V25.039L76.453.025H5.967V47.251h10.4Z" transform="translate(1.931 -0.025)"/>
+                <path id="Caminho_125" data-name="Caminho 125" d="M77.55,59.874V49.045H72.5a21.636,21.636,0,0,0-2.9-6.559L72.987,39.1,66.84,32.954l-3.386,3.391a21.5,21.5,0,0,0-6.519-2.891V28.391h-10.9v5.063a21.593,21.593,0,0,0-6.658,2.971l-3.25-3.25-6.146,6.141,3.306,3.3a21.607,21.607,0,0,0-2.808,6.389h-5.06V59.9h5.06a21.726,21.726,0,0,0,2.888,6.527l-3.386,3.386,6.146,6.141,3.386-3.386a21.657,21.657,0,0,0,6.54,2.9V80.52H56.914V75.468a21.659,21.659,0,0,0,6.4-2.811l3.522,3.519,6.146-6.141-3.469-3.474a21.584,21.584,0,0,0,2.979-6.692H77.55ZM52.373,62.11a7.653,7.653,0,1,1,7.653-7.653A7.653,7.653,0,0,1,52.373,62.11Z" transform="translate(34.253 47.118)"/>
+                <path id="Caminho_126" data-name="Caminho 126" d="M57.935,54.822h5.9V42.185h-5.9a25.208,25.208,0,0,0-3.381-7.653l3.953-3.95-7.169-7.171-3.95,3.956a25.294,25.294,0,0,0-7.608-3.373v-5.91H27.053v5.91a25.148,25.148,0,0,0-7.765,3.466L15.5,23.666,8.324,30.832l3.857,3.857a25.108,25.108,0,0,0-3.274,7.453H3V54.856H8.9a25.193,25.193,0,0,0,3.373,7.619L8.324,66.428l7.169,7.163,3.953-3.95a25.28,25.28,0,0,0,7.632,3.378v5.9H39.751v-5.9a25.274,25.274,0,0,0,7.475-3.277l4.11,4.107L58.5,66.686l-4.049-4.052A25.245,25.245,0,0,0,57.935,54.822ZM33.416,58.929A10.427,10.427,0,1,1,43.842,48.5,10.428,10.428,0,0,1,33.416,58.929Z" transform="translate(-3 29.988)"/>
+            </svg>
+            <p class="log-title">Log de registros</p>
+            <ul class="log-list">
+
+            </ul>
+        </div>
+
+        <div class="modal-actions">
+            <button class="button secondary-button" id="btnCancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16.245" height="16.212" viewBox="0 0 16.245 16.212">
+                    <path d="M15.88,14.086l-6-6,5.963-5.963A1.246,1.246,0,0,0,14.085.365L8.122,6.328,2.159.365A1.246,1.246,0,0,0,.4,2.127L6.361,8.09l-6,6a1.246,1.246,0,0,0,1.762,1.762l6-6,6,6a1.246,1.246,0,1,0,1.762-1.762Z" transform="translate(0 0)"/>
+                </svg>
+                <span>Cancelar</span>
+            </button>
+            <button class="button primary-button" id="btnEditarCompetidor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20.427" viewBox="0 0 16 20.427">
+                    <path d="M20.636,4.013a.661.661,0,0,0-.727,0c-2.545,1.6-4.436.582-6.545-.582-2.182-1.164-4.727-2.473-8-.509A1.01,1.01,0,0,0,5,3.649V21.613a.687.687,0,0,0,.727.727.687.687,0,0,0,.727-.727V14.267c2.4-1.309,4.145-.364,6.182.727a10.092,10.092,0,0,0,4.655,1.527A6.327,6.327,0,0,0,20.636,15.5.764.764,0,0,0,21,14.849V4.667A.764.764,0,0,0,20.636,4.013Z" transform="translate(-5 -1.913)"/>
+                </svg>
+                <span>Finalizar</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 {{/section}}
 
 {{#section 'scripts'}}
@@ -690,5 +732,51 @@
 
     $('.modal-competidor').find('#btnCancelar').on('click', closeModal);
     $('.modal-competidor').find('.close-modal').on('click', closeModal);
+
+    const serialSocket = io(window.location.origin, {
+        autoConnect: false, 
+        reconnection: false,
+        path: '/api/serial/log/'
+    });
+    serialSocket.on('connect_error', (error) => {
+        showModalInformation('Ocorreu um erro ao estabelecer conexão com o servidor.');
+    });
+    serialSocket.on('disconnect', () => {
+        console.log('Cliente desconectado do socket de log.');
+    });
+    serialSocket.on('connect', () => {
+        console.log('Cliente conectado ao socket de log.');
+    });
+    serialSocket.on('log', (json) => {
+        const data = JSON.parse(json);
+
+        if (!data.status) {
+            return;
+        }
+
+        $('#modalLog').find('.log-list').append(
+            '<li>' + '[' + data.data['time'] + '] ' + data.message + '</li>'
+        );
+    })
+    function showModalLog() {
+        clearModalLog();
+        $('#modalLog').addClass('show');
+        serialSocket.connect();
+    }
+    function cancelModalLog() {
+        $('#modalLog').removeClass('show');
+        showModalInformation('Operação cancelada com sucesso.');
+        serialSocket.disconnect();
+    }
+    function clearModalLog() {
+        $('#modalLog').find('.log-list').html('');
+    }
+    function iniciarDc() {
+        showModalOption("Você tem certeza de que deseja iniciar a descida classificatória?", showModalLog);   
+    }
+    
+    $('#btnIniciarDc').on('click', iniciarDc);
+    $('.modal-log').find('#btnCancelar').on('click', cancelModalLog);
+    $('.modal-log').find('.close-modal').on('click', cancelModalLog);
 </script>
 {{/section}}

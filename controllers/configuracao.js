@@ -45,7 +45,7 @@ exports.update = async (req, res) => {
         })
         .then(num => {
             if (num == 1) {
-                SerialService.configure();
+                SerialService.configureSerial();
                 res.status(204).send();
             } else {
                 res.status(500).send({

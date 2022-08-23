@@ -4,15 +4,28 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline')
 var serialConnection = {};
 var parser = {};
+var socket;
 
 class SerialService {
 
-    static async configure() {    
+    static async configureSerial() {    
         if (serialConnection.isOpen) {
             await this.finish();
         }
 
-        this.start();
+        this.startSerial();
+    }
+
+    static async configureSocket(io) {
+        socket = io;
+
+        socket.on('connection', (socket) => {
+            console.log('Cliente conectado ao socket de log.');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Cliente desconectado do socket de log.');
+        });
     }
 
     static async finish() {
@@ -30,7 +43,7 @@ class SerialService {
         });
     }
 
-    static async start() {
+    static async startSerial() {
         const port = await ConfiguracaoService.getSelectedPort();
 
         serialConnection = new SerialPort({
@@ -49,6 +62,20 @@ class SerialService {
             
             console.log('Serial Port Opened');
         });
+
+        parser.on('data', function(json) {
+            try {
+                const data = JSON.parse(json);
+
+                if (!data.status) {
+                    return;
+                }
+
+                socket.emit('log', json);
+            } catch(err) {
+                console.log(err);
+            }
+        });
     }
 
     static async getAvailablePorts() {
@@ -57,7 +84,7 @@ class SerialService {
         return ports;
     }
 
-    static async communicate(deviceRequired, operationRequired, timeout = 5000, sendMessage = true) {
+    static async sendSerial(deviceRequired, operationRequired, timeout = 5000, sendMessage = true) {
 
         return new Promise((resolve, reject) => {
             setTimeout(function() {
@@ -99,42 +126,42 @@ class SerialService {
     };
 
     static async centralConnectionTest() {
-        return this.communicate(1, 1);
+        return this.sendSerial(1, 1);
     }
 
     static async largadaConnectionTest() {
-        return this.communicate(2, 1);
+        return this.sendSerial(2, 1);
     }
 
     static async largadaRfidTest() {
-        return this.communicate(2, 2);
+        return this.sendSerial(2, 2);
     }
 
     static async largadaRtcTest() {
-        return this.communicate(2, 3);
+        return this.sendSerial(2, 3);
     }
 
     static async largadaInterruptorTest() {
-        return this.communicate(2, 4);
+        return this.sendSerial(2, 4);
     }
 
     static async chegadaConnectionTest() {
-        return this.communicate(3, 1);
+        return this.sendSerial(3, 1);
     }
 
     static async chegadaRfidTest() {
-        return this.communicate(3, 2);
+        return this.sendSerial(3, 2);
     }
 
     static async chegadaRtcTest() {
-        return this.communicate(3, 3);
+        return this.sendSerial(3, 3);
     }
 
     static async chegadaInterruptorTest() {
-        return this.communicate(3, 4);
+        return this.sendSerial(3, 4);
     }
 }
 
-SerialService.configure();
+SerialService.configureSerial();
 
 module.exports = SerialService;
