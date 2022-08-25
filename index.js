@@ -98,7 +98,6 @@ app.set('views', './views');
 require('./routes')(app);
 SerialService.configureSocket(io);
 
-
 // Server
 const port = process.env.PORT || 3000;
 server.listen(port, (req, res) => {

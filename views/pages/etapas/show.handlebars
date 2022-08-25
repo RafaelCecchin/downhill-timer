@@ -736,7 +736,8 @@
     const serialSocket = io(window.location.origin, {
         autoConnect: false, 
         reconnection: false,
-        path: '/api/serial/log/'
+        path: '/api/serial/log/',
+        query: 'etapa=' + {{get etapa 'id'}}
     });
     serialSocket.on('connect_error', (error) => {
         showModalInformation('Ocorreu um erro ao estabelecer conexão com o servidor.');

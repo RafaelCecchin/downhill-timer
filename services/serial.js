@@ -2,9 +2,14 @@
 const ConfiguracaoService = require('./configuracao');
 const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline')
-var serialConnection = {};
-var parser = {};
-var socket;
+const models = require('../models');
+const Etapa = models.Etapa;
+
+let serialConnection = {};
+let parser = {};
+let socket;
+
+let currentRun;
 
 class SerialService {
 
@@ -20,12 +25,23 @@ class SerialService {
         socket = io;
 
         socket.on('connection', (socket) => {
+            SerialService.setCurrentRun(socket.handshake.query['etapa']);
             console.log('Cliente conectado ao socket de log.');
-        });
 
-        socket.on('disconnect', () => {
-            console.log('Cliente desconectado do socket de log.');
-        });
+            socket.on('disconnect', () => {
+                currentRun.save = false;
+                currentRun.etapa = false;
+                console.log('Cliente desconectado do socket de log.');
+            });
+        });        
+    }
+
+    static async setCurrentRun(etapa) {
+        currentRun = await Etapa.findByPk(etapa);
+    }
+
+    static async clearCurrentRun(etapa) {
+        currentRun = null;
     }
 
     static async finish() {
@@ -71,11 +87,29 @@ class SerialService {
                     return;
                 }
 
+                if (!currentRun) {
+                    return;
+                }
+
                 socket.emit('log', json);
+                SerialService.saveData(data);
+                
             } catch(err) {
                 console.log(err);
             }
         });
+    }
+
+    static async saveData(data) {
+
+        switch(data.device) {
+            case 2:
+                
+                break;
+            case 3:
+
+                break;
+        }
     }
 
     static async getAvailablePorts() {
