@@ -83,6 +83,15 @@ bool switchPush() {
     return digitalRead(SWITCH) == HIGH;
 }
 
+// RFID Reader
+#include <SoftwareSerial.h>
+SoftwareSerial rfid(38,39); // RX / TX
+
+void setupRfid(){
+  rfid.begin(9600);
+  rfid.listen(); 
+}
+
 // Helper
 #include <ArduinoJson.h>
 #define ever (;;)
@@ -98,6 +107,7 @@ void setup() {
   setupRTC();
   setupEspNow();
   setupSerial();
+  setupRfid();
 }
 void loop() {
   for ever {
@@ -201,6 +211,26 @@ void loop() {
       data["time"] = getHour();
       espNowSendData(output.as<String>());
       serializeJson(output, Serial);
+      Serial.println();
+    }
+
+    //RFID
+    if (rfid.available() > 0) {
+      
+      /*String rfidInput = "";
+      while(rfid.available()) {
+        char character = rfid.read();
+        rfidInput += character;
+      }
+      
+      Serial.print("Eu recebi: ");
+      Serial.println(rfidInput);*/
+
+      while(rfid.available()) {
+        byte character = rfid.read();
+        Serial.print(character, HEX);
+        Serial.print(' ');
+      }
       Serial.println();
     }
   }

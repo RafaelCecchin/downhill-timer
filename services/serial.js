@@ -119,48 +119,47 @@ class SerialService {
     static async updateData(serialData) {
 
         currentRun.get('etapaCompetidor').filter(function (el) {
-            
-            if (el.rfid == serialData.data.rfid) {
 
-                switch(serialData.device) {
-                    case 2:
-                        switch(currentRun.getDataValue('status')) {
-                            case 0: 
-                                if (!el.getDataValue('dci')) {
-                                    el.set('dci', serialData.data.time);
-                                }
-        
-                                break;
-                            case 1: 
-                                if (!el.getDataValue('pi')) {
-                                    el.set('pi', serialData.data.time);
-                                }
-        
-                                break;
-                        }
-                        break;
-                    case 3:
-                        switch(currentRun.getDataValue('status')) {
-                            case 0: 
-                                if (!el.getDataValue('dcf')) {
-                                    el.set('dcf', serialData.data.time);
-                                }
+            if (el.rfid != serialData.data.rfid) {
+                return false;
+            }
 
-                                break;
-                            case 1: 
-                                if (!el.getDataValue('pf')) {
-                                    el.set('pf', serialData.data.time);
-                                }
+            switch(serialData.device) {
+                case 2:
+                    switch(currentRun.getDataValue('status')) {
+                        case 0: 
+                            if (!el.getDataValue('dci')) {
+                                el.set('dci', serialData.data.time);
+                            }
+    
+                            break;
+                        case 1: 
+                            if (!el.getDataValue('pi')) {
+                                el.set('pi', serialData.data.time);
+                            }
+    
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch(currentRun.getDataValue('status')) {
+                        case 0: 
+                            if (!el.getDataValue('dcf')) {
+                                el.set('dcf', serialData.data.time);
+                            }
 
-                                break;
-                        }
-                        break;
-                }
-                
-                return true;
+                            break;
+                        case 1: 
+                            if (!el.getDataValue('pf')) {
+                                el.set('pf', serialData.data.time);
+                            }
+
+                            break;
+                    }
+                    break;
             }
             
-            return false;
+            return true;
         });
     }
 

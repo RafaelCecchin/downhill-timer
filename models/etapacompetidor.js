@@ -104,37 +104,77 @@ module.exports = (sequelize, DataTypes) => {
     dci:{
       type: DataTypes.DATE,
       get() {
-        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+        if (!this.getDataValue('dci')) {
+          return '00:00:00';
+        }
+
+        const date = this.getDataValue('dci');
+
+        let h = String(date.getHours()).padStart(2, '0');
+        let m = String(date.getMinutes()).padStart(2, '0');
+        let s = String(date.getSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     },
     dcf: {
       type: DataTypes.DATE,
       get() {
-        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+        if (!this.getDataValue('dcf')) {
+          return '00:00:00';
+        }
+
+        const date = this.getDataValue('dcf');
+
+        let h = String(date.getHours()).padStart(2, '0');
+        let m = String(date.getMinutes()).padStart(2, '0');
+        let s = String(date.getSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     },
     dct: {
       type: DataTypes.VIRTUAL,
       get() {
-        return '00:00:00:000';
+        return '00:00:00';
       }
     },
     pi: {
       type: DataTypes.DATE,
       get() {
-        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+        if (!this.getDataValue('pi')) {
+          return '00:00:00';
+        }
+
+        const date = this.getDataValue('pi');
+
+        let h = String(date.getHours()).padStart(2, '0');
+        let m = String(date.getMinutes()).padStart(2, '0');
+        let s = String(date.getSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     },
     pf: {
       type: DataTypes.DATE,
       get() {
-        return this.getDataValue('dci') ? this.getDataValue('dci') : '00:00:00:000';
+        if (!this.getDataValue('pf')) {
+          return '00:00:00';
+        }
+
+        const date = this.getDataValue('pf');
+
+        let h = String(date.getHours()).padStart(2, '0');
+        let m = String(date.getMinutes()).padStart(2, '0');
+        let s = String(date.getSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     },
     pt: {
       type: DataTypes.VIRTUAL,
       get() {
-        return '00:00:00:000';
+        return '00:00:00';
       }
     }
   }, {

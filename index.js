@@ -64,6 +64,15 @@ var hbs = exphbs.create({
 
             return yyyy + '-' + mm + '-' + dd;
         },
+        getTime: function(fullDate) {
+            const date = new Date(fullDate);
+
+            let h = String(date.getHours()).padStart(2, '0');
+            let m = String(date.getMinutes()).padStart(2, '0');
+            let s = String(date.getSeconds()).padStart(2, '0');
+
+            return h + ':' + m + ':' + s;
+        },
         getDateTime: function(fullDate) {
             const date = new Date(fullDate);
 
