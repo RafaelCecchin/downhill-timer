@@ -79,7 +79,7 @@ void loop() {
       Serial.println(output.as<String>());
 
       delay(2000);
-      output["device"] = 2;
+      output["device"] = 3;
       output["operation"] = 2;
       output["status"] = 1;
       output["message"] = "O competidor com RFID 24444 finalizou a prova.";
@@ -88,7 +88,7 @@ void loop() {
       Serial.println(output.as<String>());
 
       delay(2000);
-      output["device"] = 2;
+      output["device"] = 3;
       output["operation"] = 2;
       output["status"] = 1;
       output["message"] = "O competidor com RFID 34444 finalizou a prova.";
@@ -97,7 +97,7 @@ void loop() {
       Serial.println(output.as<String>());
 
       delay(2000);
-      output["device"] = 2;
+      output["device"] = 3;
       output["operation"] = 2;
       output["status"] = 1;
       output["message"] = "O competidor com RFID 44444 finalizou a prova.";

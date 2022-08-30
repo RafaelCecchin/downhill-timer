@@ -451,7 +451,7 @@
                 </svg>
                 <span>Cancelar</span>
             </button>
-            <button class="button primary-button" id="btnEditarCompetidor">
+            <button class="button primary-button" id="btnFinalizar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20.427" viewBox="0 0 16 20.427">
                     <path d="M20.636,4.013a.661.661,0,0,0-.727,0c-2.545,1.6-4.436.582-6.545-.582-2.182-1.164-4.727-2.473-8-.509A1.01,1.01,0,0,0,5,3.649V21.613a.687.687,0,0,0,.727.727.687.687,0,0,0,.727-.727V14.267c2.4-1.309,4.145-.364,6.182.727a10.092,10.092,0,0,0,4.655,1.527A6.327,6.327,0,0,0,20.636,15.5.764.764,0,0,0,21,14.849V4.667A.764.764,0,0,0,20.636,4.013Z" transform="translate(-5 -1.913)"/>
                 </svg>
@@ -759,25 +759,50 @@
             '<li>' + '[' + data.data['time'] + '] ' + data.message + '</li>'
         );
     })
-    function showModalLog() {
-        clearModalLog();
-        $('#modalLog').addClass('show');
+    serialSocket.on('saved', () => {
+        socketDisonnect();
+        showModalInformation('Salvo com sucesso!', () => { document.location.reload(); }, () => { document.location.reload(); });
+    })
+    function socketConnect() {
         serialSocket.connect();
     }
-    function cancelModalLog() {
-        $('#modalLog').removeClass('show');
-        showModalInformation('Operação cancelada com sucesso.');
+    function socketDisonnect() {
         serialSocket.disconnect();
+    }
+    function initRun() {
+        clearModalLog();
+        showModalLog();
+        socketConnect();
+    }
+    function cancelRun() {
+        closeModalLog();
+        socketDisonnect();
+        showModalInformation('Operação cancelada com sucesso.');
+    }
+    function finishRun() {
+        closeModalLog();
+        saveRunData();
+    }
+    function saveRunData() {
+        serialSocket.emit('save');
+    }
+    function showModalLog() {
+        $('#modalLog').addClass('show');
+    }
+    function closeModalLog() {
+        $('#modalLog').removeClass('show');
     }
     function clearModalLog() {
         $('#modalLog').find('.log-list').html('');
     }
-    function iniciarDc() {
-        showModalOption("Você tem certeza de que deseja iniciar a descida classificatória?", showModalLog);   
+    function initDc() {
+        showModalOption("Você tem certeza de que deseja iniciar a descida classificatória?", initRun);   
     }
     
-    $('#btnIniciarDc').on('click', iniciarDc);
-    $('.modal-log').find('#btnCancelar').on('click', cancelModalLog);
-    $('.modal-log').find('.close-modal').on('click', cancelModalLog);
+    $('#btnIniciarDc').on('click', initDc);
+    $('.modal-log').find('#btnCancelar').on('click', cancelRun);
+    $('.modal-log').find('.close-modal').on('click', cancelRun);
+    $('.modal-log').find('#btnFinalizar').on('click', finishRun);
+    
 </script>
 {{/section}}

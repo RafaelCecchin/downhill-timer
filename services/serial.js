@@ -28,16 +28,32 @@ class SerialService {
             SerialService.setCurrentRun(socket.handshake.query['etapa']);
             console.log('Cliente conectado ao socket de log.');
 
+            socket.on('save', async () => {
+                currentRun.get('etapaCompetidor').forEach(element => {
+                    element.save();
+                });
+                currentRun.set('status', 1);
+                currentRun.save()
+                
+                socket.emit('saved');
+                console.log('Dados salvos com sucesso!');
+            });
+
             socket.on('disconnect', () => {
-                currentRun.save = false;
-                currentRun.etapa = false;
+                currentRun = null;
                 console.log('Cliente desconectado do socket de log.');
             });
         });        
     }
 
     static async setCurrentRun(etapa) {
-        currentRun = await Etapa.findByPk(etapa);
+        currentRun = await Etapa.findByPk(etapa, {
+            include: [
+                {
+                    association: 'etapaCompetidor'
+                }
+            ]
+        });
     }
 
     static async clearCurrentRun(etapa) {
@@ -81,9 +97,9 @@ class SerialService {
 
         parser.on('data', function(json) {
             try {
-                const data = JSON.parse(json);
+                const serialData = JSON.parse(json);
 
-                if (!data.status) {
+                if (!serialData.status) {
                     return;
                 }
 
@@ -92,7 +108,7 @@ class SerialService {
                 }
 
                 socket.emit('log', json);
-                SerialService.saveData(data);
+                SerialService.updateData(serialData);
                 
             } catch(err) {
                 console.log(err);
@@ -100,16 +116,52 @@ class SerialService {
         });
     }
 
-    static async saveData(data) {
+    static async updateData(serialData) {
 
-        switch(data.device) {
-            case 2:
+        currentRun.get('etapaCompetidor').filter(function (el) {
+            
+            if (el.rfid == serialData.data.rfid) {
+
+                switch(serialData.device) {
+                    case 2:
+                        switch(currentRun.getDataValue('status')) {
+                            case 0: 
+                                if (!el.getDataValue('dci')) {
+                                    el.set('dci', serialData.data.time);
+                                }
+        
+                                break;
+                            case 1: 
+                                if (!el.getDataValue('pi')) {
+                                    el.set('pi', serialData.data.time);
+                                }
+        
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch(currentRun.getDataValue('status')) {
+                            case 0: 
+                                if (!el.getDataValue('dcf')) {
+                                    el.set('dcf', serialData.data.time);
+                                }
+
+                                break;
+                            case 1: 
+                                if (!el.getDataValue('pf')) {
+                                    el.set('pf', serialData.data.time);
+                                }
+
+                                break;
+                        }
+                        break;
+                }
                 
-                break;
-            case 3:
-
-                break;
-        }
+                return true;
+            }
+            
+            return false;
+        });
     }
 
     static async getAvailablePorts() {

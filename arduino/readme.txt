@@ -22,10 +22,10 @@ JSON de retorno
     device: x,
     operation: y,
     status: z, // 1 = Ok, 0 = Erro
-    message: "Your message here",
+    message: "Sua mensagem aqui",
     data: {
-        // Caso o status for 0, "data" vai ter apenas o atributo "message"
-    } 
+		"time": "Y-m-d h:i:s"
+    }
 }
 
 JSON de envio
@@ -33,3 +33,4 @@ JSON de envio
     device: x,
     operation: y
 }
+

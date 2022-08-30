@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Etapa.belongsTo(models.Campeonato, {foreignKey: 'campeonatoId', as: 'campeonato'})
+      Etapa.belongsTo(models.Campeonato, {foreignKey: 'campeonatoId', as: 'campeonato'}),
+      Etapa.hasMany(models.EtapaCompetidor, {foreignKey: 'etapaId', as: 'etapaCompetidor'})
     }
   }
   Etapa.init({
