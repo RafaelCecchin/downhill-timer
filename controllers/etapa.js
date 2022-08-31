@@ -115,14 +115,16 @@ exports.update = async (req, res) => {
     const etapa = { 
         campeonatoId: req.body.campeonatoEtapa,
         numero: req.body.numeroEtapa,
-        data: req.body.dataEtapa
+        data: req.body.dataEtapa,
+        status: req.body.status
     }
 
     Etapa.update(etapa, {
-            where: { id: req.params.id }
+            where: { id: req.params.id },
+            individualHooks: true
         })
         .then(num => {
-            if (num == 1) {
+            if (num.shift() == 1) {
                 res.status(204).send();
             } else {
                 res.status(500).send({
@@ -143,7 +145,7 @@ exports.delete = async (req, res) => {
             where: { id: req.params.id }
         })
         .then(num => {
-            if (num == 1) {
+            if (num.shift() == 1) {
                 res.status(204).send();
             } else {
                 res.status(500).send({

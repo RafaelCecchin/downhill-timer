@@ -131,7 +131,7 @@ exports.update = async (req, res) => {
             where: { id: req.params.id }
         })
         .then(num => {
-            if (num == 1) {
+            if (num.shift() == 1) {
                 res.status(204).send();
             } else {
                 res.status(500).send({
@@ -152,7 +152,7 @@ exports.delete = async (req, res) => {
             where: { id: req.params.id }
         })
         .then(num => {
-            if (num == 1) {
+            if (num.shift() == 1) {
                 res.status(204).send();
             } else {
                 res.status(500).send({

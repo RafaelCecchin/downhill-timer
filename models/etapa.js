@@ -57,8 +57,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     }
   }, {
+    hooks: {
+      beforeUpdate: (etapa, options) => {
+        if (etapa.changed('status')) {
+
+          switch(etapa.getDataValue('status')) {
+            case '0':
+              sequelize.models.EtapaCompetidor.update(
+                { dci: null, dcf: null },
+                { where: { etapaId: etapa.getDataValue('id') } }
+              );
+
+              break;
+          }
+
+        }
+      }
+    },
     sequelize,
-    modelName: 'Etapa',
+    modelName: 'Etapa'
   });
   return Etapa;
 };
