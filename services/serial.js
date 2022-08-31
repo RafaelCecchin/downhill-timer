@@ -32,7 +32,16 @@ class SerialService {
                 currentRun.get('etapaCompetidor').forEach(element => {
                     element.save();
                 });
-                currentRun.set('status', 1);
+
+                switch(currentRun.getDataValue('status')) {
+                    case 0:
+                        currentRun.set('status', 1);
+                        break;
+                    case 1:
+                        currentRun.set('status', 2);
+                        break;
+                }
+                
                 currentRun.save()
                 
                 socket.emit('saved');

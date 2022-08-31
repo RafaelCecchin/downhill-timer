@@ -69,6 +69,13 @@ module.exports = (sequelize, DataTypes) => {
               );
 
               break;
+            case '1':
+              sequelize.models.EtapaCompetidor.update(
+                { pi: null, pf: null },
+                { where: { etapaId: etapa.getDataValue('id') } }
+              );
+
+              break;
           }
 
         }
