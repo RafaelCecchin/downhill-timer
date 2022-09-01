@@ -42,7 +42,7 @@ class SerialService {
                         break;
                 }
                 
-                currentRun.save()
+                currentRun.save();
                 
                 socket.emit('saved');
                 console.log('Dados salvos com sucesso!');
@@ -59,7 +59,18 @@ class SerialService {
         currentRun = await Etapa.findByPk(etapa, {
             include: [
                 {
-                    association: 'etapaCompetidor'
+                    association: 'etapaCompetidor',
+                    include: [
+                        {
+                            association: 'competidor'
+                        },
+                        {
+                            association: 'etapa'
+                        },
+                        {
+                            association: 'categoria'
+                        }
+                    ]
                 }
             ]
         });
@@ -116,13 +127,31 @@ class SerialService {
                     return;
                 }
 
-                socket.emit('log', json);
+                SerialService.sendLog(serialData);
                 SerialService.updateData(serialData);
                 
             } catch(err) {
                 console.log(err);
             }
         });
+    }
+
+    static async sendLog(serialData) {
+
+        currentRun.get('etapaCompetidor').filter(function (el) {
+
+            if (el.rfid != serialData.data.rfid) {
+                return false;
+            }
+
+            serialData.message = serialData.message.replace(
+                '[NOME_COMPETIDOR]', // Replace tag
+                el.get('competidor').get('nome')
+            );
+            
+            socket.emit('log', JSON.stringify(serialData));
+        });
+
     }
 
     static async updateData(serialData) {

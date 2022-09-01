@@ -17,6 +17,9 @@ Operations
         - 3 RTC
         - 4 Interruptor
 
+Replace tags
+[NOME_COMPETIDOR]
+
 JSON de retorno
 {
     device: x,
