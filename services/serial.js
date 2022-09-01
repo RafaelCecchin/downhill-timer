@@ -29,6 +29,11 @@ class SerialService {
             console.log('Cliente conectado ao socket de log.');
 
             socket.on('save', async () => {
+                
+                if (!currentRun) {
+                    throw new Error('A corrida não foi iniciada.');
+                }
+
                 currentRun.get('etapaCompetidor').forEach(element => {
                     element.save();
                 });
@@ -138,6 +143,10 @@ class SerialService {
 
     static async sendLog(serialData) {
 
+        if (!currentRun) {
+            throw new Error('A corrida não foi iniciada.');
+        }
+
         currentRun.get('etapaCompetidor').filter(function (el) {
 
             if (el.rfid != serialData.data.rfid) {
@@ -148,13 +157,17 @@ class SerialService {
                 '[NOME_COMPETIDOR]', // Replace tag
                 el.get('competidor').get('nome')
             );
-            
+
             socket.emit('log', JSON.stringify(serialData));
         });
 
     }
 
     static async updateData(serialData) {
+
+        if (!currentRun) {
+            throw new Error('A corrida não foi iniciada.');
+        }
 
         currentRun.get('etapaCompetidor').filter(function (el) {
 
