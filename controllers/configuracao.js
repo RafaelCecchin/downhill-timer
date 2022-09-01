@@ -44,7 +44,7 @@ exports.update = async (req, res) => {
             where: { id: 1 }
         })
         .then(num => {
-            if (num.shift() == 1) {
+            if (num == 1) {
                 SerialService.configureSerial();
                 res.status(204).send();
             } else {

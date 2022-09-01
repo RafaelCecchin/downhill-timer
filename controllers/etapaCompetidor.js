@@ -65,7 +65,7 @@ exports.delete = async (req, res) => {
             }
         })
         .then(num => {
-            if (num.shift() == 1) {
+            if (num == 1) {
                 res.status(204).send();
             } else {
                 res.status(500).send({
