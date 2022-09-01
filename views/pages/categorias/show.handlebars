@@ -66,11 +66,27 @@
     function adicionarCategoria(event) {
         event.preventDefault();
 
+        const nomeCategoria = $('#formCategoria').find('input[name="nomeCategoria"]').val();
+        const generoCategoria = $('#formCategoria').find('select[name="generoCategoria"]').val();
+
+        if (!nomeCategoria) {
+            showModalInformation("Informe um nome para a categoria.");
+            return;
+        }
+
+        if (!generoCategoria) {
+            showModalInformation("Informe um gênero para a categoria.");
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: url.origin + `/api/categorias`,
             dataType: "json",
-            data: $('#formCategoria').serialize(),
+            data: {
+                nomeCategoria: nomeCategoria,
+                generoCategoria: generoCategoria
+            },
             success: function(response){
                 const categoriaUrl = url.origin + `/categorias/${response.id}`;
                 showModalInformation("Categoria criada com sucesso.", () => { window.location.href = categoriaUrl }, () => { window.location.href = categoriaUrl });

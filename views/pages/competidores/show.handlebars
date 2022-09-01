@@ -87,11 +87,43 @@
     function adicionarCompetidor(event) {
         event.preventDefault();
 
+        const cpfCompetidor = $('#formCompetidor').find('input[name="cpfCompetidor"]').val();
+        const nomeCompetidor = $('#formCompetidor').find('input[name="nomeCompetidor"]').val();
+        const generoCompetidor = $('#formCompetidor').find('select[name="generoCompetidor"]').val();
+        const dataNascimentoCompetidor = $('#formCompetidor').find('input[name="dataNascimentoCompetidor"]').val();
+        const patrocinadorCompetidor = $('#formCompetidor').find('input[name="patrocinadorCompetidor"]').val();
+
+        if (!cpfCompetidor) {
+            showModalInformation("Informe o CPF do competidor.");
+            return;
+        }
+
+        if (!nomeCompetidor) {
+            showModalInformation("Informe o nome do competidor.");
+            return;
+        }
+
+        if (!generoCompetidor) {
+            showModalInformation("Informe o gênero do competidor.");
+            return;
+        }
+
+        if (!dataNascimentoCompetidor) {
+            showModalInformation("Informe a data de nascimento do competidor.");
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: url.origin + `/api/competidores`,
             dataType: "json",
-            data: $('#formCompetidor').serialize(),
+            data: {
+                cpfCompetidor: cpfCompetidor,
+                nomeCompetidor: nomeCompetidor,
+                generoCompetidor: generoCompetidor,
+                dataNascimentoCompetidor: dataNascimentoCompetidor,
+                patrocinadorCompetidor: patrocinadorCompetidor
+            },
             success: function(response){
                 const competidorUrl = url.origin + `/competidores/${response.id}`;
                 showModalInformation("Competidor criado com sucesso.", () => { window.location.href = competidorUrl }, () => { window.location.href = competidorUrl });

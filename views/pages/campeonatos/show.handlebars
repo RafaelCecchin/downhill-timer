@@ -52,12 +52,21 @@
 <script>
     function adicionarCampeonato(event) {
         event.preventDefault();
+        
+        const nomeCampeonato = $('#formCampeonato').find('input[name="nomeCampeonato"]').val();
+
+        if (!nomeCampeonato) {
+            showModalInformation("Informe um nome para o campeonato.");
+            return;
+        }
 
         $.ajax({
             type: "POST",
             url: url.origin + `/api/campeonatos`,
             dataType: "json",
-            data: $('#formCampeonato').serialize(),
+            data: {
+                nomeCampeonato: nomeCampeonato
+            },
             success: function(response){
                 const campeonatoUrl = url.origin + `/campeonatos/${response.id}`;
                 showModalInformation("Campeonato criado com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
