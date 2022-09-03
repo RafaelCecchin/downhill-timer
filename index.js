@@ -48,17 +48,23 @@ var hbs = exphbs.create({
                     return options.inverse(this);
             }
         },
+        section: sections(),
         get: function(obj, data) {
             if (!obj || !data) {
                 return '';
             }
             return obj.get(data);
         },
-        section: sections(),
+        getDataValue: function(obj, data) {
+            if (!obj || !data) {
+                return '';
+            }
+            return obj.getDataValue(data);
+        },
         getDate: function(fullDate) {
             const date = new Date(fullDate);
 
-            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const yyyy = String(date.getFullYear()).padStart(4, '0');
 
@@ -76,7 +82,7 @@ var hbs = exphbs.create({
         getDateTime: function(fullDate) {
             const date = new Date(fullDate);
 
-            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const yyyy = String(date.getFullYear()).padStart(4, '0');
 
@@ -88,7 +94,7 @@ var hbs = exphbs.create({
         getFormatedDateTime: function(fullDate) {
             const date = new Date(fullDate);
 
-            const dd = String(date.getDate() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const yyyy = String(date.getFullYear()).padStart(4, '0');
 

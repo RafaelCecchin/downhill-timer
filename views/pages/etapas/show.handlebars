@@ -136,11 +136,15 @@
                                                     data-categoria-id="{{get this 'categoriaId'}}"
                                                     data-rfid="{{get this 'rfid'}}"
                                                     data-placa="{{get this 'placa'}}"
-                                                    data-dci="{{get this 'dci'}}"
-                                                    data-dcf="{{get this 'dcf'}}"
+                                                    data-dci-time="{{getTime (getDataValue this 'dci')}}"
+                                                    data-dci-date="{{getDate (getDataValue this 'dci')}}"
+                                                    data-dcf-time="{{getTime (getDataValue this 'dcf')}}"
+                                                    data-dcf-date="{{getDate (getDataValue this 'dcf')}}"
                                                     data-dct="{{get this 'dct'}}"
-                                                    data-pi="{{get this 'pi'}}"
-                                                    data-pf="{{get this 'pf'}}"
+                                                    data-pi-time="{{getTime (getDataValue this 'pi')}}"
+                                                    data-pi-date="{{getDate (getDataValue this 'pi')}}"
+                                                    data-pf-time="{{getTime (getDataValue this 'pf')}}"
+                                                    data-pf-date="{{getDate (getDataValue this 'pf')}}"
                                                     data-pt="{{get this 'pt'}}">
 
                                                     <td>{{get (get this 'competidor') 'nome'}}</td>
@@ -153,6 +157,7 @@
                                                     <td>PF: {{get this 'pf'}}</td>
                                                     <td>PT: {{get this 'pt'}}</td>
                                                     <td>
+                                                        {{#ifCond ../../../etapa.dataValues.status '==' 0}}
                                                         <button class="table-button remove-row" data-target="#competidor-{{get this 'id'}}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
                                                                 <g id="Lixo" transform="translate(-2 -1)">
@@ -163,7 +168,8 @@
                                                                 </g>
                                                             </svg>
                                                         </button>
-                                                        <button class="table-button edit-row" data-target="#competidor-{{get this 'id'}}">
+                                                        
+                                                        <button class="table-button edit-row editar-competidor" data-target="#competidor-{{get this 'id'}}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
                                                                 <g id="Editar" transform="translate(-6 -2.6)">
                                                                     <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
@@ -171,6 +177,18 @@
                                                                 </g>
                                                             </svg>
                                                         </button>
+                                                        {{/ifCond}}
+
+                                                        {{#ifCond ../../../etapa.dataValues.status '!=' 0}}
+                                                        <button class="table-button edit-row editar-tempo-competidor" data-target="#competidor-{{get this 'id'}}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                                                <g id="Editar" transform="translate(-6 -2.6)">
+                                                                    <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                    <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                </g>
+                                                            </svg>
+                                                        </button>
+                                                        {{/ifCond}}
                                                     </td>
                                                 </tr>
 
@@ -299,14 +317,14 @@
                 <div class="label placa-do-competidor">
                     <span class="label-title">Placa do competidor</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="placaCompetidor" disabled/>
+                        <input class="input" type="text" name="placa" disabled/>
                     </div>
                 </div>
 
                 <div class="label rfid-do-competidor">
                     <span class="label-title">RFID</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="rfidCompetidor" disabled/>
+                        <input class="input" type="text" name="rfid" disabled/>
                     </div>
                 </div>
 
@@ -387,14 +405,14 @@
                 <div class="label placa-do-competidor">
                     <span class="label-title">Placa do competidor</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="placaCompetidor"/>
+                        <input class="input" type="text" name="placa"/>
                     </div>
                 </div>
 
                 <div class="label rfid-do-competidor">
                     <span class="label-title">RFID</span>
                     <div class="label-inputs">                
-                        <input class="input" type="text" name="rfidCompetidor"/>
+                        <input class="input" type="text" name="rfid"/>
                     </div>
                 </div>
 
@@ -410,7 +428,84 @@
                 </svg>
                 <span>Cancelar</span>
             </button>
-            <button class="button primary-button" id="btnEditarCompetidor">
+
+            <button class="button primary-button" id="btnSalvarCompetidor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
+                    <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
+                </svg>
+                <span>Editar</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR TEMPO DO COMPETIDOR -->
+<div class="modal modal-competidor" id="modalEditarTempoCompetidor">
+    <div class="modal-container">
+        <button class="close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19.207" height="19.207" viewBox="0 0 19.207 19.207">
+                <g transform="translate(0.707 0.707)">
+                    <path d="M0,0H25.163" transform="translate(0 0) rotate(45)" stroke="#707070" stroke-width="2"/>
+                    <path d="M0,0H25.163" transform="translate(0 17.793) rotate(-45)" stroke="#707070" stroke-width="2"/>
+                </g>
+            </svg>
+        </button>
+
+        <form class="form" id="formEditarTempoCompetidor">
+
+            <div class="data">
+
+                <div class="label nome-do-competidor">
+                    <span class="label-title">Nome do competidor</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" name="nomeCompetidor" disabled/>
+                    </div>
+                </div>                
+
+                <div class="label dci-do-competidor">
+                    <span class="label-title">DCI</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="time" step="2" name="dci"/>
+                    </div>
+                </div>
+
+                <div class="label dcf-do-competidor">
+                    <span class="label-title">DCF</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="time" step="2" name="dcf"/>
+                    </div>
+                </div>
+
+                {{#ifCond etapa.dataValues.status '==' 2}}
+                <div class="label pi-do-competidor">
+                    <span class="label-title">PI</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="time" step="2" name="pi"/>
+                    </div>
+                </div>
+
+                <div class="label pf-do-competidor">
+                    <span class="label-title">PF</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="time" step="2" name="pf"/>
+                    </div>
+                </div>
+                {{/ifCond}}
+
+                <input type="hidden" name="idCompetidor"/>
+            </div>
+
+        </form>
+
+        <div class="modal-actions">
+            <button class="button secondary-button" id="btnCancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16.245" height="16.212" viewBox="0 0 16.245 16.212">
+                    <path d="M15.88,14.086l-6-6,5.963-5.963A1.246,1.246,0,0,0,14.085.365L8.122,6.328,2.159.365A1.246,1.246,0,0,0,.4,2.127L6.361,8.09l-6,6a1.246,1.246,0,0,0,1.762,1.762l6-6,6,6a1.246,1.246,0,1,0,1.762-1.762Z" transform="translate(0 0)"/>
+                </svg>
+                <span>Cancelar</span>
+            </button>
+
+            <button class="button primary-button" id="btnSalvarTempoCompetidor">
                 <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
                     <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
                 </svg>
@@ -546,8 +641,8 @@
                 $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val(response.id);
                 $('#modalAdicionarCompetidor').find('input[name="nomeCompetidor"]').val(response.nome);
                 $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').removeAttr('disabled');
-                $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').removeAttr('disabled');
-                $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('input[name="placa"]').removeAttr('disabled');
+                $('#modalAdicionarCompetidor').find('input[name="rfid"]').removeAttr('disabled');
                 $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').removeAttr('disabled');
 
                 switch(response.generoId) {
@@ -575,15 +670,15 @@
         $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val("");
         $('#modalAdicionarCompetidor').find('input[name="nomeCompetidor"]').val("").attr("disabled", "");
         $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val("").attr("disabled", "");
-        $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').val("").attr("disabled", "");
-        $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('input[name="placa"]').val("").attr("disabled", "");
+        $('#modalAdicionarCompetidor').find('input[name="rfid"]').val("").attr("disabled", "");
         $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').attr("disabled", "");
     }
     function adicionarCompetidor() {
         const idCompetidor = $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val();
         const categoriaCompetidor = $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val();
-        const placaCompetidor = $('#modalAdicionarCompetidor').find('input[name="placaCompetidor"]').val();
-        const rfidCompetidor = $('#modalAdicionarCompetidor').find('input[name="rfidCompetidor"]').val();
+        const placa = $('#modalAdicionarCompetidor').find('input[name="placa"]').val();
+        const rfid = $('#modalAdicionarCompetidor').find('input[name="rfid"]').val();
         
         if (!idCompetidor) {
             showModalInformation("Nenhum competidor selecionado.");
@@ -595,12 +690,12 @@
             return;
         }
 
-        if (!placaCompetidor) {
+        if (!placa) {
             showModalInformation("Informe a placa do competidor.");
             return;
         }
 
-        if (!rfidCompetidor) {
+        if (!rfid) {
             showModalInformation("Informe o RFID do competidor.");
             return;
         }
@@ -611,8 +706,8 @@
             data: {
                 idCompetidor: idCompetidor,
                 categoriaCompetidor: categoriaCompetidor,
-                placaCompetidor: placaCompetidor,
-                rfidCompetidor: rfidCompetidor
+                placa: placa,
+                rfid: rfid
             },
             dataType: "json",
             success: function(response){
@@ -646,8 +741,8 @@
         $('#modalEditarCompetidor').find('input[name="cpfCompetidor"]').val(cpfCompetidor);
         $('#modalEditarCompetidor').find('input[name="nomeCompetidor"]').val(nomeCompetidor);
         $('#modalEditarCompetidor').find('select[name="categoriaCompetidor"]').val(idCategoria).change();
-        $('#modalEditarCompetidor').find('input[name="rfidCompetidor"]').val(rfid);
-        $('#modalEditarCompetidor').find('input[name="placaCompetidor"]').val(placa);
+        $('#modalEditarCompetidor').find('input[name="rfid"]').val(rfid);
+        $('#modalEditarCompetidor').find('input[name="placa"]').val(placa);
         
         switch(generoCompetidor) {
             case 1:
@@ -663,8 +758,8 @@
     function editarCompetidor() {
         const idCompetidor = $('#modalEditarCompetidor').find('input[name="idCompetidor"]').val();
         const categoriaCompetidor = $('#modalEditarCompetidor').find('select[name="categoriaCompetidor"]').val();
-        const placaCompetidor = $('#modalEditarCompetidor').find('input[name="placaCompetidor"]').val();
-        const rfidCompetidor = $('#modalEditarCompetidor').find('input[name="rfidCompetidor"]').val();
+        const placa = $('#modalEditarCompetidor').find('input[name="placa"]').val();
+        const rfid = $('#modalEditarCompetidor').find('input[name="rfid"]').val();
         
         if (!idCompetidor) {
             showModalInformation("Nenhum competidor selecionado.");
@@ -676,12 +771,12 @@
             return;
         }
 
-        if (!placaCompetidor) {
+        if (!placa) {
             showModalInformation("Informe a placa do competidor.");
             return;
         }
 
-        if (!rfidCompetidor) {
+        if (!rfid) {
             showModalInformation("Informe o RFID do competidor.");
             return;
         }
@@ -691,8 +786,8 @@
             url: url.origin + `/api` + url.pathname + `/competidores/` + idCompetidor,
             data: {
                 categoriaCompetidor: categoriaCompetidor,
-                placaCompetidor: placaCompetidor,
-                rfidCompetidor: rfidCompetidor
+                placa: placa,
+                rfid: rfid
             },
             dataType: "json",
             success: function(response){
@@ -704,8 +799,104 @@
             }
         });
     }
-    $('.edit-row').on('click', showModalEditarCompetidor);
-    $('#btnEditarCompetidor').on('click', editarCompetidor);
+    $('.editar-competidor').on('click', showModalEditarCompetidor);
+    $('#btnSalvarCompetidor').on('click', editarCompetidor);
+
+    function showModalEditarTempoCompetidor() {
+        $('#modalEditarTempoCompetidor').addClass('show');
+
+        const row = $( $(this).data('target') );
+
+        const idCompetidor = row.data('competidor-id');
+        const nomeCompetidor = row.data('competidor-nome');
+
+        const dciTime = row.data('dci-time');
+        const dciDate = row.data('dci-date');
+
+        const dcfTime = row.data('dcf-time');
+        const dcfDate = row.data('dcf-date');
+
+        const piTime = row.data('pi-time');
+        const piDate = row.data('pi-date');
+
+        const pfTime = row.data('pf-time');
+        const pfDate = row.data('pf-date');
+
+        $('#modalEditarTempoCompetidor').find('input[name="idCompetidor"]').val(idCompetidor);
+        $('#modalEditarTempoCompetidor').find('input[name="nomeCompetidor"]').val(nomeCompetidor);
+
+        $('#modalEditarTempoCompetidor').find('input[name="dci"]').val(dciTime);
+        $('#modalEditarTempoCompetidor').find('input[name="dci"]').attr('valueAsDate', dciDate);
+
+        $('#modalEditarTempoCompetidor').find('input[name="dcf"]').val(dcfTime);
+        $('#modalEditarTempoCompetidor').find('input[name="dcf"]').attr('valueAsDate', dcfDate);
+
+        $('#modalEditarTempoCompetidor').find('input[name="pi"]').val(piTime);
+        $('#modalEditarTempoCompetidor').find('input[name="pi"]').attr('valueAsDate', piDate);
+
+        $('#modalEditarTempoCompetidor').find('input[name="pf"]').val(pfTime);
+        $('#modalEditarTempoCompetidor').find('input[name="pf"]').attr('valueAsDate', pfDate);
+
+    }
+    function editarTempoCompetidor() {
+        const idCompetidor = $('#modalEditarTempoCompetidor').find('input[name="idCompetidor"]').val();
+        
+        if (!idCompetidor) {
+            showModalInformation("Nenhum competidor selecionado.");
+            return;
+        }
+
+        const data = {};
+
+        const dciInput = $('#modalEditarTempoCompetidor').find('input[name="dci"]');
+        const dcfInput = $('#modalEditarTempoCompetidor').find('input[name="dcf"]');
+        const piInput = $('#modalEditarTempoCompetidor').find('input[name="pi"]');
+        const pfInput = $('#modalEditarTempoCompetidor').find('input[name="pf"]');
+        
+        if (!dciInput.val()) {
+            showModalInformation("Informe o tempo inicial do competidor na descida classificatória.");
+            return;
+        }
+        data.dci = dciInput.attr('valueasdate') + ' ' + dciInput.val();
+
+        if (!dcfInput.val()) {
+            showModalInformation("Informe o tempo final do competidor na descida classificatória.");
+            return;
+        }
+        data.dcf = dcfInput.attr('valueasdate') + ' ' + dcfInput.val(); 
+
+        {{#ifCond etapa.dataValues.status '==' 2}}
+
+            if (!piInput) {
+                showModalInformation("Informe o tempo inicial do competidor na prova.");
+                return;
+            }
+            data.pi = piInput.attr('valueasdate') + ' ' + piInput.val(); 
+
+            if (!pfInput) {
+                showModalInformation("Informe o tempo final do competidor na prova.");
+                return;
+            } 
+            data.pf = pfInput.attr('valueasdate') + ' ' + pfInput.val(); 
+            
+        {{/ifCond}}
+        
+        $.ajax({
+            type: "PUT",
+            url: url.origin + `/api` + url.pathname + `/competidores/` + idCompetidor,
+            data: data,
+            dataType: "json",
+            success: function(response){
+                document.location.reload();
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    $('.editar-tempo-competidor').on('click', showModalEditarTempoCompetidor);
+    $('#btnSalvarTempoCompetidor').on('click', editarTempoCompetidor);
 
     function excluirCompetidor() {
 

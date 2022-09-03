@@ -7,8 +7,8 @@ exports.create = async (req, res) => {
         etapaId: req.params.etapa,
         competidorId: req.body.idCompetidor,
         categoriaId: req.body.categoriaCompetidor,
-        placa: req.body.placaCompetidor,
-        rfid: req.body.rfidCompetidor
+        placa: req.body.placa,
+        rfid: req.body.rfid
     }
 
     EtapaCompetidor.create(competidor)
@@ -30,15 +30,20 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
     const competidor = {
         categoriaId: req.body.categoriaCompetidor,
-        placa: req.body.placaCompetidor,
-        rfid: req.body.rfidCompetidor
+        placa: req.body.placa,
+        rfid: req.body.rfid,
+        dci: req.body.dci,
+        dcf: req.body.dcf,
+        pi: req.body.pi,
+        pf: req.body.pf
     }
 
     EtapaCompetidor.update(competidor, {
-            where: { 
+            where: {
                 etapaId: req.params.etapa,
                 competidorId: req.params.competidor
-            }
+            },
+            individualHooks: true
         })
         .then(num => {
             if (num.shift() == 1) {

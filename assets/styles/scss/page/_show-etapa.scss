@@ -180,6 +180,11 @@
                                         width: auto;
                                         fill: $gray;
                                         cursor: pointer;
+
+                                        svg {
+                                            width: auto;
+                                            height: 1.5rem;
+                                        }
                                     }
                                 }
                             }
