@@ -99,7 +99,6 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
     const categoria = { 
         nome: req.body.nomeCategoria,
-        generoId: req.body.generoCategoria
     }
 
     Categoria.update(categoria, {

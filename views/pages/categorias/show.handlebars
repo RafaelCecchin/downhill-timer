@@ -10,17 +10,19 @@
                     </div>
                 </div>
 
-                <div class="label genero-da-categoria">
-                    <span class="label-title">Gênero</span>
-                    <div class="label-inputs">       
-                        <select class="input" name="generoCategoria">
-                            <option value="" hidden>Selecione o gênero</option>
-                            {{#each generos}}
-                                <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../categoria 'generoId')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
-                            {{/each}}
-                        </select>         
+                {{#ifCond formAction '==' 'create'}}
+                    <div class="label genero-da-categoria">
+                        <span class="label-title">Gênero</span>
+                        <div class="label-inputs">       
+                            <select class="input" name="generoCategoria">
+                                <option value="" hidden>Selecione o gênero</option>
+                                {{#each generos}}
+                                    <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../categoria 'generoId')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
+                                {{/each}}
+                            </select>         
+                        </div>
                     </div>
-                </div>
+                {{/ifCond}}
             </div>
 
             {{#ifCond formAction '==' 'update'}}
