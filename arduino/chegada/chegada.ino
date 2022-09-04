@@ -22,6 +22,22 @@ String getHour() {
   
   return time;
 }
+void setHour(String dateTime) {
+    char time_char[21] = "";
+    strcpy(time_char, dateTime.c_str()); 
+    struct tm time_tm;
+    
+    strptime(time_char,"%Y-%m-%d %H:%M:%S",&time_tm);
+  
+    int  y = time_tm.tm_year + 1900, 
+         m = time_tm.tm_mon + 1,
+         d = time_tm.tm_mday,
+         H = time_tm.tm_hour,
+         M = time_tm.tm_min,
+         S = time_tm.tm_sec;
+  
+    rtc.adjust(DateTime(y, m, d, H, M, S));
+}
 
 
 // 2.4GHz
@@ -171,6 +187,7 @@ void loop() {
           break;
         case 3:
           output["status"] = 1;
+          setHour(input["data"]["dateTime"].as<String>());
           output["message"] = "A data e hora identificada foi " + getHour();
           data["time"] = getHour();
           espNowSendData(output.as<String>());

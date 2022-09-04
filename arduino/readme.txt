@@ -34,6 +34,8 @@ JSON de retorno
 JSON de envio
 {
     device: x,
-    operation: y
+    operation: y,
+    data: {
+        "time": "Y-m-d h:i:s"
+    }
 }
-

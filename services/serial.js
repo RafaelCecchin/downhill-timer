@@ -1,5 +1,6 @@
 'use strict';
 const ConfiguracaoService = require('./configuracao');
+const Helper = require('../helper/helper');
 const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline')
 const models = require('../models');
@@ -136,7 +137,7 @@ class SerialService {
                 SerialService.updateData(serialData);
                 
             } catch(err) {
-                console.log(err);
+                //console.log(err);
             }
         });
     }
@@ -220,7 +221,7 @@ class SerialService {
         return ports;
     }
 
-    static async sendSerial(deviceRequired, operationRequired, timeout = 5000, sendMessage = true) {
+    static async sendSerial(deviceRequired, operationRequired, sendData = {}, timeout = 5000, sendMessage = true) {
 
         return new Promise((resolve, reject) => {
             setTimeout(function() {
@@ -230,7 +231,8 @@ class SerialService {
             if (sendMessage) {
                 serialConnection.write(`{
                     "device":"${deviceRequired}",
-                    "operation":"${operationRequired}"
+                    "operation":"${operationRequired}",
+                    "data": ${JSON.stringify(sendData)}
                 }`, function(err) {
                     if (err) {
                         reject(err);
@@ -254,7 +256,7 @@ class SerialService {
                     
                     resolve(data);
                 } catch(err) {
-                    console.log(err);
+                    //console.log(err);
                 }
             });                   
         });
@@ -274,7 +276,9 @@ class SerialService {
     }
 
     static async largadaRtcTest() {
-        return this.sendSerial(2, 3);
+        return this.sendSerial(2, 3, {
+            dateTime: Helper.getCurrentDateTime()
+        });
     }
 
     static async largadaInterruptorTest() {
@@ -289,8 +293,10 @@ class SerialService {
         return this.sendSerial(3, 2);
     }
 
-    static async chegadaRtcTest() {
-        return this.sendSerial(3, 3);
+    static async chegadaRtcTest() {        
+        return this.sendSerial(3, 3, {
+            dateTime: Helper.getCurrentDateTime()
+        });
     }
 
     static async chegadaInterruptorTest() {
