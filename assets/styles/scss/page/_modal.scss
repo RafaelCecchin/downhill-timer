@@ -126,7 +126,7 @@
     &.modal-competidor {
 
         .modal-container {
-            min-width: 36rem;
+            min-width: max-content;
 
             .form {
                 display: grid;
@@ -189,6 +189,12 @@
                 }
                 
             }
+        }
+    }
+
+    &.modal-backup {
+        .modal-container {
+            min-width: max-content;
         }
     }
 }

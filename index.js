@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const util = require("util");
 const cors = require('cors');
 const exphbs = require('express-handlebars');
+const fileupload = require("express-fileupload");
 const sections = require('express-handlebars-sections');
 const path = require('path');
 
@@ -17,6 +18,7 @@ const io = new socket.Server(server, {
 const SerialService = require('./services/serial');
 
 app.use(cors());
+app.use(fileupload());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('assets'));
 

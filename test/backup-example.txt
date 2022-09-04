@@ -1,0 +1,11 @@
+[
+{"data":{"time":"2022-08-29 20:00:00","rfid":"14444"},"device":2,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] iniciou a prova."},
+{"data":{"time":"2022-08-29 23:55:55","rfid":"14444"},"device":2,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] iniciou a prova."},
+{"data":{"time":"2022-08-29 20:01:00","rfid":"24444"},"device":2,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] iniciou a prova."},
+{"data":{"time":"2022-08-29 20:02:00","rfid":"34444"},"device":2,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] iniciou a prova."},
+{"data":{"time":"2022-08-29 20:03:00","rfid":"44444"},"device":2,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] iniciou a prova."},
+{"data":{"time":"2022-08-29 20:04:00","rfid":"14444"},"device":3,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] finalizou a prova."},
+{"data":{"time":"2022-08-29 20:05:00","rfid":"24444"},"device":3,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] finalizou a prova."},
+{"data":{"time":"2022-08-29 20:06:00","rfid":"34444"},"device":3,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] finalizou a prova."},
+{"data":{"time":"2022-08-29 20:07:00","rfid":"44444"},"device":3,"operation":2,"status":1,"message":"O competidor [NOME_COMPETIDOR] finalizou a prova."}
+]

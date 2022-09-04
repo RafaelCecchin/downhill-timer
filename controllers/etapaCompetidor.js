@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const models = require('../models');
+const EtapaService = require('../services/etapa');
 const EtapaCompetidor = models.EtapaCompetidor;
 
 exports.create = async (req, res) => {
@@ -85,3 +86,21 @@ exports.delete = async (req, res) => {
             });
         });
 };
+
+exports.importBackup = async (req, res) => {
+    const backup = {
+        etapaId: req.params.etapa,
+        file: req.files.arquivoBackup
+    }
+
+    EtapaService.importBackup(backup)
+        .then(() => {
+            res.status(204).send();
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message
+            });
+        });
+}

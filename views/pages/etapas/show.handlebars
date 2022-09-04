@@ -81,9 +81,9 @@
                     {{/ifCond}}
 
                     {{#ifCond etapa.dataValues.status '!=' 0}}
-                        <div class="label importar-backup">
+                        <div class="label modal-backup">
                             <div class="label-inputs">
-                                <button class="button secondary-button" id="btn-importar-backup">
+                                <button class="button secondary-button" id="btnModalBackup">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
                                         <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
                                     </svg>
@@ -556,6 +556,60 @@
     </div>
 </div>
 
+<!-- MODAL DE BACKUP -->
+<div class="modal modal-backup" id="modalBackup">
+    <div class="modal-container">
+        <button class="close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19.207" height="19.207" viewBox="0 0 19.207 19.207">
+                <g transform="translate(0.707 0.707)">
+                    <path d="M0,0H25.163" transform="translate(0 0) rotate(45)" stroke="#707070" stroke-width="2"/>
+                    <path d="M0,0H25.163" transform="translate(0 17.793) rotate(-45)" stroke="#707070" stroke-width="2"/>
+                </g>
+            </svg>
+        </button>
+
+        <form class="form" id="formBackup">
+
+            <div class="data">
+
+                <div class="label arquivo-backup">
+                    <span class="label-title">Arquivo de backup</span>
+                    <div class="label-inputs">                
+                        <input class="input" type="text" id="nomeArquivoBackup" disabled/>
+                        <button class="button secondary-button" id="btnSelecionarArquivoBackup" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16.988" height="22.409" viewBox="0 0 16.988 22.409">
+                                <path d="M78.294,50.081c-.181-1.506-1.394-1.562-2.371-1.367a2.137,2.137,0,0,0-.934.544c-.5-.46-.767-.767-1.548-.7a2.59,2.59,0,0,0-1.3.53c-.4-.711-1.492-.5-1.492-.5-.432.167-.446-.084-.446-.4.014-.795,0-1.59,0-2.385a1.832,1.832,0,0,0-.572-1.381,1.892,1.892,0,0,0-2.12-.488,1.99,1.99,0,0,0-1.353,2.008c-.014,1.618,0,3.221,0,4.839v3.57A10.2,10.2,0,0,0,66.51,57.6a6.2,6.2,0,0,0,5.8,4.17,6.027,6.027,0,0,0,5.717-4.156C78.712,55.129,78.419,52.591,78.294,50.081Zm-1.283,5.927a4.754,4.754,0,0,1-9.482,0c-.084-1.673-.014-3.361-.014-5.048h-.028V46.121c0-.516.084-.976.725-.962.586.014.683.46.683.948v5.606c0,.474.042.948.641.962s.669-.446.669-.934c0-.377-.014-.753.014-1.116.042-.418.265-.725.711-.711a.657.657,0,0,1,.669.739c0,.418-.014.837,0,1.255s.167.739.641.753c.516.014.683-.335.7-.781.014-.39,0-.795,0-1.185,0-.474.209-.781.683-.795s.683.335.711.781c.014.39.014.795,0,1.185,0,.46.181.795.683.781.46-.014.628-.321.628-.767,0-.418-.014-.837,0-1.255s.223-.739.683-.739a.67.67,0,0,1,.711.767C77.053,52.452,77.108,54.237,77.011,56.008Z" transform="translate(-61.476 -39.358)" fill="#94e182"/>
+                                <path d="M48.7,34.649a.671.671,0,0,1-.586-.321,4.575,4.575,0,1,1,8.437-2.454.7.7,0,1,1-1.394,0,3.179,3.179,0,1,0-5.871,1.7.7.7,0,0,1-.209.962A.78.78,0,0,1,48.7,34.649Z" transform="translate(-45.336 -25.166)" fill="#94e182"/>
+                                <path d="M34.218,22.5a.671.671,0,0,1-.586-.321,6.63,6.63,0,1,1,12.23-3.542.7.7,0,1,1-1.394,0,5.236,5.236,0,1,0-9.664,2.8.7.7,0,0,1-.209.962A.759.759,0,0,1,34.218,22.5Z" transform="translate(-32.6 -12)" fill="#94e182"/>
+                            </svg>
+                            <span>Selecionar</span>
+                        </button>
+                    </div>
+                </div>             
+
+                <input type="file" name="arquivoBackup" id="arquivoBackup" accept="text/plain" hidden/>
+            </div>
+
+        </form>
+
+        <div class="modal-actions">
+            <button class="button secondary-button" id="btnCancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16.245" height="16.212" viewBox="0 0 16.245 16.212">
+                    <path d="M15.88,14.086l-6-6,5.963-5.963A1.246,1.246,0,0,0,14.085.365L8.122,6.328,2.159.365A1.246,1.246,0,0,0,.4,2.127L6.361,8.09l-6,6a1.246,1.246,0,0,0,1.762,1.762l6-6,6,6a1.246,1.246,0,1,0,1.762-1.762Z" transform="translate(0 0)"/>
+                </svg>
+                <span>Cancelar</span>
+            </button>
+
+            <button class="button primary-button" id="btnImportarBackup">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
+                    <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
+                </svg>
+                <span>Importar</span>
+            </button>
+        </div>
+    </div>
+</div> 
+
 {{/section}}
 
 {{#section 'scripts'}}
@@ -621,9 +675,6 @@
 
     function showModalAdicionarCompetidor() {
         $('#modalAdicionarCompetidor').addClass('show');
-    }
-    function closeModalAdicionarCompetidor() {
-        $('#modalAdicionarCompetidor').removeClass('show');
     }
     function buscarCompetidor() {
         const cpfCompetidor = $('#modalAdicionarCompetidor').find('input[name="cpfCompetidor"]').val();
@@ -1031,13 +1082,62 @@
         });   
     }
     
-    $('.modal-log').find('#btnCancelar').on('click', cancelRun);
-    $('.modal-log').find('.close-modal').on('click', cancelRun);
-    $('.modal-log').find('#btnFinalizar').on('click', finishRun);
+    $('#modalLog').find('#btnCancelar').on('click', cancelRun);
+    $('#modalLog').find('.close-modal').on('click', cancelRun);
+    $('#modalLog').find('#btnFinalizar').on('click', finishRun);
 
     $('#btnIniciarDc').on('click', initDc);
     $('#btnLimparDc').on('click', clearDc);
     $('#btnIniciarProva').on('click', initCompetition);
     $('#btnLimparProva').on('click', clearCompetition);
+
+    function showModalBackup() {
+        $('#modalBackup').addClass('show');
+    }
+    function closeModalBackup() {
+        $('#modalBackup').removeClass('show');
+    }
+    function showFileExplorer() {
+        $('#modalBackup').find('#arquivoBackup').click();
+    }
+    function updateFileName() {
+        const absoluteFileName = $('#modalBackup').find('#arquivoBackup').val();
+        const fileName = absoluteFileName.split('\\').pop();
+        $('#modalBackup').find('#nomeArquivoBackup').val( fileName );
+    }
+    function importarBackup() {
+        if (!$('#arquivoBackup').val()) {
+            showModalInformation('Você deve informar um arquivo válido.');
+            return;
+        }
+
+        const formData = new FormData();
+        const file = $('#modalBackup').find('#arquivoBackup')[0].files[0];
+        formData.append('arquivoBackup', file);
+
+        $.ajax({
+            type: "POST",
+            url: url.origin + `/api` + url.pathname + `/backup`,
+            dataType: "json",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                closeModalBackup();
+                showModalInformation('Backup importado com sucesso.', () => { document.location.reload(); }, () => { document.location.reload(); });
+            },
+            error: function(res, status, error) {
+                const response = JSON.parse(res.responseText);
+                showModalInformation(response.message);
+            }
+        });
+    }
+    $('#modalBackup').find('.close-modal').on('click', closeModal)
+    $('#modalBackup').find('#btnCancelar').on('click', closeModal)
+    $('#modalBackup').find('#btnSelecionarArquivoBackup').on('click', showFileExplorer);
+    $('#modalBackup').find('#arquivoBackup').on('change', updateFileName)
+    $('#modalBackup').find('#btnImportarBackup').on('click', importarBackup)
+
+    $('#btnModalBackup').on('click', showModalBackup)
 </script>
 {{/section}}

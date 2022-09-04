@@ -62,6 +62,8 @@ module.exports = function(app) {
     app.post('/api/etapas/:etapa/competidores', etapaCompetidorController.create);
     app.put('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.update);
     app.delete('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.delete);
+    
+    app.post('/api/etapas/:etapa/backup', etapaCompetidorController.importBackup);
 
     // SerialPort
     app.get('/api/serial/portas', serialController.portas);
