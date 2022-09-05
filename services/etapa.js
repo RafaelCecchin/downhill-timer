@@ -59,9 +59,6 @@ class EtapaService {
 
                     const etapaCompetidor = {};
                     const date = new Date(el.data.time);
-
-                    console.log(date + ' < ' + etapa.getDataValue('dci') + ' || ' + date + ' > ' + etapa.getDataValue('dcf'));
-                    
                     
                     switch(etapa.getDataValue('status')) {
                         case 1:

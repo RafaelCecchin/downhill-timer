@@ -136,7 +136,18 @@ module.exports = (sequelize, DataTypes) => {
     dct: {
       type: DataTypes.VIRTUAL,
       get() {
-        return '00:00:00';
+        if (!this.getDataValue('dcf') || !this.getDataValue('dci')) {
+          return '00:00:00';
+        }
+
+        const dateDiff = this.getDataValue('dcf') - this.getDataValue('dci');
+        const date = new Date( dateDiff );
+        
+        let h = String(date.getUTCHours()).padStart(2, '0');
+        let m = String(date.getUTCMinutes()).padStart(2, '0');
+        let s = String(date.getUTCSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     },
     pi: {
@@ -174,7 +185,18 @@ module.exports = (sequelize, DataTypes) => {
     pt: {
       type: DataTypes.VIRTUAL,
       get() {
-        return '00:00:00';
+        if (!this.getDataValue('pf') || !this.getDataValue('pi')) {
+          return '00:00:00';
+        }
+
+        const dateDiff = Math.abs(this.getDataValue('pf') - this.getDataValue('pi'));
+        const date = new Date( dateDiff );
+        
+        let h = String(date.getUTCHours()).padStart(2, '0');
+        let m = String(date.getUTCMinutes()).padStart(2, '0');
+        let s = String(date.getUTCSeconds()).padStart(2, '0');
+
+        return h + ':' + m + ':' + s;
       }
     }
   }, {
