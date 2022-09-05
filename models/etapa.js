@@ -55,30 +55,49 @@ module.exports = (sequelize, DataTypes) => {
     },
     data: {
       type: DataTypes.DATE,
+    },
+    dci: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    dcf: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    pi: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    pf: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     hooks: {
       beforeUpdate: (etapa, options) => {
         if (etapa.changed('status')) {
 
-          switch(etapa.getDataValue('status')) {
-            case '0':
-              sequelize.models.EtapaCompetidor.update(
-                { dci: null, dcf: null },
-                { where: { etapaId: etapa.getDataValue('id') } }
-              );
+          if (etapa.getDataValue('status') == 0 && etapa.previous('status') == 1) {
+            etapa.setDataValue('dci', null);
+            etapa.setDataValue('dcf', null);
 
-              break;
-            case '1':
-              sequelize.models.EtapaCompetidor.update(
-                { pi: null, pf: null },
-                { where: { etapaId: etapa.getDataValue('id') } }
-              );
-
-              break;
+            sequelize.models.EtapaCompetidor.update(
+              { dci: null, dcf: null },
+              { where: { etapaId: etapa.getDataValue('id') } }
+            );
           }
 
+          if (etapa.getDataValue('status') == 1 && etapa.previous('status') == 2) {
+            etapa.setDataValue('pi', null);
+            etapa.setDataValue('pf', null);
+
+            sequelize.models.EtapaCompetidor.update(
+              { pi: null, pf: null },
+              { where: { etapaId: etapa.getDataValue('id') } }
+            );
+          }
         }
+
       }
     },
     sequelize,

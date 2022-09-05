@@ -25,8 +25,9 @@ class SerialService {
     static async configureSocket(io) {
         socket = io;
 
-        socket.on('connection', (socket) => {
-            SerialService.setCurrentRun(socket.handshake.query['etapa']);
+        socket.on('connection', async (socket) => {
+            await SerialService.setCurrentRun(socket.handshake.query['etapa']);
+            await SerialService.setRunStartTime();
             console.log('Cliente conectado ao socket de log.');
 
             socket.on('save', async () => {
@@ -39,6 +40,8 @@ class SerialService {
                     element.save();
                 });
 
+                await SerialService.setRunFinishTime();
+
                 switch(currentRun.getDataValue('status')) {
                     case 0:
                         currentRun.set('status', 1);
@@ -48,7 +51,7 @@ class SerialService {
                         break;
                 }
                 
-                currentRun.save();
+                await currentRun.save();
                 
                 socket.emit('saved');
                 console.log('Dados salvos com sucesso!');
@@ -80,6 +83,32 @@ class SerialService {
                 }
             ]
         });
+    }
+
+    static async setRunStartTime() {
+        const date = Helper.getCurrentDateTime();
+
+        switch(currentRun.getDataValue('status')) {
+            case 0:
+                currentRun.set('dci', date);
+                break;
+            case 1:
+                currentRun.set('pi', date);
+                break;
+        }
+    }
+
+    static async setRunFinishTime() {
+        const date = Helper.getCurrentDateTime();
+
+        switch(currentRun.getDataValue('status')) {
+            case 0:
+                currentRun.set('dcf', date);
+                break;
+            case 1:
+                currentRun.set('pf', date);
+                break;
+        }
     }
 
     static async clearCurrentRun(etapa) {

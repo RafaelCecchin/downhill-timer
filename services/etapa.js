@@ -58,26 +58,38 @@ class EtapaService {
                     }
 
                     const etapaCompetidor = {};
+                    const date = new Date(el.data.time);
 
+                    console.log(date + ' < ' + etapa.getDataValue('dci') + ' || ' + date + ' > ' + etapa.getDataValue('dcf'));
+                    
+                    
                     switch(etapa.getDataValue('status')) {
                         case 1:
+                            if (date < etapa.getDataValue('dci') || date > etapa.getDataValue('dcf')) {
+                                continue;
+                            }
+
                             switch(el.device) {
                                 case 2:
-                                    etapaCompetidor.dci = el.data.time;
+                                    etapaCompetidor.dci = date;
                                     break;
                                 case 3:
-                                    etapaCompetidor.dcf = el.data.time;
+                                    etapaCompetidor.dcf = date;
                                     break;
                             }
 
                             break;
                         case 2:
+                            if (date < etapa.getDataValue('pi') || date > etapa.getDataValue('pf')) {
+                                continue;
+                            }
+
                             switch(el.device) {
                                 case 2:
-                                    etapaCompetidor.pi = el.data.time;
+                                    etapaCompetidor.pi = date;
                                     break;
                                 case 3:
-                                    etapaCompetidor.pf = el.data.time;
+                                    etapaCompetidor.pf = date;
                                     break;
                             }
 
