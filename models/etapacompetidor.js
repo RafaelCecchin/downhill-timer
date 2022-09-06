@@ -1,4 +1,6 @@
 'use strict';
+const Helper = require('../helper/helper');
+
 const {
   Model
 } = require('sequelize');
@@ -13,22 +15,27 @@ module.exports = (sequelize, DataTypes) => {
       return new Promise(
         async function(resolve, reject) {
             let competidoresArray = [];
-            const etapaCompetidoresObjs = await EtapaCompetidor.findAll({
-                include: [ 
+
+            const etapa = await sequelize.models.Etapa.findByPk(etapaId, {
+              include: [
+                {
+                  association: 'etapaCompetidor',
+                  include: [
                     {
-                        association: 'competidor',
-                        include: ['genero']
-                    }, 
+                      association: 'competidor',
+                      include: ['genero']
+                    },
                     {
-                        association: 'categoria'
-                    } 
-                ],
-                where: {
-                    etapaId: etapaId
+                      association: 'categoria'
+                    }
+                  ]
                 }
-            });            
+              ]
+            });
             
-            for (const etapaCompetidor of etapaCompetidoresObjs) {
+            
+            for (const etapaCompetidor of etapa.get('etapaCompetidor')) {
+              
                 const genero = etapaCompetidor.get('competidor').get('genero');
                 const categoria = etapaCompetidor.get('categoria');
                 
@@ -49,6 +56,40 @@ module.exports = (sequelize, DataTypes) => {
                     .competidores
                     .push(etapaCompetidor);
             }
+
+            competidoresArray.sort(function(a,b) {
+              return a.genero.getDataValue('nome') < b.genero.getDataValue('nome') ? 1 : -1;
+            });
+
+            competidoresArray.forEach(el => {
+              el.categorias.sort(function(a,b) {
+                return a.categoria.getDataValue('nome') < b.categoria.getDataValue('nome') ? -1 : 1;
+              });
+            });
+
+            competidoresArray.forEach(el1 => {
+              el1.categorias.forEach(el2 => {
+                el2.competidores.sort(function(a,b) {
+                  
+                  switch(etapa.getDataValue('status')) {
+                    case 0:
+                      return a.getDataValue('createdAt') < b.getDataValue('createdAt') ? -1 : 1;
+
+                      break;
+                    case 1:
+                      return a.get('dct') > b.get('dct') ? -1 : 1;
+
+                      break;
+                    case 2:
+                      return a.get('pt') < b.get('pt') ? -1 : 1;
+
+                      break;
+                  }
+
+                });
+              });
+            });
+            
 
             resolve(competidoresArray);
         }
@@ -102,101 +143,37 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     dci:{
-      type: DataTypes.DATE,
-      get() {
-        if (!this.getDataValue('dci')) {
-          return '00:00:00';
-        }
-        
-        const date = this.getDataValue('dci');
-        
-        let h = String(date.getHours()).padStart(2, '0');
-        let m = String(date.getMinutes()).padStart(2, '0');
-        let s = String(date.getSeconds()).padStart(2, '0');
-
-        return h + ':' + m + ':' + s;
-      }
+      type: DataTypes.DATE
     },
     dcf: {
-      type: DataTypes.DATE,
-      get() {
-        if (!this.getDataValue('dcf')) {
-          return '00:00:00';
-        }
-        
-        const date = this.getDataValue('dcf');
-        
-        let h = String(date.getHours()).padStart(2, '0');
-        let m = String(date.getMinutes()).padStart(2, '0');
-        let s = String(date.getSeconds()).padStart(2, '0');
-        
-        return h + ':' + m + ':' + s;
-      }
+      type: DataTypes.DATE
     },
     dct: {
       type: DataTypes.VIRTUAL,
       get() {
-        if (!this.getDataValue('dcf') || !this.getDataValue('dci')) {
-          return '00:00:00';
+        if (!this.getDataValue('dci') || !this.getDataValue('dcf')) {
+          return new Date(0);
         }
-
-        const dateDiff = this.getDataValue('dcf') - this.getDataValue('dci');
-        const date = new Date( dateDiff );
         
-        let h = String(date.getUTCHours()).padStart(2, '0');
-        let m = String(date.getUTCMinutes()).padStart(2, '0');
-        let s = String(date.getUTCSeconds()).padStart(2, '0');
-
-        return h + ':' + m + ':' + s;
+        const diff = Helper.getDateDiff( this.getDataValue('dcf'), this.getDataValue('dci') );
+        return diff;
       }
     },
     pi: {
-      type: DataTypes.DATE,
-      get() {
-        if (!this.getDataValue('pi')) {
-          return '00:00:00';
-        }
-        
-        const date = this.getDataValue('pi');
-        
-        let h = String(date.getHours()).padStart(2, '0');
-        let m = String(date.getMinutes()).padStart(2, '0');
-        let s = String(date.getSeconds()).padStart(2, '0');
-
-        return h + ':' + m + ':' + s;
-      }
+      type: DataTypes.DATE
     },
     pf: {
-      type: DataTypes.DATE,
-      get() {
-        if (!this.getDataValue('pf')) {
-          return '00:00:00';
-        }
-
-        const date = this.getDataValue('pf');
-
-        let h = String(date.getHours()).padStart(2, '0');
-        let m = String(date.getMinutes()).padStart(2, '0');
-        let s = String(date.getSeconds()).padStart(2, '0');
-
-        return h + ':' + m + ':' + s;
-      }
+      type: DataTypes.DATE
     },
     pt: {
       type: DataTypes.VIRTUAL,
       get() {
-        if (!this.getDataValue('pf') || !this.getDataValue('pi')) {
-          return '00:00:00';
+        if (!this.getDataValue('pi') || !this.getDataValue('pf')) {
+          return new Date(0);
         }
-
-        const dateDiff = Math.abs(this.getDataValue('pf') - this.getDataValue('pi'));
-        const date = new Date( dateDiff );
         
-        let h = String(date.getUTCHours()).padStart(2, '0');
-        let m = String(date.getUTCMinutes()).padStart(2, '0');
-        let s = String(date.getUTCSeconds()).padStart(2, '0');
-
-        return h + ':' + m + ':' + s;
+        const diff = Helper.getDateDiff( this.getDataValue('pf'), this.getDataValue('pi') );
+        return diff;
       }
     }
   }, {

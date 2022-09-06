@@ -8,7 +8,7 @@ const exphbs = require('express-handlebars');
 const fileupload = require("express-fileupload");
 const sections = require('express-handlebars-sections');
 const path = require('path');
-
+const Helper = require('./helper/helper');
 const app = express();
 const server = http.createServer(app);
 const io = new socket.Server(server, {
@@ -52,58 +52,25 @@ var hbs = exphbs.create({
         },
         section: sections(),
         get: function(obj, data) {
-            if (!obj || !data) {
-                return '';
-            }
-            return obj.get(data);
+            return Helper.get(obj, data);
         },
         getDataValue: function(obj, data) {
-            if (!obj || !data) {
-                return '';
-            }
-            return obj.getDataValue(data);
+            return Helper.getDataValue(obj, data);
         },
         getDate: function(fullDate) {
-            const date = new Date(fullDate);
-
-            const dd = String(date.getDate()).padStart(2, '0');
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const yyyy = String(date.getFullYear()).padStart(4, '0');
-
-            return yyyy + '-' + mm + '-' + dd;
+            return Helper.getDate(fullDate);
         },
         getTime: function(fullDate) {
-            const date = new Date(fullDate);
-
-            let h = String(date.getHours()).padStart(2, '0');
-            let m = String(date.getMinutes()).padStart(2, '0');
-            let s = String(date.getSeconds()).padStart(2, '0');
-
-            return h + ':' + m + ':' + s;
+            return Helper.getTime(fullDate);
         },
         getDateTime: function(fullDate) {
-            const date = new Date(fullDate);
-
-            const dd = String(date.getDate()).padStart(2, '0');
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const yyyy = String(date.getFullYear()).padStart(4, '0');
-
-            let h = String(date.getHours()).padStart(2, '0');
-            let m = String(date.getMinutes()).padStart(2, '0');
-
-            return yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + m;
+            return Helper.getDateTime(fullDate);
         },
         getFormatedDateTime: function(fullDate) {
-            const date = new Date(fullDate);
-
-            const dd = String(date.getDate()).padStart(2, '0');
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const yyyy = String(date.getFullYear()).padStart(4, '0');
-
-            let h = String(date.getHours()).padStart(2, '0');
-            let m = String(date.getMinutes()).padStart(2, '0');
-
-            return dd + '/' + mm + '/' + yyyy + ' ' + h + ':' + m;
+            return Helper.getFormatedDateTime(fullDate);
+        },
+        getUTCTime: function(fullDate) {
+            return Helper.getUTCTime(fullDate);
         }
     }
 });

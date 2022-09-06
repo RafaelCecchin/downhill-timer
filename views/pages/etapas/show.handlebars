@@ -150,12 +150,12 @@
                                                     <td>{{get (get this 'competidor') 'nome'}}</td>
                                                     <td>RFID: {{get this 'rfid'}}</td>
                                                     <td>PLACA: {{get this 'placa'}}</td>
-                                                    <td>DCI: {{get this 'dci'}}</td>
-                                                    <td>DCF: {{get this 'dcf'}}</td>
-                                                    <td>DCT: {{get this 'dct'}}</td>
-                                                    <td>PI: {{get this 'pi'}}</td>
-                                                    <td>PF: {{get this 'pf'}}</td>
-                                                    <td>PT: {{get this 'pt'}}</td>
+                                                    <td>DCI: {{getTime (get this 'dci')}}</td>
+                                                    <td>DCF: {{getTime (get this 'dcf')}}</td>
+                                                    <td>DCT: {{getUTCTime (get this 'dct')}}</td>
+                                                    <td>PI: {{getTime (get this 'pi')}}</td>
+                                                    <td>PF: {{getTime (get this 'pf')}}</td>
+                                                    <td>PT: {{getUTCTime (get this 'pt')}}</td>
                                                     <td>
                                                         {{#ifCond ../../../etapa.dataValues.status '==' 0}}
                                                         <button class="table-button remove-row" data-target="#competidor-{{get this 'id'}}">
