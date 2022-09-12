@@ -76,7 +76,7 @@ void loraSendData(String message){
 }
 
 // Interruptor
-#define SWITCH 13
+#define SWITCH 2
 
 void setupSwitch() {
   pinMode(SWITCH,INPUT);
@@ -85,14 +85,45 @@ bool switchPush() {
     return digitalRead(SWITCH) == HIGH;
 }
 
+// RFID Reader
+#include <SoftwareSerial.h>
+SoftwareSerial rfid(38,39); // RX / TX
+
+void setupRfid(){
+  rfid.begin(9600);
+  rfid.listen(); 
+}
+
+// SD Card reader
+#include "FS.h"
+#include "SD.h"
+#include "SPI.h"
+
+#define SD_MISO 13
+#define SD_MOSI 12
+#define SD_SCK 17
+#define SD_CS 23
+
+void setupSD() {
+  delay(1000);
+  SPIClass sd_spi(HSPI);
+  sd_spi.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
+
+  while (!SD.begin(SD_CS, sd_spi)) {
+    Serial.println("Erro ao iniciar o cartão SD!");
+  }
+}
+
 // Helper
 #include <ArduinoJson.h>
 #define ever (;;)
 
 void setup() {
-  setupLoRa();
-  setupRTC();
   setupSerial();
+  setupLoRa();
+  setupSD();
+  setupRTC();
+  setupRfid();
 }
 void loop() {
   StaticJsonDocument<500> input;
