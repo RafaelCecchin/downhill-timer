@@ -80,10 +80,6 @@ void espNowOnReceiveData(const uint8_t * mac, const uint8_t *incomingData, int l
   dataReceived = String(buff);                  //converting into STRING
   espNowReceivedData = true;
 }
-/*void espNowOnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  espNowReceivedData = false;
-  dataReceived = "";
-}*/
 void resetEspNowVars() {
   espNowReceivedData = false;
   dataReceived = "";
@@ -100,12 +96,34 @@ bool switchPush() {
 }
 
 // RFID Reader
-#include <SoftwareSerial.h>
-SoftwareSerial rfid(38,39); // RX / TX
+String lastRfidTag = "";
 
 void setupRfid(){
-  rfid.begin(9600);
-  rfid.listen(); 
+  Serial2.begin(9600, SERIAL_8N1);
+
+  while (!Serial2) {
+    Serial.println("Erro ao inicializar o Serial2/RFID Reader!");
+  }
+}
+void updateLastRfidTag() {
+  if (Serial2.available() == 25) {
+    delay(50);
+
+    byte byteArray[25];
+    char hexArray[54];
+    String rfid;
+
+    for (int i = 0; i < 25; i++) {
+      byteArray[i] = Serial2.read();
+      sprintf(&hexArray[i*2], "%02x", byteArray[i]);
+    }
+
+    for (int i = 43; i < 48; i++) {
+      rfid += hexArray[i];
+    }
+
+    lastRfidTag = rfid;
+  }
 }
 
 // SD Card reader
@@ -133,17 +151,13 @@ void setupSD() {
 #define ever (;;)
 void setupSerial(){
   Serial.begin(9600);
-  
-  while (!Serial) {
-    Serial.println("Erro ao inicializar o LoRa!");
-  }
 }
 
 void setup() {
   setupSerial();
-  setupSD();
-  setupRTC();
-  setupEspNow();
+  //setupSD();
+  //setupRTC();
+  //setupEspNow();
   setupRfid();
 }
 void loop() {
@@ -253,23 +267,6 @@ void loop() {
     }
 
     //RFID
-    if (rfid.available() > 0) {
-      
-      /*String rfidInput = "";
-      while(rfid.available()) {
-        char character = rfid.read();
-        rfidInput += character;
-      }
-      
-      Serial.print("Eu recebi: ");
-      Serial.println(rfidInput);*/
-
-      while(rfid.available()) {
-        byte character = rfid.read();
-        Serial.print(character, HEX);
-        Serial.print(' ');
-      }
-      Serial.println();
-    }
+    updateLastRfidTag();
   }
 }
