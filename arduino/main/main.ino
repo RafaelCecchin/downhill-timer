@@ -12,8 +12,6 @@
 
 String dataReceived;
 bool espNowReceivedData = false;
-uint8_t broadcastAddress[] = {0x99, 0xB4, 0x7E, 0xFF, 0x24, 0x88};
-
 String lastRfidTag = "";
 
 #define DEVICE 1
@@ -21,7 +19,6 @@ String lastRfidTag = "";
 //    - 1 = Central
 //    - 2 = Largada
 //    - 3 = Chegada
-
 
 void setup() {
   setupDevice();

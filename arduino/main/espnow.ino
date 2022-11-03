@@ -1,5 +1,28 @@
 // 2.4GHz
-void setupEspNow(){ 
+uint8_t* espNowGetBroadcastAddress() {
+  uint8_t broadcastAddress[6];
+
+ if (DEVICE == 1) {
+  broadcastAddress[0] = 0xC8;
+  broadcastAddress[1] = 0xC9;
+  broadcastAddress[2] = 0xA3;
+  broadcastAddress[3] = 0xC8;
+  broadcastAddress[4] = 0xBD;
+  broadcastAddress[5] = 0x60;
+ }
+
+ if (DEVICE == 3) {
+  broadcastAddress[0] = 0x99;
+  broadcastAddress[1] = 0xB4;
+  broadcastAddress[2] = 0x7E;
+  broadcastAddress[3] = 0xFF;
+  broadcastAddress[4] = 0x24;
+  broadcastAddress[5] = 0x88;
+ }
+
+ return broadcastAddress;
+}
+void setupEspNow(){    
  WiFi.mode(WIFI_STA);
   
  while (esp_now_init() != ESP_OK) {
@@ -11,7 +34,7 @@ void setupEspNow(){
  memset(&peerInfo, 0, sizeof(peerInfo));
  for (int ii = 0; ii < 6; ++ii )
  {
-    peerInfo.peer_addr[ii] = (uint8_t) broadcastAddress[ii];
+    peerInfo.peer_addr[ii] = (uint8_t) espNowGetBroadcastAddress()[ii];
  }
  peerInfo.channel = 0;
  peerInfo.encrypt = false;
@@ -25,7 +48,8 @@ void setupEspNow(){
  //esp_now_register_send_cb(espNowOnDataSent);
 }
 void espNowSendData(String message) { 
-  esp_now_send(broadcastAddress, (uint8_t *) message.c_str(), strlen(message.c_str()) + 10);
+  
+  esp_now_send(espNowGetBroadcastAddress(), (uint8_t *) message.c_str(), strlen(message.c_str()) + 10);
 };
 void espNowOnReceiveData(const uint8_t * mac, const uint8_t *incomingData, int len) {
   char* buff = (char*) incomingData;        //char buffer
