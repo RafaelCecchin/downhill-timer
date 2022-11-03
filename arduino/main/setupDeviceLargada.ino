@@ -1,0 +1,4 @@
+void setupDeviceLargada() {
+  setupEspNow();
+  setupLoRa();
+}
