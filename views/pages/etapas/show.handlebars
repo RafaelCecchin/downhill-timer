@@ -614,7 +614,7 @@
 
 {{#section 'scripts'}}
     <script>
-        let etapaStatus = etapa.dataValues.status;
+        let etapaStatus = {{ etapa.dataValues.status }};
         let etapaId = {{#if (get etapa 'id')}} {{get etapa 'id'}} {{else}} '' {{/if}};
     </script>
     <script src="/scripts/pages/etapas/show.js"></script>
