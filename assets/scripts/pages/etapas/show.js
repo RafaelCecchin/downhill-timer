@@ -68,6 +68,11 @@ function buscarCompetidor() {
         return;
     }
 
+    if (!isValidCpf(cpfCompetidor)) {
+        showModalInformation("Informe um CPF válido.");
+        return;
+    }
+
     $.ajax({
         type: "GET",
         url: url.origin + `/api/competidores/cpf/` + cpfCompetidor,
@@ -520,3 +525,5 @@ $('#modalBackup').find('#btnSelecionarArquivoBackup').on('click', showFileExplor
 $('#modalBackup').find('#arquivoBackup').on('change', updateFileName);
 $('#modalBackup').find('#btnImportarBackup').on('click', importarBackup);
 $('#btnModalBackup').on('click', showModalBackup);
+
+$('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});

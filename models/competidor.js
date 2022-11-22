@@ -1,4 +1,6 @@
 'use strict';
+const Helper = require('../helper/helper');
+
 const {
   Model
 } = require('sequelize');
@@ -27,7 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: true,
-        notEmpty: true
+        notEmpty: true,
+        isValidCpf(value) {
+          if (!Helper.isValidCpf(value)) {
+            throw new Error('CPF inválido!');
+          }
+        }
       }
     },
     nascimento: {

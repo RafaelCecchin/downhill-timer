@@ -1,43 +1,15 @@
 function adicionarCompetidor(event) {
     event.preventDefault();
-
-    const cpfCompetidor = $('#formCompetidor').find('input[name="cpfCompetidor"]').val();
-    const nomeCompetidor = $('#formCompetidor').find('input[name="nomeCompetidor"]').val();
-    const generoCompetidor = $('#formCompetidor').find('select[name="generoCompetidor"]').val();
-    const dataNascimentoCompetidor = $('#formCompetidor').find('input[name="dataNascimentoCompetidor"]').val();
-    const patrocinadorCompetidor = $('#formCompetidor').find('input[name="patrocinadorCompetidor"]').val();
-
-    if (!cpfCompetidor) {
-        showModalInformation("Informe o CPF do competidor.");
+    
+    if(!isValidCompetidorFormData()) {
         return;
     }
-
-    if (!nomeCompetidor) {
-        showModalInformation("Informe o nome do competidor.");
-        return;
-    }
-
-    if (!generoCompetidor) {
-        showModalInformation("Informe o gênero do competidor.");
-        return;
-    }
-
-    if (!dataNascimentoCompetidor) {
-        showModalInformation("Informe a data de nascimento do competidor.");
-        return;
-    }
-
+    
     $.ajax({
         type: "POST",
         url: url.origin + `/api/competidores`,
         dataType: "json",
-        data: {
-            cpfCompetidor: cpfCompetidor,
-            nomeCompetidor: nomeCompetidor,
-            generoCompetidor: generoCompetidor,
-            dataNascimentoCompetidor: dataNascimentoCompetidor,
-            patrocinadorCompetidor: patrocinadorCompetidor
-        },
+        data: $('#formCompetidor').serialize(),
         success: function(response){
             const competidorUrl = url.origin + `/competidores/${response.id}`;
             showModalInformation("Competidor criado com sucesso.", () => { window.location.href = competidorUrl }, () => { window.location.href = competidorUrl });
@@ -50,6 +22,10 @@ function adicionarCompetidor(event) {
 }
 function salvarCompetidor(event) {
     event.preventDefault();
+    
+    if(!isValidCompetidorFormData()) {
+        return;
+    }
 
     $.ajax({
         type: "PUT",
@@ -84,7 +60,43 @@ function excluirCompetidor(event) {
         });
     });        
 }
+function isValidCompetidorFormData() {
+    const cpfCompetidor = $('#formCompetidor').find('input[name="cpfCompetidor"]').val();
+    const nomeCompetidor = $('#formCompetidor').find('input[name="nomeCompetidor"]').val();
+    const generoCompetidor = $('#formCompetidor').find('select[name="generoCompetidor"]').val();
+    const dataNascimentoCompetidor = $('#formCompetidor').find('input[name="dataNascimentoCompetidor"]').val();
+    const patrocinadorCompetidor = $('#formCompetidor').find('input[name="patrocinadorCompetidor"]').val();
+
+    if (!cpfCompetidor) {
+        showModalInformation("Informe o CPF do competidor.");
+        return false;
+    }
+
+    if (!isValidCpf(cpfCompetidor)) {
+        showModalInformation("Informe um CPF válido.");
+        return false;
+    }
+
+    if (!nomeCompetidor) {
+        showModalInformation("Informe o nome do competidor.");
+        return false;
+    }
+
+    if (!generoCompetidor) {
+        showModalInformation("Informe o gênero do competidor.");
+        return false;
+    }
+
+    if (!dataNascimentoCompetidor) {
+        showModalInformation("Informe a data de nascimento do competidor.");
+        return false;
+    }
+
+    return true;
+}
 
 $('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
 $('#btnSalvarCompetidor').on('click', salvarCompetidor);
 $('#btnExcluirCompetidor').on('click', excluirCompetidor);    
+
+$('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});
