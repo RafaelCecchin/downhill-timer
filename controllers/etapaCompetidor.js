@@ -12,7 +12,9 @@ exports.create = async (req, res) => {
         rfid: req.body.rfid
     }
 
-    EtapaCompetidor.create(competidor)
+    EtapaCompetidor.create(competidor, {
+            individualHooks: true
+        })
         .then(data => {
                 res.status(201).send(data);
             })

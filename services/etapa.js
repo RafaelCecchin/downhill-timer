@@ -107,8 +107,7 @@ class EtapaService {
                 resolve();
             }
         );
-
-    }
+    }    
 }
 
 module.exports = EtapaService;

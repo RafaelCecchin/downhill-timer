@@ -1,5 +1,6 @@
 'use strict';
 const Helper = require('../helper/helper');
+const EtapaService = require('../services/etapa');
 
 const {
   Model
@@ -95,6 +96,58 @@ module.exports = (sequelize, DataTypes) => {
         }
       );   
     }
+    static async existsCompetidorEtapa(competidorId, etapaId) {
+      let etapaCompetidor = await EtapaCompetidor.findOne({ 
+          where: { 
+            competidorId: competidorId,
+            etapaId: etapaId
+          } 
+      });
+
+      return etapaCompetidor ? true : false;
+    }
+    static async existsPlacaEtapa(placa, etapaId) {
+      let placaCompetidor = await EtapaCompetidor.findOne({ 
+          where: { 
+            placa: placa,
+            etapaId: etapaId
+          } 
+        })
+
+      return placaCompetidor ? true : false;
+    }
+    static async existsRfidEtapa(rfid, etapaId) {
+      let rfidCompetidor = await EtapaCompetidor.findOne({ 
+          where: { 
+            rfid: rfid,
+            etapaId: etapaId
+          } 
+      })
+
+      return rfidCompetidor ? true : false;
+    }
+    static async validateData(etapaId, competidorId, placa, rfid) {
+      if (await EtapaCompetidor.existsCompetidorEtapa(
+        competidorId, 
+        etapaId
+      )) {
+        throw new Error('Este competidor já foi cadastrado nesta etapa.');
+      }
+
+      if (await EtapaCompetidor.existsPlacaEtapa(
+        placa, 
+        etapaId
+      )) {
+        throw new Error('Esta placa já foi cadastrada nesta etapa.');
+      }
+
+      if (await EtapaCompetidor.existsRfidEtapa(
+        rfid, 
+        etapaId
+      )) {
+        throw new Error('Este RFID já foi cadastrado nesta etapa.');
+      }
+    };
     static associate(models) {
       EtapaCompetidor.belongsTo(models.Etapa, {foreignKey: 'etapaId', as: 'etapa'}),
       EtapaCompetidor.belongsTo(models.Competidor, {foreignKey: 'competidorId', as: 'competidor'}),
@@ -178,7 +231,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
+      beforeCreate: async (etapaCompetidor, options) => {
+        await EtapaCompetidor.validateData(
+          etapaCompetidor.getDataValue('etapaId'),
+          etapaCompetidor.getDataValue('competidorId'),
+          etapaCompetidor.getDataValue('placa'),
+          etapaCompetidor.getDataValue('rfid')
+        );
+      },
       beforeUpdate: async (etapaCompetidor, options) => {
+        await EtapaCompetidor.validateData(
+          etapaCompetidor.getDataValue('etapaId'),
+          etapaCompetidor.getDataValue('competidorId'),
+          etapaCompetidor.getDataValue('placa'),
+          etapaCompetidor.getDataValue('rfid')
+        );
+
         const etapa = await sequelize.models.Etapa.findByPk( etapaCompetidor.getDataValue('etapaId') );
 
         if ((etapaCompetidor.changed('categoriaId') ||
@@ -218,8 +286,6 @@ module.exports = (sequelize, DataTypes) => {
             etapaCompetidor.getDataValue('dcf') == 'Invalid Date' ||
             etapaCompetidor.getDataValue('pi') == 'Invalid Date' ||
             etapaCompetidor.getDataValue('pf') == 'Invalid Date') {
-
-              console.log(etapaCompetidor.dataValues);
 
             throw new Error('Você informou uma data inválida.');
         }
