@@ -4,11 +4,24 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Etapa extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+     static async existsNumeroCampeonato(numero, campeonatoId) {
+      let numeroCampeonato = await Etapa.findOne({ 
+          where: { 
+            numero: numero,
+            campeonatoId: campeonatoId
+          } 
+      })
+
+      return numeroCampeonato ? true : false;
+    }
+    static async validateData(numero, campeonatoId) {
+      if (await Etapa.existsNumeroCampeonato(
+        numero, 
+        campeonatoId
+      )) {
+        throw new Error('Já existe uma etapa de mesmo número nesse campeonato.');
+      }
+    };
     static associate(models) {
       Etapa.belongsTo(models.Campeonato, {foreignKey: 'campeonatoId', as: 'campeonato', onDelete: 'cascade'}), 
       Etapa.hasMany(models.EtapaCompetidor, {foreignKey: 'etapaId', as: 'etapaCompetidor'})
@@ -74,7 +87,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
-      beforeUpdate: (etapa, options) => {
+      beforeCreate: async (etapa, options) => {
+        await Etapa.validateData(
+          etapa.getDataValue('numero'),
+          etapa.getDataValue('campeonatoId')
+        );
+      },
+      beforeUpdate: async (etapa, options) => {
+        await Etapa.validateData(
+          etapa.getDataValue('numero'),
+          etapa.getDataValue('campeonatoId')
+        );
+
         if (etapa.changed('status')) {
 
           if (etapa.getDataValue('status') == 0 && etapa.previous('status') == 1) {

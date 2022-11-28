@@ -39,6 +39,13 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addConstraint('Etapas', {
+      type: 'unique',
+      name: 'unique_numero_campeonato',
+      fields: ['numero', 'campeonatoId']
+    });
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Etapas');
