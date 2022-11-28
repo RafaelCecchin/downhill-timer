@@ -4,7 +4,7 @@ function excluirCompetidor(event) {
     const row = $( $(this).data('target') );
     const idCompetidor = row.data('cod');
 
-    showModalOption("Você tem certeza que deseja excluir esse competidor?", function () {
+    showModalOption("Ao excluir esse competidor, todo o histórico dele nas etapas será perdido. Tem certeza que deseja excluir esse competidor?", function () {
         $.ajax({
             type: "DELETE",
             url: url.origin + `/api/competidores/` + idCompetidor,

@@ -11,6 +11,7 @@ module.exports = {
       etapaId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Etapas',
           key: 'id'
@@ -19,6 +20,7 @@ module.exports = {
       competidorId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Competidores',
           key: 'id'

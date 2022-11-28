@@ -45,7 +45,7 @@ function salvarCampeonato(event) {
 function excluirCampeonato(event) {
     event.preventDefault();
 
-    showModalOption("Você tem certeza que deseja excluir esse campeonato?", function () {
+    showModalOption("Ao excluir esse campeonato você também apaga todas as etapas vinculadas a ele. Tem certeza que deseja excluir esse campeonato?", function () {
         $.ajax({
             type: "DELETE",
             url: url.origin + `/api` + url.pathname,

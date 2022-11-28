@@ -11,6 +11,7 @@ module.exports = {
       campeonatoId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Campeonatos',
           key: 'id'

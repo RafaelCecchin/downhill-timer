@@ -23,11 +23,9 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.removeColumn('Etapas', 'dci'),
-      queryInterface.removeColumn('Etapas', 'dcf'),
-      queryInterface.removeColumn('Etapas', 'pi'),
-      queryInterface.removeColumn('Etapas', 'pf')
-    ]);
+    queryInterface.removeColumn('Etapas', 'dci'),
+    queryInterface.removeColumn('Etapas', 'dcf'),
+    queryInterface.removeColumn('Etapas', 'pi'),
+    queryInterface.removeColumn('Etapas', 'pf')
   }
 };

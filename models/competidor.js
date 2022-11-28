@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Competidor.belongsTo(models.Genero, {foreignKey: 'generoId', as: 'genero'})
+      Competidor.hasMany(models.EtapaCompetidor)
     }
   }
   Competidor.init({

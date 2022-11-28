@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Configuracoes', [
       {
         id: 1,
-        portaCom: '',
+        portaCom: 'UNDEFINED',
         createdAt: new Date(),
         updatedAt: new Date()
       }
