@@ -156,7 +156,7 @@
 
     &.modal-log {
         .modal-container {
-            min-width: 36rem;
+            min-width: 38rem;
 
             .log {
                 display: grid;
@@ -188,6 +188,13 @@
                     }
                 }
                 
+            }
+
+            .modal-actions {
+
+                #btnLive {
+                    margin-right: auto;
+                }
             }
         }
     }

@@ -54,6 +54,8 @@ module.exports = function(app) {
     app.get('/etapas/new', etapaController.new);
     app.get('/etapas/:id', etapaController.show);
 
+    app.get('/etapas/:id/live', etapaController.live);
+
     app.post('/api/etapas', etapaController.create);
     app.get('/api/etapas/:id', etapaController.read);
     app.put('/api/etapas/:id', etapaController.update);

@@ -42,6 +42,10 @@ exports.new = async (req, res) => {
     });
 };
 
+exports.live = async (req, res) => {
+    res.render('pages/etapas/live', {layout: 'clear'});
+};
+
 exports.show = async (req, res) => {
     
     const campeonatos = await Campeonato.findAll();
