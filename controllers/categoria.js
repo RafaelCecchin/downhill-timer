@@ -123,7 +123,8 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     Categoria.destroy({
-            where: { id: req.params.id }
+            where: { id: req.params.id },
+            individualHooks: true
         })
         .then(num => {
             if (num == 1) {

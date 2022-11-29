@@ -11,7 +11,7 @@ function excluirCategoria(event) {
             dataType: "json",
             success: function(response){
                 row.remove();
-                showModalInformation("Categoria excluído com sucesso.");                    
+                showModalInformation("Categoria excluída com sucesso.");                    
             },
             error: function(res, status, error) {
                 const response = JSON.parse(res.responseText);
