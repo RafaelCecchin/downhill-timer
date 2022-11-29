@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 
 const models = require('../models');
 const Etapa = models.Etapa;
@@ -16,9 +15,9 @@ exports.index = async (req, res) => {
             }
         ],
         where: {
-            [Op.or]: [
+            [Sequelize.Op.or]: [
                 Sequelize.where(Sequelize.literal("numero || 'ª Etapa / ' || `campeonato`.`nome`"), 
-                    Op.like, `%${req.query.search ?? ''}%`
+                    Sequelize.Op.like, `%${req.query.search ?? ''}%`
                 )
             ]
         }

@@ -13,7 +13,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('Configuracoes', {id: {[Op.in]: [1]}}, {});
+    return queryInterface.bulkDelete('Configuracoes', {id: {[Sequelize.Op.in]: [1]}}, {});
   }
 };

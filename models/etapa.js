@@ -1,25 +1,32 @@
 'use strict';
+
+const Sequelize = require("sequelize");
+
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Etapa extends Model {
-     static async existsNumeroCampeonato(numero, campeonatoId) {
+     static async existsNumeroCampeonato(numero, campeonatoId, excludeId) {
       let numeroCampeonato = await Etapa.findOne({ 
           where: { 
             numero: numero,
-            campeonatoId: campeonatoId
+            campeonatoId: campeonatoId,
+            id: {[Sequelize.Op.not]: excludeId}
           } 
       })
 
       return numeroCampeonato ? true : false;
     }
-    static async validateData(numero, campeonatoId) {
-      if (await Etapa.existsNumeroCampeonato(
-        numero, 
-        campeonatoId
-      )) {
-        throw new Error('Já existe uma etapa de mesmo número nesse campeonato.');
+    static async validateData(numero, campeonatoId, excludeId) {
+      if (numero || campeonatoId) {
+        if (await Etapa.existsNumeroCampeonato(
+          numero, 
+          campeonatoId,
+          excludeId
+        )) {
+          throw new Error('Já existe uma etapa de mesmo número nesse campeonato.');
+        }
       }
     };
     static associate(models) {
@@ -96,7 +103,8 @@ module.exports = (sequelize, DataTypes) => {
       beforeUpdate: async (etapa, options) => {
         await Etapa.validateData(
           etapa.getDataValue('numero'),
-          etapa.getDataValue('campeonatoId')
+          etapa.getDataValue('campeonatoId'),
+          etapa.getDataValue('id')
         );
 
         if (etapa.changed('status')) {

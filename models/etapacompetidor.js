@@ -1,6 +1,7 @@
 'use strict';
+
+const Sequelize = require("sequelize");
 const Helper = require('../helper/helper');
-const EtapaService = require('../services/etapa');
 
 const {
   Model
@@ -96,56 +97,68 @@ module.exports = (sequelize, DataTypes) => {
         }
       );   
     }
-    static async existsCompetidorEtapa(competidorId, etapaId) {
+    static async existsCompetidorEtapa(competidorId, etapaId, excludeId) {
       let etapaCompetidor = await EtapaCompetidor.findOne({ 
           where: { 
             competidorId: competidorId,
-            etapaId: etapaId
+            etapaId: etapaId,
+            id: {[Sequelize.Op.not]: excludeId}
           } 
       });
 
       return etapaCompetidor ? true : false;
     }
-    static async existsPlacaEtapa(placa, etapaId) {
+    static async existsPlacaEtapa(placa, etapaId, excludeId) {
       let placaCompetidor = await EtapaCompetidor.findOne({ 
           where: { 
             placa: placa,
-            etapaId: etapaId
+            etapaId: etapaId,
+            id: {[Sequelize.Op.not]: excludeId}
           } 
         })
 
       return placaCompetidor ? true : false;
     }
-    static async existsRfidEtapa(rfid, etapaId) {
+    static async existsRfidEtapa(rfid, etapaId, excludeId) {
       let rfidCompetidor = await EtapaCompetidor.findOne({ 
           where: { 
             rfid: rfid,
-            etapaId: etapaId
+            etapaId: etapaId,
+            id: {[Sequelize.Op.not]: excludeId}
           } 
       })
 
       return rfidCompetidor ? true : false;
     }
-    static async validateData(etapaId, competidorId, placa, rfid) {
-      if (await EtapaCompetidor.existsCompetidorEtapa(
-        competidorId, 
-        etapaId
-      )) {
-        throw new Error('Este competidor já foi cadastrado nesta etapa.');
+    static async validateData(etapaId, competidorId, placa, rfid, excludeId) {
+      if (competidorId) {
+        if (await EtapaCompetidor.existsCompetidorEtapa(
+          competidorId, 
+          etapaId,
+          excludeId
+        )) {
+          throw new Error('Este competidor já foi cadastrado nesta etapa.');
+        }
       }
 
-      if (await EtapaCompetidor.existsPlacaEtapa(
-        placa, 
-        etapaId
-      )) {
-        throw new Error('Esta placa já foi cadastrada nesta etapa.');
+      if (placa) {
+        if (await EtapaCompetidor.existsPlacaEtapa(
+          placa, 
+          etapaId,
+          excludeId
+        )) {
+          throw new Error('Esta placa já foi cadastrada nesta etapa.');
+        }
       }
-
-      if (await EtapaCompetidor.existsRfidEtapa(
-        rfid, 
-        etapaId
-      )) {
-        throw new Error('Este RFID já foi cadastrado nesta etapa.');
+      
+      if (rfid) {
+        if (await EtapaCompetidor.existsRfidEtapa(
+          rfid, 
+          etapaId,
+          excludeId
+        )) {
+          throw new Error('Este RFID já foi cadastrado nesta etapa.');
+        }
       }
     };
     static associate(models) {
@@ -244,7 +257,8 @@ module.exports = (sequelize, DataTypes) => {
           etapaCompetidor.getDataValue('etapaId'),
           etapaCompetidor.getDataValue('competidorId'),
           etapaCompetidor.getDataValue('placa'),
-          etapaCompetidor.getDataValue('rfid')
+          etapaCompetidor.getDataValue('rfid'),
+          etapaCompetidor.getDataValue('id')
         );
 
         const etapa = await sequelize.models.Etapa.findByPk( etapaCompetidor.getDataValue('etapaId') );
