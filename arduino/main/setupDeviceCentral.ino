@@ -1,5 +1,4 @@
 void setupDeviceCentral() {
-  setupSD();
-  setupRTC();
   setupLoRa();
+  setupEspNow();
 }

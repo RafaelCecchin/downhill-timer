@@ -1,4 +1,5 @@
 void setupDeviceLargada() {
-  setupEspNow();
+  setupSD();
+  setupRTC();
   setupLoRa();
 }
