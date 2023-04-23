@@ -29,9 +29,9 @@
 ## JSON de envio
 ```json
 {
-    device: x,
-    operation: y,
-    data: {
+    "device": x,
+    "operation": y,
+    "data": {
         //"dateTime": "Y-m-d h:i:s"
     }
 }
@@ -40,11 +40,11 @@
 ## JSON de retorno
 ```json
 {
-    device: x,
-    operation: y,
-    status: z,
-    message: "Your message here",
-    data: {
+    "device": x,
+    "operation": y,
+    "status": z,
+    "message": "Your message here",
+    "data": {
 		//"dateTime": "Y-m-d h:i:s",
         //"rfid": XXXXX
     }
@@ -61,18 +61,18 @@
 Ao clicar em "Testar Conexão Serial" nas configurações do sistema, o seguinte JSON é enviado para a interface serial selecionada:
 ```json
 {
-    device: 1,
-    operation: 1
+    "device": 1,
+    "operation": 1
 }
 ```
 
 Caso o embarcado tenha recebido a solicitação, deve retornar o seguinte JSON:
 ```json
 {
-    device: 1,
-    operation: 1,
-    status: 1,
-    message: "Conexão realizada com sucesso."
+    "device": 1,
+    "operation": 1,
+    "status": 1,
+    "message": "Conexão realizada com sucesso."
 }
 ```
 
@@ -83,9 +83,9 @@ O sistema vai esperar a resposta durante alguns segundos e, caso não obtenha re
 Ao clicar em "Testar RTC e atualizar hora" nas configurações do sistema para o dispositivo de chegada, o seguinte JSON é enviado para a interface serial selecionada:
 ```json
 {
-    device: 3,
-    operation: 3,
-    data: {
+    "device": 3,
+    "operation": 3,
+    "data": {
         "dateTime": "2023-03-19 11:07:23" // Exemplo*
     }
 }
@@ -94,10 +94,10 @@ Ao clicar em "Testar RTC e atualizar hora" nas configurações do sistema para o
 Caso o embarcado tenha recebido a solicitação, deve retornar o seguinte JSON:
 ```json
 {
-    device: 3,
-    operation: 3,
-    status: 1,
-    message: "A data e hora identificada foi 2023-03-19 11:07:23"
+    "device": 3,
+    "operation": 3,
+    "status": 1,
+    "message": "A data e hora identificada foi 2023-03-19 11:07:23"
 }
 ```
 
@@ -108,19 +108,19 @@ O sistema vai esperar a resposta durante alguns segundos e, caso não obtenha re
 Ao clicar em "Testar RFID" nas configurações do sistema para o dispositivo de largada, o seguinte JSON é enviado para a interface serial selecionada:
 ```json
 {
-    device: 2,
-    operation: 2
+    "device": 2,
+    "operation": 2
 }
 ```
 
 Caso o embarcado tenha recebido a solicitação, ao aproximar uma tag do leitor RFID ele deve retornar o seguinte JSON:
 ```json
 {
-    device: 2,
-    operation: 2,
-    status: 1,
-    message: "Competidor 34434 identificado com sucesso.",
-    data: {
+    "device": 2,
+    "operation": 2,
+    "status": 1,
+    "message": "Competidor 34434 identificado com sucesso.",
+    "data": {
         "rfid": 34434
     }
 }
@@ -130,11 +130,11 @@ Caso o embarcado tenha recebido a solicitação, ao aproximar uma tag do leitor 
 
 ```json
 {
-    device: 2,
-    operation: 2,
-    status: 1,
-    message: "Competidor [NOME_COMPETIDOR] identificado com sucesso.",
-    data: {
+    "device": 2,
+    "operation": 2,
+    "status": 1,
+    "message": "Competidor [NOME_COMPETIDOR] identificado com sucesso.",
+    "data": {
         "rfid": 34434
     }
 }
