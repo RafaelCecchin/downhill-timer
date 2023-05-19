@@ -1,3 +1,4 @@
+const { app, BrowserWindow, Menu } = require('electron')
 const express = require('express');
 const http = require('http');
 const socket = require("socket.io");
@@ -9,18 +10,18 @@ const fileupload = require("express-fileupload");
 const sections = require('express-handlebars-sections');
 const path = require('path');
 const Helper = require('./helper/helper');
-const app = express();
-const server = http.createServer(app);
+const expressApp = express();
+const server = http.createServer(expressApp);
 const io = new socket.Server(server, {
     'path': '/api/serial/log/'
 });
 
 const SerialService = require('./services/serial');
 
-app.use(cors());
-app.use(fileupload());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static('assets'));
+expressApp.use(cors());
+expressApp.use(fileupload());
+expressApp.use(bodyParser.urlencoded({extended: false}));
+expressApp.use(express.static('assets'));
 
 var hbs = exphbs.create({
     helpers: {
@@ -75,11 +76,11 @@ var hbs = exphbs.create({
     }
 });
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', './views');
+expressApp.engine('handlebars', hbs.engine);
+expressApp.set('view engine', 'handlebars');
+expressApp.set('views', './views');
 
-require('./routes')(app);
+require('./routes')(expressApp);
 SerialService.configureSocket(io);
 
 // Server
@@ -87,3 +88,18 @@ const port = process.env.PORT || 3000;
 server.listen(port, (req, res) => {
     console.log('Servidor rodando');
 });
+
+// Electron
+const createWindow = () => {
+    const win = new BrowserWindow({
+        minWidth: 1000,
+        minHeight: 600
+    });
+  
+    win.loadURL('http://localhost:3000');
+}
+
+app.whenReady().then(() => {
+    Menu.setApplicationMenu(null);
+    createWindow();
+})
