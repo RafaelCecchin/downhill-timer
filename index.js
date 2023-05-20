@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron')
+require('dotenv').config();
+const { app, BrowserWindow, Menu } = require('electron');
 const express = require('express');
 const http = require('http');
 const socket = require("socket.io");
