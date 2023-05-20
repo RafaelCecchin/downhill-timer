@@ -6,6 +6,7 @@
   "build": {
     "appId": "com.example.downhilltimer",
     "productName": "Downhill Timer",
+    "icon": "assets/images/icon",
     "directories": {
       "output": "dist"
     },
@@ -20,8 +21,7 @@
       "services/**/*",
       "views/**/*",
       "routes.js",
-      "index.js",
-      ".env"
+      "index.js"
     ],
     "extraResources": [
       "db-prod.sqlite3"
