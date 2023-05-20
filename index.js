@@ -21,7 +21,7 @@ const SerialService = require('./services/serial');
 expressApp.use(cors());
 expressApp.use(fileupload());
 expressApp.use(bodyParser.urlencoded({extended: false}));
-expressApp.use(express.static('assets'));
+expressApp.use(express.static(path.join(__dirname, 'assets')));
 
 var hbs = exphbs.create({
     helpers: {
@@ -78,7 +78,7 @@ var hbs = exphbs.create({
 
 expressApp.engine('handlebars', hbs.engine);
 expressApp.set('view engine', 'handlebars');
-expressApp.set('views', './views');
+expressApp.set('views', path.join(__dirname, 'views'));
 
 require('./routes')(expressApp);
 SerialService.configureSocket(io);
@@ -96,7 +96,7 @@ const createWindow = () => {
         minHeight: 600
     });
   
-    win.loadURL('http://localhost:3000');
+    win.loadURL('http://localhost:3000', {"extraHeaders" : "pragma: no-cache\n"});
 }
 
 app.whenReady().then(() => {

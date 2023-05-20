@@ -3,8 +3,35 @@
   "version": "1.0.0",
   "description": "Downhill timer",
   "main": "index.js",
-  "directories": {
-    "test": "test"
+  "build": {
+    "appId": "com.example.downhilltimer",
+    "productName": "Downhill Timer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/",
+      "node_modules/**/*",
+      "assets/**/*",
+      "config/**/*",
+      "controllers/**/*",
+      "helper/**/*",
+      "migrations/**/*",
+      "models/**/*",
+      "services/**/*",
+      "views/**/*",
+      "routes.js",
+      "index.js"
+    ],
+    "linux": {
+      "target": "deb"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    }
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -20,7 +47,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "gulp watch",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -34,6 +62,7 @@
   "homepage": "https://github.com/RafaelCecchin/downhill-timer#readme",
   "devDependencies": {
     "electron": "^22.3.10",
+    "electron-builder": "^23.6.0",
     "gulp": "^4.0.2",
     "gulp-minify": "^3.1.0",
     "gulp-sass": "^5.1.0",
