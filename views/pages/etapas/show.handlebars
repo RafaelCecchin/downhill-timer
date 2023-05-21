@@ -9,7 +9,7 @@
                             <select class="input" name="campeonatoEtapa">
                                 <option value="" hidden>Selecione o campeonato</option>
                                 {{#each campeonatos}}
-                                    <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../campeonato 'id')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
+                                    <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../etapa 'campeonatoId')}} selected {{/ifCond}} {{#ifCond (get this 'id') '==' (get ../campeonato 'id')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
                                 {{/each}}
                             </select>
                         </div>
