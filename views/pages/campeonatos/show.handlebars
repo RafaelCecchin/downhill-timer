@@ -80,7 +80,7 @@
 
                                 {{#each campeonato.etapas}}
                                     <tr id="etapa-{{get this 'id'}}" data-cod="{{get this 'id'}}">
-                                        <td>{{get this 'numero'}}ª Etapa</td>
+                                        <td><a href="/campeonatos/{{get ../campeonato 'id'}}/etapas/{{get this 'id'}}">{{get this 'numero'}}ª Etapa</a></td>
                                         <td>{{get this 'status'}}</td>
                                         <td>{{getFormatedDateTime (get this 'data')}}</td>
                                         <td>
