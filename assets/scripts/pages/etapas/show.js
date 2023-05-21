@@ -3,11 +3,11 @@ function adicionarEtapa(event) {
 
     $.ajax({
         type: "POST",
-        url: url.origin + `/api/etapas`,
+        url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
         dataType: "json",
         data: $('#formEtapa').serialize(),
         success: function(response){
-            const etapaUrl = url.origin + `/etapas/${response.id}`;
+            const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas/${response.id}`;
             showModalInformation("Etapa criada com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
         },
         error: function(res, status, error) {
@@ -42,7 +42,7 @@ function excluirEtapa(event) {
             url: url.origin + `/api` + url.pathname,
             dataType: "json",
             success: function(response){
-                const etapaUrl = url.origin + `/etapas`;
+                const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas`;
                 showModalInformation("Etapa excluída com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
             },
             error: function(res, status, error) {
@@ -529,7 +529,7 @@ $('#btnModalBackup').on('click', showModalBackup);
 $('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});
 
 function openLiveView() {
-    window.open('/etapas/' + etapaId + '/live', 'Live', `scrollbars=no,status=no,location=no,toolbar=no,menubar=no,
+    window.open( `/campeonatos/${campeonatoId}/etapas/${etapaId}/live`, 'Live', `scrollbars=no,status=no,location=no,toolbar=no,menubar=no,
     width=0,height=0,left=-1000,top=-1000`);
 }
 

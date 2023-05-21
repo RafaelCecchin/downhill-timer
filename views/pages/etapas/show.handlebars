@@ -1,254 +1,256 @@
 <section class="page-etapas show-etapa">
     <div class="container">
+        <div class="show-container">
+            <form method="POST" id="formEtapa" class="form {{ formAction }}">
 
-        <form method="POST" id="formEtapa" class="form {{ formAction }}">
-            <div class="data">
-                <div class="label campeonato-da-etapa">
-                    <div class="label-inputs">                
-                        <select class="input" name="campeonatoEtapa">
-                            <option value="" hidden>Selecione o campeonato</option>
-                            {{#each campeonatos}}
-                                <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../etapa 'campeonatoId')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
-                            {{/each}}
-                        </select>
+                <div class="data">
+                    <div class="label campeonato-da-etapa">
+                        <div class="label-inputs">                
+                            <select class="input" name="campeonatoEtapa">
+                                <option value="" hidden>Selecione o campeonato</option>
+                                {{#each campeonatos}}
+                                    <option value="{{get this 'id'}}" {{#ifCond (get this 'id') '==' (get ../campeonato 'id')}} selected {{/ifCond}}>{{get this 'nome'}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="label numero-da-etapa">
-                    <div class="label-inputs">  
-                        <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{get etapa 'numero'}}"/>
+                    <div class="label numero-da-etapa">
+                        <div class="label-inputs">  
+                            <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{get etapa 'numero'}}"/>
+                        </div>
                     </div>
-                </div>
 
-                <div class="label data-do-etapa">
-                    <div class="label-inputs">                
-                        <input class="input" type="datetime-local" name="dataEtapa" value="{{getDateTime (get etapa 'data')}}"/>
+                    <div class="label data-do-etapa">
+                        <div class="label-inputs">                
+                            <input class="input" type="datetime-local" name="dataEtapa" value="{{getDateTime (get etapa 'data')}}"/>
+                        </div>
                     </div>
-                </div>
 
-                <div class="label actions">
-                    <div class="label-inputs">  
+                    <div class="label actions">
+                        <div class="label-inputs">  
 
-                        {{#ifCond formAction '==' 'update'}}
-                            <button type="button" class="button remove-button" id="btnExcluirEtapa">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.243" height="16.243" viewBox="0 0 16.243 16.243">
-                                    <g transform="translate(-3.879 -3.756)">
-                                        <line x1="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                                        <line x2="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                                    </g>
-                                </svg>
-                                <span>Excluir</span>
-                            </button>
+                            {{#ifCond formAction '==' 'update'}}
+                                <button type="button" class="button remove-button" id="btnExcluirEtapa">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16.243" height="16.243" viewBox="0 0 16.243 16.243">
+                                        <g transform="translate(-3.879 -3.756)">
+                                            <line x1="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                                            <line x2="12" y2="12" transform="translate(6 5.877)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                                        </g>
+                                    </svg>
+                                    <span>Excluir</span>
+                                </button>
 
-                            <button type="button" class="button secondary-button save-button" id="btnSalvarEtapa">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
-                                    <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
-                                </svg>
-                                <span>Salvar</span>
-                            </button>
-                        {{/ifCond}}
+                                <button type="button" class="button secondary-button save-button" id="btnSalvarEtapa">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="438.528" height="438.534" viewBox="0 0 438.528 438.534">
+                                        <path d="M432.823,121.049q-5.709-13.7-13.709-21.695L339.173,19.412q-7.988-7.987-21.7-13.7T292.357,0H27.409A26.433,26.433,0,0,0,7.995,7.993,26.421,26.421,0,0,0,0,27.407V411.126a26.426,26.426,0,0,0,7.992,19.417,26.45,26.45,0,0,0,19.414,7.991H411.127a27.277,27.277,0,0,0,27.4-27.408V146.178Q438.531,134.754,432.823,121.049Zm-250.1-75.372a9.259,9.259,0,0,1,9.137-9.131h54.819a9.264,9.264,0,0,1,9.134,9.131v91.362a9.264,9.264,0,0,1-9.134,9.135H191.862a9.259,9.259,0,0,1-9.137-9.135V45.677ZM328.906,401.991H109.633V292.355H328.906Zm73.094,0H365.441V283.218a27.289,27.289,0,0,0-27.4-27.411H100.5a27.291,27.291,0,0,0-27.409,27.411V401.991H36.544V36.542H73.088V155.313A27.289,27.289,0,0,0,100.5,182.72H264.953a27.292,27.292,0,0,0,27.4-27.407V36.542q4.281,0,11.136,2.853T313.2,45.1l80.232,80.23q2.853,2.854,5.708,9.851T402,146.178V401.991Z" transform="translate(-0.003 0)"/>
+                                    </svg>
+                                    <span>Salvar</span>
+                                </button>
+                            {{/ifCond}}
 
-                        {{#ifCond formAction '==' 'create'}}
-                            <button type="button" class="button secondary-button add-button" id="btnAdicionarEtapa">   
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                                    <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
-                                </svg>
-                                <span>Adicionar</span>
-                            </button>
-                        {{/ifCond}}
-                        
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        {{#ifCond formAction '==' 'update'}}
-            <div class="content">
-                
-                <div class="actions-competidores">
-
-                    {{#ifCond etapa.dataValues.status '==' 0}}
-                        <div class="label modal-competidor">
-                            <div class="label-inputs">
-                                <button class="button primary-button" id="btnModalCompetidor" type="button">
+                            {{#ifCond formAction '==' 'create'}}
+                                <button type="button" class="button secondary-button add-button" id="btnAdicionarEtapa">   
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                         <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
                                     </svg>
-                                    <span>Adicionar competidor</span>
+                                    <span>Adicionar</span>
                                 </button>
-                            </div>
-                        </div>
-                    {{/ifCond}}
-
-                    {{#ifCond etapa.dataValues.status '!=' 0}}
-                        <div class="label modal-backup">
-                            <div class="label-inputs">
-                                <button class="button secondary-button" id="btnModalBackup">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
-                                        <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
-                                    </svg>
-                                    <span>Importar backup</span>
-                                </button>
-                            </div>
-                        </div>
-                    {{/ifCond}}
-                </div>
-
-                <div class="table-competidores">
-                    
-                    {{#each competidores}}
-
-                    <div class="secao-genero">
-                        <div class="genero-title">
-                            <span class="title">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12.363" height="10.145" viewBox="0 0 12.363 10.145">
-                                    <path d="M7,6.82V17.18a1,1,0,0,0,1.54.84l8.14-5.18a1,1,0,0,0,0-1.69L8.54,5.98A1,1,0,0,0,7,6.82Z" transform="translate(18.181 -7) rotate(90)" fill-rule="evenodd"/>
-                                </svg>
-                                <h2>{{get this.genero 'nome'}}</h2>
-                            </span>
-                        </div>
-                        <div class="genero-content">
+                            {{/ifCond}}
                             
-                            {{#each this.categorias}}
-
-                            <div class="secao-categoria">
-                                <div class="categoria-title">
-                                    <span class="title">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12.363" height="10.145" viewBox="0 0 12.363 10.145">
-                                            <path d="M7,6.82V17.18a1,1,0,0,0,1.54.84l8.14-5.18a1,1,0,0,0,0-1.69L8.54,5.98A1,1,0,0,0,7,6.82Z" transform="translate(18.181 -7) rotate(90)" fill-rule="evenodd"/>
-                                        </svg>
-                                        <h2>{{get this.categoria 'nome'}}</h2>
-                                    </span>
-                                </div>
-                                <div class="categoria-content">
-
-                                    <table class="secao-competidores">
-                                        <tbody>
-
-                                            {{#each this.competidores}}
-
-                                                <tr id="competidor-{{get this 'id'}}"
-                                                    data-cod="{{get this 'id'}}"
-                                                    data-competidor-id="{{get (get this 'competidor') 'id'}}"
-                                                    data-competidor-nome="{{get (get this 'competidor') 'nome'}}"
-                                                    data-competidor-genero-id="{{get (get this 'competidor') 'generoId'}}"
-                                                    data-competidor-cpf="{{get (get this 'competidor') 'cpf'}}"
-                                                    data-categoria-id="{{get this 'categoriaId'}}"
-                                                    data-rfid="{{get this 'rfid'}}"
-                                                    data-placa="{{get this 'placa'}}"
-                                                    data-dci-time="{{getTime (getDataValue this 'dci')}}"
-                                                    data-dci-date="{{getDate (getDataValue this 'dci')}}"
-                                                    data-dcf-time="{{getTime (getDataValue this 'dcf')}}"
-                                                    data-dcf-date="{{getDate (getDataValue this 'dcf')}}"
-                                                    data-dct="{{get this 'dct'}}"
-                                                    data-pi-time="{{getTime (getDataValue this 'pi')}}"
-                                                    data-pi-date="{{getDate (getDataValue this 'pi')}}"
-                                                    data-pf-time="{{getTime (getDataValue this 'pf')}}"
-                                                    data-pf-date="{{getDate (getDataValue this 'pf')}}"
-                                                    data-pt="{{get this 'pt'}}">
-
-                                                    <td>{{get (get this 'competidor') 'nome'}}</td>
-                                                    <td>RFID: {{get this 'rfid'}}</td>
-                                                    <td>PLACA: {{get this 'placa'}}</td>
-                                                    <td>DCI: {{getTime (get this 'dci')}}</td>
-                                                    <td>DCF: {{getTime (get this 'dcf')}}</td>
-                                                    <td>DCT: {{getUTCTime (get this 'dct')}}</td>
-                                                    <td>PI: {{getTime (get this 'pi')}}</td>
-                                                    <td>PF: {{getTime (get this 'pf')}}</td>
-                                                    <td>PT: {{getUTCTime (get this 'pt')}}</td>
-                                                    <td>
-                                                        {{#ifCond ../../../etapa.dataValues.status '==' 0}}
-                                                        <button class="table-button remove-row" data-target="#competidor-{{get this 'id'}}">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
-                                                                <g id="Lixo" transform="translate(-2 -1)">
-                                                                    <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                                    <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                                    <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                                    <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                                </g>
-                                                            </svg>
-                                                        </button>
-                                                        
-                                                        <button class="table-button edit-row editar-competidor" data-target="#competidor-{{get this 'id'}}">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
-                                                                <g id="Editar" transform="translate(-6 -2.6)">
-                                                                    <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                                                    <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                                                </g>
-                                                            </svg>
-                                                        </button>
-                                                        {{/ifCond}}
-
-                                                        {{#ifCond ../../../etapa.dataValues.status '!=' 0}}
-                                                        <button class="table-button edit-row editar-tempo-competidor" data-target="#competidor-{{get this 'id'}}">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
-                                                                <g id="Editar" transform="translate(-6 -2.6)">
-                                                                    <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                                                    <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-                                                                </g>
-                                                            </svg>
-                                                        </button>
-                                                        {{/ifCond}}
-                                                    </td>
-                                                </tr>
-
-                                            {{/each}}
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-
-                            {{/each}}
-
                         </div>
                     </div>
-
-                    {{/each}}
-
                 </div>
-            </div>   
-                
-            <div class="actions-etapa">
-                <span class="status" id="status">{{get etapa 'status'}}</span>
-                
-                {{#ifCond etapa.dataValues.status '==' 0}}
-                    <button type="button" class="button primary-button" id="btnIniciarDc">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
-                            <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
-                        </svg>
-                        <span>Iniciar DC</span>
-                    </button>
-                {{/ifCond}}
+            </form>
 
-                {{#ifCond etapa.dataValues.status '==' 1}}
-                    <button type="button" class="button secondary-button" id="btnLimparDc">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
-                            <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
-                        </svg>
-                        <span>Limpar DC</span>
-                    </button>
+            {{#ifCond formAction '==' 'update'}}
+                <div class="content">
+                    
+                    <div class="actions-competidores">
 
-                    <button type="button" class="button primary-button" id="btnIniciarProva">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
-                            <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
-                        </svg>
-                        <span>Iniciar Prova</span>
-                    </button>
-                {{/ifCond}}
+                        {{#ifCond etapa.dataValues.status '==' 0}}
+                            <div class="label modal-competidor">
+                                <div class="label-inputs">
+                                    <button class="button primary-button" id="btnModalCompetidor" type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                            <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
+                                        </svg>
+                                        <span>Adicionar competidor</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {{/ifCond}}
 
-                {{#ifCond etapa.dataValues.status '==' 2}}
-                    <button type="button" class="button secondary-button" id="btnLimparProva">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
-                            <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
-                        </svg>
-                        <span>Limpar Prova</span>
-                    </button>
-                {{/ifCond}}
-                
-            </div>
-        {{/ifCond}}
+                        {{#ifCond etapa.dataValues.status '!=' 0}}
+                            <div class="label modal-backup">
+                                <div class="label-inputs">
+                                    <button class="button secondary-button" id="btnModalBackup">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="26.386" height="17.59" viewBox="0 0 26.386 17.59">
+                                            <path d="M21.274,10.64a8.237,8.237,0,0,0-15.392-2.2A6.594,6.594,0,0,0,6.6,21.59H20.889a5.481,5.481,0,0,0,.385-10.95Zm-.385,8.751H6.6a4.394,4.394,0,0,1-.484-8.762l1.176-.121.55-1.044a6.033,6.033,0,0,1,11.28,1.605l.33,1.649,1.682.121a3.28,3.28,0,0,1-.242,6.552ZM8.8,13.895h2.8v3.3h3.188v-3.3h2.8l-4.4-4.4Z" transform="translate(0 -4)" fill-rule="evenodd"/>
+                                        </svg>
+                                        <span>Importar backup</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {{/ifCond}}
+                    </div>
+
+                    <div class="table-competidores">
+                        
+                        {{#each competidores}}
+
+                        <div class="secao-genero">
+                            <div class="genero-title">
+                                <span class="title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12.363" height="10.145" viewBox="0 0 12.363 10.145">
+                                        <path d="M7,6.82V17.18a1,1,0,0,0,1.54.84l8.14-5.18a1,1,0,0,0,0-1.69L8.54,5.98A1,1,0,0,0,7,6.82Z" transform="translate(18.181 -7) rotate(90)" fill-rule="evenodd"/>
+                                    </svg>
+                                    <h2>{{get this.genero 'nome'}}</h2>
+                                </span>
+                            </div>
+                            <div class="genero-content">
+                                
+                                {{#each this.categorias}}
+
+                                <div class="secao-categoria">
+                                    <div class="categoria-title">
+                                        <span class="title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12.363" height="10.145" viewBox="0 0 12.363 10.145">
+                                                <path d="M7,6.82V17.18a1,1,0,0,0,1.54.84l8.14-5.18a1,1,0,0,0,0-1.69L8.54,5.98A1,1,0,0,0,7,6.82Z" transform="translate(18.181 -7) rotate(90)" fill-rule="evenodd"/>
+                                            </svg>
+                                            <h2>{{get this.categoria 'nome'}}</h2>
+                                        </span>
+                                    </div>
+                                    <div class="categoria-content">
+
+                                        <table class="secao-competidores">
+                                            <tbody>
+
+                                                {{#each this.competidores}}
+
+                                                    <tr id="competidor-{{get this 'id'}}"
+                                                        data-cod="{{get this 'id'}}"
+                                                        data-competidor-id="{{get (get this 'competidor') 'id'}}"
+                                                        data-competidor-nome="{{get (get this 'competidor') 'nome'}}"
+                                                        data-competidor-genero-id="{{get (get this 'competidor') 'generoId'}}"
+                                                        data-competidor-cpf="{{get (get this 'competidor') 'cpf'}}"
+                                                        data-categoria-id="{{get this 'categoriaId'}}"
+                                                        data-rfid="{{get this 'rfid'}}"
+                                                        data-placa="{{get this 'placa'}}"
+                                                        data-dci-time="{{getTime (getDataValue this 'dci')}}"
+                                                        data-dci-date="{{getDate (getDataValue this 'dci')}}"
+                                                        data-dcf-time="{{getTime (getDataValue this 'dcf')}}"
+                                                        data-dcf-date="{{getDate (getDataValue this 'dcf')}}"
+                                                        data-dct="{{get this 'dct'}}"
+                                                        data-pi-time="{{getTime (getDataValue this 'pi')}}"
+                                                        data-pi-date="{{getDate (getDataValue this 'pi')}}"
+                                                        data-pf-time="{{getTime (getDataValue this 'pf')}}"
+                                                        data-pf-date="{{getDate (getDataValue this 'pf')}}"
+                                                        data-pt="{{get this 'pt'}}">
+
+                                                        <td>{{get (get this 'competidor') 'nome'}}</td>
+                                                        <td>RFID: {{get this 'rfid'}}</td>
+                                                        <td>PLACA: {{get this 'placa'}}</td>
+                                                        <td>DCI: {{getTime (get this 'dci')}}</td>
+                                                        <td>DCF: {{getTime (get this 'dcf')}}</td>
+                                                        <td>DCT: {{getUTCTime (get this 'dct')}}</td>
+                                                        <td>PI: {{getTime (get this 'pi')}}</td>
+                                                        <td>PF: {{getTime (get this 'pf')}}</td>
+                                                        <td>PT: {{getUTCTime (get this 'pt')}}</td>
+                                                        <td>
+                                                            {{#ifCond ../../../etapa.dataValues.status '==' 0}}
+                                                            <button class="table-button remove-row" data-target="#competidor-{{get this 'id'}}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
+                                                                    <g id="Lixo" transform="translate(-2 -1)">
+                                                                        <path d="M3,6H26.44" transform="translate(0 1.209)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                                        <path d="M23.231,7.209V25.44a2.6,2.6,0,0,1-2.6,2.6H7.6A2.6,2.6,0,0,1,5,25.44V7.209m3.907,0V4.6a2.6,2.6,0,0,1,2.6-2.6H16.72a2.6,2.6,0,0,1,2.6,2.6v2.6" transform="translate(0.604)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                                        <line y2="8" transform="translate(12.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                                        <line y2="8" transform="translate(17.44 14)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                                    </g>
+                                                                </svg>
+                                                            </button>
+                                                            
+                                                            <button class="table-button edit-row editar-competidor" data-target="#competidor-{{get this 'id'}}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                                                    <g id="Editar" transform="translate(-6 -2.6)">
+                                                                        <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                        <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                    </g>
+                                                                </svg>
+                                                            </button>
+                                                            {{/ifCond}}
+
+                                                            {{#ifCond ../../../etapa.dataValues.status '!=' 0}}
+                                                            <button class="table-button edit-row editar-tempo-competidor" data-target="#competidor-{{get this 'id'}}">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28.089" height="28.089" viewBox="0 0 28.089 28.089">
+                                                                    <g id="Editar" transform="translate(-6 -2.6)">
+                                                                        <path d="M18.414,19.936H15V16.523L27.923,3.6l3.414,3.414Z" transform="translate(1.753)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                        <path d="M28.944,10.657V26.506a2.445,2.445,0,0,1-2.438,2.438H9.438A2.445,2.445,0,0,1,7,26.506V9.438A2.445,2.445,0,0,1,9.438,7H25.53" transform="translate(0 0.745)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+                                                                    </g>
+                                                                </svg>
+                                                            </button>
+                                                            {{/ifCond}}
+                                                        </td>
+                                                    </tr>
+
+                                                {{/each}}
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                {{/each}}
+
+                            </div>
+                        </div>
+
+                        {{/each}}
+
+                    </div>
+                </div>   
+                    
+                <div class="actions-etapa">
+                    <span class="status" id="status">{{get etapa 'status'}}</span>
+                    
+                    {{#ifCond etapa.dataValues.status '==' 0}}
+                        <button type="button" class="button primary-button" id="btnIniciarDc">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
+                                <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
+                            </svg>
+                            <span>Iniciar DC</span>
+                        </button>
+                    {{/ifCond}}
+
+                    {{#ifCond etapa.dataValues.status '==' 1}}
+                        <button type="button" class="button secondary-button" id="btnLimparDc">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
+                                <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
+                            </svg>
+                            <span>Limpar DC</span>
+                        </button>
+
+                        <button type="button" class="button primary-button" id="btnIniciarProva">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14.372" height="17.514" viewBox="0 0 14.372 17.514">
+                                <path d="M7,7.237V21.914A1.414,1.414,0,0,0,9.182,23.1l11.532-7.338a1.417,1.417,0,0,0,0-2.394L9.182,6.047A1.414,1.414,0,0,0,7,7.237Z" transform="translate(-7 -5.819)" fill-rule="evenodd"/>
+                            </svg>
+                            <span>Iniciar Prova</span>
+                        </button>
+                    {{/ifCond}}
+
+                    {{#ifCond etapa.dataValues.status '==' 2}}
+                        <button type="button" class="button secondary-button" id="btnLimparProva">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24.187" height="19.35" viewBox="0 0 24.187 19.35">
+                                <path d="M9.693,8.192l3.278,4.126s-.627,3.868-2.894,5.673S0,19.281,0,19.281s.144-.875.416-2.095l3.576-4.239a.227.227,0,0,0-.251-.359l-2.283.835A8.592,8.592,0,0,1,3.521,9.739C5.788,7.934,9.693,8.192,9.693,8.192Zm14.363-7.02L23.305.228a.6.6,0,0,0-.847-.1L13.673,6.851l-1.29-1.624a.416.416,0,0,0-.7.084l-.957,2.062L14,11.5l2.222-.471a.416.416,0,0,0,.24-.665L15.174,8.74,23.96,2.021a.6.6,0,0,0,.1-.848Z" transform="translate(0 0)" fill="#94e182"/>
+                            </svg>
+                            <span>Limpar Prova</span>
+                        </button>
+                    {{/ifCond}}
+                    
+                </div>
+            {{/ifCond}}
+        </div>
     </div>
 </section>
 
@@ -620,8 +622,9 @@
 
 {{#section 'scripts'}}
     <script>
-        let etapaStatus = {{ etapa.dataValues.status }};
+        let etapaStatus = {{#if (etapa.dataValues.status)}} {{etapa.dataValues.status}} {{else}} '' {{/if}};
         let etapaId = {{#if (get etapa 'id')}} {{get etapa 'id'}} {{else}} '' {{/if}};
+        let campeonatoId = {{#if (get campeonato 'id')}} {{get campeonato 'id'}} {{else}} '' {{/if}};
     </script>
     <script src="/scripts/pages/etapas/show.js"></script>
 {{/section}}

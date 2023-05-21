@@ -1,60 +1,72 @@
 .show-page {
+    height: 100%;
+
     .container {
-        width: 47rem;
-        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+.show-container {
+    width: 47rem;
+    max-width: 100%;
+    display: grid;
+    gap: 1rem;
+
+    &.full-width {
+        width: 100%;
+    }
+    
+    form {
         display: grid;
         gap: 1rem;
-        
-        form {
+        width: 100%;
+
+        .data {
             display: grid;
             gap: 1rem;
             width: 100%;
 
-            .data {
-                display: grid;
-                gap: 1rem;
-                width: 100%;
-    
-                .label {
-                    .label-title {
-                        margin-bottom: .5rem;
-                    }
-            
-                    .input {
-                        width: 100%;
-                    }
+            .label {
+                .label-title {
+                    margin-bottom: .5rem;
                 }
-            }
-    
-            .actions {
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: end;
-                gap: 1rem;            
-            }
-
-            &.create {
-                .remove-button {
-                    display: none;
-                }
-
-                .save-button {
-                    display: none;
-                }
-            }
-
-            &.update {
-                .add-button {
-                    display: none;
+        
+                .input {
+                    width: 100%;
                 }
             }
         }
 
-        .return-message {
-            text-align: center;
-            font-size: 1.25rem;
-            color: red;
+        .actions {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            gap: 1rem;            
         }
-    }    
-}
+
+        &.create {
+            .remove-button {
+                display: none;
+            }
+
+            .save-button {
+                display: none;
+            }
+        }
+
+        &.update {
+            .add-button {
+                display: none;
+            }
+        }
+    }
+
+    .return-message {
+        text-align: center;
+        font-size: 1.25rem;
+        color: red;
+    }
+}   

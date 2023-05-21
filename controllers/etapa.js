@@ -1,43 +1,18 @@
-const Sequelize = require("sequelize");
-
 const models = require('../models');
 const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
 const Categoria = models.Categoria;
 const EtapaCompetidor = models.EtapaCompetidor;
 
-exports.index = async (req, res) => {
-    Etapa.findAll({
-        include: [
-            {
-                association: 'campeonato',
-                attributes: ['id','nome' ],
-            }
-        ],
-        where: {
-            [Sequelize.Op.or]: [
-                Sequelize.where(Sequelize.literal("numero || 'ª Etapa / ' || `campeonato`.`nome`"), 
-                    Sequelize.Op.like, `%${req.query.search ?? ''}%`
-                )
-            ]
-        }
-    })
-        .then(data => {
-            res.render('pages/etapas/index', {
-                viewName: 'etapas',
-                etapas: data,
-                search: req.query.search ?? ''
-            });
-        });
-};
-
 exports.new = async (req, res) => {
     const campeonatos = await Campeonato.findAll();
+    const campeonato = await Campeonato.findByPk( req.params.campeonatoId );
     
     res.render('pages/etapas/show', {
-        viewName: 'etapas', 
+        viewName: 'campeonatos', 
         formAction: 'create',
-        campeonatos: campeonatos
+        campeonatos: campeonatos,
+        campeonato: campeonato
     });
 };
 
@@ -56,7 +31,7 @@ exports.show = async (req, res) => {
             if (data) {
                 res.render('pages/etapas/show', 
                 {
-                    viewName: 'etapas', 
+                    viewName: 'campeonatos', 
                     formAction: 'update',
                     etapa: data,
                     campeonatos: campeonatos,

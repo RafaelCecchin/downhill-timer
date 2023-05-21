@@ -23,6 +23,23 @@ module.exports = function(app) {
     app.put('/api/campeonatos/:id', campeonatoController.update);
     app.delete('/api/campeonatos/:id', campeonatoController.delete);
 
+    // Etapas
+    app.get('/campeonatos/:campeonatoId/etapas/new', etapaController.new);
+    app.get('/campeonatos/:campeonatoId/etapas/:id', etapaController.show);
+
+    app.get('/campeonatos/:campeonatoId/etapas/:id/live', etapaController.live);
+
+    app.post('/api/campeonatos/:campeonatoId/etapas', etapaController.create);
+    app.get('/api/campeonatos/:campeonatoId/etapas/:id', etapaController.read);
+    app.put('/api/campeonatos/:campeonatoId/etapas/:id', etapaController.update);
+    app.delete('/api/campeonatos/:campeonatoId/etapas/:id', etapaController.delete);
+
+    app.post('/api/campeonatos/:campeonatoId/etapas/:etapa/competidores', etapaCompetidorController.create);
+    app.put('/api/campeonatos/:campeonatoId/etapas/:etapa/competidores/:competidor', etapaCompetidorController.update);
+    app.delete('/api/campeonatos/:campeonatoId/etapas/:etapa/competidores/:competidor', etapaCompetidorController.delete);
+    
+    app.post('/api/campeonatos/:campeonatoId/etapas/:etapa/backup', etapaCompetidorController.importBackup);
+
     // Categorias
     app.get('/categorias', categoriaController.index);
     app.get('/categorias/new', categoriaController.new);
@@ -48,24 +65,6 @@ module.exports = function(app) {
     app.get('/configuracoes', configuracaoController.index);
     app.get('/api/configuracoes', configuracaoController.read);
     app.put('/api/configuracoes', configuracaoController.update);
-
-    // Etapas
-    app.get('/etapas', etapaController.index);
-    app.get('/etapas/new', etapaController.new);
-    app.get('/etapas/:id', etapaController.show);
-
-    app.get('/etapas/:id/live', etapaController.live);
-
-    app.post('/api/etapas', etapaController.create);
-    app.get('/api/etapas/:id', etapaController.read);
-    app.put('/api/etapas/:id', etapaController.update);
-    app.delete('/api/etapas/:id', etapaController.delete);
-
-    app.post('/api/etapas/:etapa/competidores', etapaCompetidorController.create);
-    app.put('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.update);
-    app.delete('/api/etapas/:etapa/competidores/:competidor', etapaCompetidorController.delete);
-    
-    app.post('/api/etapas/:etapa/backup', etapaCompetidorController.importBackup);
 
     // SerialPort
     app.get('/api/serial/portas', serialController.portas);

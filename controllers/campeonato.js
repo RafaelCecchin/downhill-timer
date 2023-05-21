@@ -24,7 +24,13 @@ exports.new = async (req, res) => {
 };
 
 exports.show = async (req, res) => {
-    Campeonato.findByPk( req.params.id )
+    Campeonato.findByPk( req.params.id, {
+            include: [
+                {
+                    association: 'etapas'
+                }
+            ]
+        })
         .then(data => {
             if (data) {
                 res.render('pages/campeonatos/show', 
