@@ -148,7 +148,7 @@
                                                         data-pf-date="{{getDate (getDataValue this 'pf')}}"
                                                         data-pt="{{get this 'pt'}}">
 
-                                                        <td>{{get (get this 'competidor') 'nome'}}</td>
+                                                        <td><a href="/competidores/{{get (get this 'competidor') 'id'}}">{{get (get this 'competidor') 'nome'}}</a></td>
                                                         <td>RFID: {{get this 'rfid'}}</td>
                                                         <td>PLACA: {{get this 'placa'}}</td>
                                                         <td>DCI: {{getTime (get this 'dci')}}</td>
