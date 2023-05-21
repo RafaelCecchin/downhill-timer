@@ -44,7 +44,7 @@
 
                             {{#each competidores}}
                                 <tr id="competidor-{{get this 'id'}}" data-cod="{{get this 'id'}}">
-                                    <td>{{get this 'nome'}}</td>
+                                    <td><a href="/competidores/{{get this 'id'}}">{{get this 'nome'}}</a></td>
                                     <td>{{get this 'cpf'}}</td>
                                     <td>{{get this 'patrocinador'}}</td>
                                     <td>
