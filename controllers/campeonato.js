@@ -29,6 +29,9 @@ exports.show = async (req, res) => {
                 {
                     association: 'etapas'
                 }
+            ],
+            order: [
+                [ 'etapas', 'numero', 'ASC' ]
             ]
         })
         .then(data => {
