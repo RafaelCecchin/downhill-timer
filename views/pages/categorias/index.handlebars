@@ -46,7 +46,7 @@
                                     {{#ifCond (get this 'generoId') '==' (get ../this 'id')}}
 
                                         <tr id="categoria-{{get this 'id'}}" data-cod="{{get this 'id'}}">
-                                            <td>{{get this 'nome'}}</td>
+                                            <td><a href="/categorias/{{get this 'id'}}">{{get this 'nome'}}</a></td>
                                             <td>
                                                 <button class="table-button remove-row" data-target="#categoria-{{get this 'id'}}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25.44" height="28.044" viewBox="0 0 25.44 28.044">
