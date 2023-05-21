@@ -622,7 +622,7 @@
 
 {{#section 'scripts'}}
     <script>
-        let etapaStatus = {{#if (etapa.dataValues.status)}} {{etapa.dataValues.status}} {{else}} '' {{/if}};
+        let etapaStatus = {{#if etapa.dataValues.status}} {{etapa.dataValues.status}} {{else}} '' {{/if}};
         let etapaId = {{#if (get etapa 'id')}} {{get etapa 'id'}} {{else}} '' {{/if}};
         let campeonatoId = {{#if (get campeonato 'id')}} {{get campeonato 'id'}} {{else}} '' {{/if}};
     </script>
