@@ -1,7 +1,7 @@
 <section class="page-campeonatos show-page">
     <div class="container">
         <div class="show-container full-width">
-            <form method="POST" id="formCampeonato" class="form {{ formAction }}">
+            <div id="formCampeonato" class="form {{ formAction }}">
                 
                 <div class="data">
                     <div class="label nome-do-campeonato">
@@ -45,7 +45,7 @@
                         </button>
                     {{/ifCond}}
                 </div>
-            </form>
+            </div>
         </div>
 
         {{#ifCond formAction '==' 'update'}}

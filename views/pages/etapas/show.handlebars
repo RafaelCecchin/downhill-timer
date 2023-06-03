@@ -1,7 +1,7 @@
 <section class="page-etapas show-etapa">
     <div class="container">
         <div class="show-container">
-            <form method="POST" id="formEtapa" class="form {{ formAction }}">
+            <div id="formEtapa" class="form {{ formAction }}">
 
                 <div class="data">
                     <div class="label campeonato-da-etapa">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
 
             {{#ifCond formAction '==' 'update'}}
                 <div class="content">
@@ -364,7 +364,7 @@
             </svg>
         </button>
 
-        <form class="form" id="formEditarCompetidor">
+        <div class="form" id="formEditarCompetidor">
 
             <div class="data">
                 <div class="label cpf-do-competidor">
@@ -421,7 +421,7 @@
                 <input type="hidden" name="idCompetidor"/>
             </div>
 
-        </form>
+        </div>
 
         <div class="modal-actions">
             <button class="button secondary-button" id="btnCancelar">
@@ -453,7 +453,7 @@
             </svg>
         </button>
 
-        <form class="form" id="formEditarTempoCompetidor">
+        <div class="form" id="formEditarTempoCompetidor">
 
             <div class="data">
 
@@ -497,7 +497,7 @@
                 <input type="hidden" name="idCompetidor"/>
             </div>
 
-        </form>
+        </div>
 
         <div class="modal-actions">
             <button class="button secondary-button" id="btnCancelar">
@@ -576,7 +576,7 @@
             </svg>
         </button>
 
-        <form class="form" id="formBackup">
+        <div class="form" id="formBackup">
 
             <div class="data">
 
@@ -598,7 +598,7 @@
                 <input type="file" name="arquivoBackup" id="arquivoBackup" accept="text/plain" hidden/>
             </div>
 
-        </form>
+        </div>
 
         <div class="modal-actions">
             <button class="button secondary-button" id="btnCancelar">
