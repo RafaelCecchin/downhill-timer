@@ -7,12 +7,20 @@ const EtapaCompetidor = models.EtapaCompetidor;
 exports.new = async (req, res) => {
     const campeonatos = await Campeonato.findAll();
     const campeonato = await Campeonato.findByPk( req.params.campeonatoId );
+
+    const ultimaEtapa = await Etapa.findOne({
+        where: {
+          campeonatoId: req.params.campeonatoId
+        },
+        order: [['numero', 'DESC']]
+    });
     
     res.render('pages/etapas/show', {
         viewName: 'campeonatos', 
         formAction: 'create',
         campeonatos: campeonatos,
-        campeonato: campeonato
+        campeonato: campeonato,
+        etapaNumero: ultimaEtapa ? ultimaEtapa.numero + 1 : 1
     });
 };
 
