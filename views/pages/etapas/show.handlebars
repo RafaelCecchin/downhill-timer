@@ -17,13 +17,13 @@
 
                     <div class="label numero-da-etapa">
                         <div class="label-inputs">  
-                            <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{ get etapa 'numero' }}{{ etapaNumero }}"/>
+                            <input class="input" type="number" name="numeroEtapa" placeholder="Número da etapa" value="{{#if etapa}}{{get etapa 'numero'}}{{else}}{{defaultEtapaNumero}}{{/if}}"/>
                         </div>
                     </div>
 
                     <div class="label data-do-etapa">
                         <div class="label-inputs">                
-                            <input class="input" type="datetime-local" name="dataEtapa" value="{{getDateTime (get etapa 'data')}}"/>
+                            <input class="input" type="datetime-local" name="dataEtapa" value="{{#if etapa}}{{getDateTime (get etapa 'data')}}{{else}}{{ defaultEtapaData }}{{/if}}"/>
                         </div>
                     </div>
 
@@ -268,7 +268,7 @@
             </svg>
         </button>
 
-        <form class="form" id="formAdicionarCompetidor">
+        <div class="form" id="formAdicionarCompetidor">
 
             <div class="data">
                 <div class="label cpf-do-competidor">
@@ -333,7 +333,7 @@
                 <input type="hidden" name="idCompetidor"/>
             </div>
 
-        </form>
+        </div>
 
         <div class="modal-actions">
             <button class="button secondary-button" id="btnCancelar">

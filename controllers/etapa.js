@@ -1,3 +1,4 @@
+const Helper = require('../helper/helper');
 const models = require('../models');
 const Etapa = models.Etapa;
 const Campeonato = models.Campeonato;
@@ -20,7 +21,8 @@ exports.new = async (req, res) => {
         formAction: 'create',
         campeonatos: campeonatos,
         campeonato: campeonato,
-        etapaNumero: ultimaEtapa ? ultimaEtapa.numero + 1 : 1
+        defaultEtapaNumero: ultimaEtapa ? ultimaEtapa.numero + 1 : 1,
+        defaultEtapaData: Helper.getCurrentDateTime()
     });
 };
 
