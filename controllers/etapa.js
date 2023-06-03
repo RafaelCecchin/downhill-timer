@@ -24,7 +24,7 @@ exports.show = async (req, res) => {
     
     const campeonatos = await Campeonato.findAll();
     const categorias = await Categoria.findAll();
-    const competidores = await EtapaCompetidor.findCompetidoresByEtapaId(req.params.id);
+    const competidores = await EtapaCompetidor.findCompetidoresByEtapaId( req.params.id );
 
     Etapa.findByPk( req.params.id )
         .then(data => {
@@ -52,7 +52,7 @@ exports.show = async (req, res) => {
 
 exports.create = async (req, res) => {
     const etapa = { 
-        campeonatoId: req.body.campeonatoEtapa,
+        campeonatoId: req.params.campeonatoId,
         numero: req.body.numeroEtapa,
         data: req.body.dataEtapa,
         status: 0
@@ -91,7 +91,7 @@ exports.read = async (req, res) => {
 
 exports.update = async (req, res) => {
     const etapa = { 
-        campeonatoId: req.body.campeonatoEtapa,
+        campeonatoId: req.params.campeonatoId,
         numero: req.body.numeroEtapa,
         data: req.body.dataEtapa,
         status: req.body.status

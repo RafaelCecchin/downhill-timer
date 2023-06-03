@@ -42,8 +42,9 @@ function excluirEtapa(event) {
             url: url.origin + `/api` + url.pathname,
             dataType: "json",
             success: function(response){
-                const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas`;
-                showModalInformation("Etapa excluída com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
+                alert(campeonatoId)
+                const campeonatoUrl = url.origin + `/campeonatos/${campeonatoId}`;
+                showModalInformation("Etapa excluída com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
             },
             error: function(res, status, error) {
                 const response = JSON.parse(res.responseText);

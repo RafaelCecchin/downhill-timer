@@ -624,7 +624,7 @@
     <script>
         let etapaStatus = {{#if etapa.dataValues.status}} {{etapa.dataValues.status}} {{else}} '' {{/if}};
         let etapaId = {{#if (get etapa 'id')}} {{get etapa 'id'}} {{else}} '' {{/if}};
-        let campeonatoId = {{#if (get campeonato 'id')}} {{get campeonato 'id'}} {{else}} '' {{/if}};
+        let campeonatoId = {{#if (get etapa 'campeonatoId')}} {{get etapa 'campeonatoId'}} {{else}} '' {{/if}};
     </script>
     <script src="/scripts/pages/etapas/show.js"></script>
 {{/section}}

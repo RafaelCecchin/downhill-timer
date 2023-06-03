@@ -91,16 +91,16 @@ server.listen(port, (req, res) => {
 });
 
 // Electron
-const createWindow = () => {
-    const win = new BrowserWindow({
-        minWidth: 1000,
-        minHeight: 600
-    });
+// const createWindow = () => {
+//     const win = new BrowserWindow({
+//         minWidth: 1100,
+//         minHeight: 650
+//     });
   
-    win.loadURL('http://localhost:3000', {"extraHeaders" : "pragma: no-cache\n"});
-}
+//     win.loadURL('http://localhost:3000', {"extraHeaders" : "pragma: no-cache\n"});
+// }
 
-app.whenReady().then(() => {
-    Menu.setApplicationMenu(null);
-    createWindow();
-})
+// app.whenReady().then(() => {
+//     Menu.setApplicationMenu(null);
+//     createWindow();
+// })
