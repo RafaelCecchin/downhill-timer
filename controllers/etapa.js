@@ -91,7 +91,7 @@ exports.read = async (req, res) => {
 
 exports.update = async (req, res) => {
     const etapa = { 
-        campeonatoId: req.params.campeonatoId,
+        campeonatoId: req.body.campeonatoEtapa,
         numero: req.body.numeroEtapa,
         data: req.body.dataEtapa,
         status: req.body.status

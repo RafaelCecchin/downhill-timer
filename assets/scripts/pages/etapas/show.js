@@ -1,6 +1,8 @@
 function adicionarEtapa(event) {
     event.preventDefault();
 
+    campeonatoId = $('#formEtapa').find('select[name="campeonatoEtapa"]').val();
+
     $.ajax({
         type: "POST",
         url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
@@ -42,7 +44,6 @@ function excluirEtapa(event) {
             url: url.origin + `/api` + url.pathname,
             dataType: "json",
             success: function(response){
-                alert(campeonatoId)
                 const campeonatoUrl = url.origin + `/campeonatos/${campeonatoId}`;
                 showModalInformation("Etapa excluída com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
             },
