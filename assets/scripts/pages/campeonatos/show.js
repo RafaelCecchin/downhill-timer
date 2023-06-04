@@ -1,46 +1,55 @@
-function adicionarCampeonato(event) {
-    event.preventDefault();
-    
+function validarCampeonato() {
     const nomeCampeonato = $('#formCampeonato').find('input[name="nomeCampeonato"]').val();
 
     if (!nomeCampeonato) {
         showModalInformation("Informe um nome para o campeonato.");
-        return;
+        return false;
     }
 
-    $.ajax({
-        type: "POST",
-        url: url.origin + `/api/campeonatos`,
-        dataType: "json",
-        data: {
-            nomeCampeonato: nomeCampeonato
-        },
-        success: function(response){
-            const campeonatoUrl = url.origin + `/campeonatos/${response.id}`;
-            showModalInformation("Campeonato criado com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });    
+    return true;
 }
 function salvarCampeonato(event) {
     event.preventDefault();
 
-    $.ajax({
-        type: "PUT",
-        url: url.origin + `/api` + url.pathname,
-        dataType: "json",
-        data: $('#formCampeonato').serialize(),
-        success: function(response){
-            showModalInformation("Campeonato atualizado com sucesso.");
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });
+    if (!validarCampeonato()) {
+        return;
+    }
+
+    switch(formAction) {
+        case 'create':
+            $.ajax({
+                type: "POST",
+                url: url.origin + `/api/campeonatos`,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    const campeonatoUrl = url.origin + `/campeonatos/${response.id}`;
+                    showModalInformation("Campeonato criado com sucesso.", () => { window.location.href = campeonatoUrl }, () => { window.location.href = campeonatoUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });   
+
+            break;
+        case 'update':
+            $.ajax({
+                type: "PUT",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    showModalInformation("Campeonato atualizado com sucesso.");
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+    } 
 }
 function excluirCampeonato(event) {
     event.preventDefault();
@@ -62,8 +71,7 @@ function excluirCampeonato(event) {
     });        
 }
 
-$('#btnAdicionarCampeonato').on('click', adicionarCampeonato);
-$('#btnSalvarCampeonato').on('click', salvarCampeonato);
+$('#formCampeonato').on('submit', salvarCampeonato);
 $('#btnExcluirCampeonato').on('click', excluirCampeonato);
 
 function excluirEtapa(event) {
@@ -89,4 +97,4 @@ function excluirEtapa(event) {
     });   
 }
 
-$('.remove-row').on('click', excluirEtapa);  
+$('.remove-row').on('click', excluirEtapa);

@@ -1,7 +1,7 @@
 <section class="page-competidores show-page">
     <div class="container">
         <div class="show-container">
-            <div id="formCompetidor" class="form {{ formAction }}">
+            <form id="formCompetidor" class="form {{ formAction }}">
                 
                 <div class="data">
                     <div class="label cpf">
@@ -57,7 +57,7 @@
                             <span>Excluir</span>
                         </button>
 
-                        <button type="button" class="button secondary-button save-button" id="btnSalvarCompetidor">
+                        <button type="submit" class="button secondary-button save-button" id="btnSalvarCompetidor">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                 <g transform="translate(-2 -2)">
                                     <path d="M19,21H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3H16l5,5V19A2,2,0,0,1,19,21Z" fill="none" stroke="#94e182" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -70,7 +70,7 @@
                     {{/ifCond}}
 
                     {{#ifCond formAction '==' 'create'}}
-                        <button type="button" class="button secondary-button add-button" id="btnAdicionarCompetidor">   
+                        <button type="submit" class="button secondary-button add-button" id="btnAdicionarCompetidor">   
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                 <path d="M12,7a1,1,0,0,0-1,1v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2H13V8A1,1,0,0,0,12,7Zm0-5A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20Z" transform="translate(-2 -2)" fill-rule="evenodd"/>
                             </svg>
@@ -78,12 +78,15 @@
                         </button>
                     {{/ifCond}}
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
 </section>
 
 {{#section 'scripts'}}
+    <script>
+        const formAction = '{{formAction}}';
+    </script>
     <script src="/scripts/pages/competidores/show.js"></script>
 {{/section}}

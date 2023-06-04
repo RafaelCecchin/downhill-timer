@@ -1,39 +1,70 @@
-function adicionarEtapa(event) {
-    event.preventDefault();
+function validarEtapa() {
+    const campeonatoEtapa = $('#formEtapa').find('select[name="campeonatoEtapa"]').val();
+    const numeroEtapa = $('#formEtapa').find('input[name="numeroEtapa"]').val();
+    const dataEtapa = $('#formEtapa').find('input[name="dataEtapa"]').val();
 
-    campeonatoId = $('#formEtapa').find('select[name="campeonatoEtapa"]').val();
+    if (!campeonatoEtapa) {
+        showModalInformation("Informe um campeonato para a etapa.");
+        return false;
+    }
 
-    $.ajax({
-        type: "POST",
-        url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
-        dataType: "json",
-        data: $('#formEtapa').serialize(),
-        success: function(response){
-            const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas/${response.id}`;
-            showModalInformation("Etapa criada com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });    
+    if (!numeroEtapa) {
+        showModalInformation("Informe um número para a etapa.");
+        return false;
+    }
+
+    if (!dataEtapa) {
+        showModalInformation("Informe uma data para a etapa.");
+        return false;
+    }
+
+    return true;
 }
+
 function salvarEtapa(event) {
     event.preventDefault();
 
-    $.ajax({
-        type: "PUT",
-        url: url.origin + `/api` + url.pathname,
-        dataType: "json",
-        data: $('#formEtapa').serialize(),
-        success: function(response){
-            showModalInformation("Etapa atualizada com sucesso.");
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });
+    if (!validarEtapa()) {
+        return;
+    }
+
+    switch(formAction) {
+        case 'create':
+            let campeonatoId = $( this ).find('select[name="campeonatoEtapa"]').val();
+
+            $.ajax({
+                type: "POST",
+                url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas/${response.id}`;
+                    showModalInformation("Etapa criada com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+        case 'update':
+            $.ajax({
+                type: "PUT",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    showModalInformation("Etapa atualizada com sucesso.");
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+    }
 }
 function excluirEtapa(event) {
     event.preventDefault();
@@ -55,8 +86,7 @@ function excluirEtapa(event) {
     });        
 }
 
-$('#btnAdicionarEtapa').on('click', adicionarEtapa);
-$('#btnSalvarEtapa').on('click', salvarEtapa);
+$('#formEtapa').on('submit', salvarEtapa);
 $('#btnExcluirEtapa').on('click', excluirEtapa);  
 
 function showModalAdicionarCompetidor() {
