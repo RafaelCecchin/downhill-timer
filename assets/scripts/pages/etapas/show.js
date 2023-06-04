@@ -146,7 +146,9 @@ function clearCompetidorInputs(event, cpf = false) {
     $('#modalAdicionarCompetidor').find('input[name="rfid"]').val("").attr("disabled", "");
     $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').attr("disabled", "");
 }
-function adicionarCompetidor() {
+function adicionarCompetidor(event) {
+    event.preventDefault();
+
     const idCompetidor = $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val();
     const categoriaCompetidor = $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val();
     const placa = $('#modalAdicionarCompetidor').find('input[name="placa"]').val();
@@ -194,7 +196,7 @@ function adicionarCompetidor() {
 $('#btnModalCompetidor').on('click', showModalAdicionarCompetidor);  
 $('#btnBuscarCompetidor').on('click', buscarCompetidor);
 $('input[name="cpfCompetidor"]').on("keyup keydown keypress click", clearCompetidorInputs);
-$('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
+$('#formAdicionarCompetidor').on('submit', adicionarCompetidor);
 
 function showModalEditarCompetidor() {
     $('#modalEditarCompetidor').addClass('show');
@@ -272,7 +274,7 @@ function editarCompetidor() {
     });
 }
 $('.editar-competidor').on('click', showModalEditarCompetidor);
-$('#btnSalvarCompetidor').on('click', editarCompetidor);
+$('#formEditarCompetidor').on('submit', editarCompetidor);
 
 function showModalEditarTempoCompetidor() {
     $('#modalEditarTempoCompetidor').addClass('show');
@@ -310,7 +312,9 @@ function showModalEditarTempoCompetidor() {
     $('#modalEditarTempoCompetidor').find('input[name="pf"]').attr('valueAsDate', pfDate);
 
 }
-function editarTempoCompetidor() {
+function editarTempoCompetidor(event) {
+    event.preventDefault();
+
     const idCompetidor = $('#modalEditarTempoCompetidor').find('input[name="idCompetidor"]').val();
     
     if (!idCompetidor) {
@@ -366,7 +370,7 @@ function editarTempoCompetidor() {
     });
 }
 $('.editar-tempo-competidor').on('click', showModalEditarTempoCompetidor);
-$('#btnSalvarTempoCompetidor').on('click', editarTempoCompetidor);
+$('#formEditarTempoCompetidor').on('submit', editarTempoCompetidor);
 
 function excluirCompetidor() {
 
@@ -524,7 +528,9 @@ function updateFileName() {
     const fileName = absoluteFileName.split('\\').pop();
     $('#modalBackup').find('#nomeArquivoBackup').val( fileName );
 }
-function importarBackup() {
+function importarBackup(event) {
+    event.preventDefault();
+
     if (!$('#arquivoBackup').val()) {
         showModalInformation('Você deve informar um arquivo válido.');
         return;
@@ -555,7 +561,7 @@ $('#modalBackup').find('.close-modal').on('click', closeModal);
 $('#modalBackup').find('#btnCancelar').on('click', closeModal);
 $('#modalBackup').find('#btnSelecionarArquivoBackup').on('click', showFileExplorer);
 $('#modalBackup').find('#arquivoBackup').on('change', updateFileName);
-$('#modalBackup').find('#btnImportarBackup').on('click', importarBackup);
+$('#modalBackup').find('#formBackup').on('submit', importarBackup);
 $('#btnModalBackup').on('click', showModalBackup);
 
 $('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});
