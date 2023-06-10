@@ -1,53 +1,64 @@
-function adicionarCategoria(event) {
-    event.preventDefault();
-
+function validarCategoria() {
     const nomeCategoria = $('#formCategoria').find('input[name="nomeCategoria"]').val();
     const generoCategoria = $('#formCategoria').find('select[name="generoCategoria"]').val();
 
     if (!nomeCategoria) {
         showModalInformation("Informe um nome para a categoria.");
-        return;
+        return false;
     }
 
     if (!generoCategoria) {
         showModalInformation("Informe um gênero para a categoria.");
-        return;
+        return false;
     }
 
-    $.ajax({
-        type: "POST",
-        url: url.origin + `/api/categorias`,
-        dataType: "json",
-        data: {
-            nomeCategoria: nomeCategoria,
-            generoCategoria: generoCategoria
-        },
-        success: function(response){
-            const categoriaUrl = url.origin + `/categorias/${response.id}`;
-            showModalInformation("Categoria criada com sucesso.", () => { window.location.href = categoriaUrl }, () => { window.location.href = categoriaUrl });
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });    
+    return true;
 }
+
 function salvarCategoria(event) {
     event.preventDefault();
 
-    $.ajax({
-        type: "PUT",
-        url: url.origin + `/api` + url.pathname,
-        dataType: "json",
-        data: $('#formCategoria').serialize(),
-        success: function(response){
-            showModalInformation("Categoria atualizada com sucesso.");
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });
+    if (!validarCategoria()) {
+        return;
+    }
+
+    switch(formAction) {
+        case 'create':
+            $.ajax({
+                type: "POST",
+                url: url.origin + `/api/categorias`,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    const categoriaUrl = url.origin + `/categorias/${response.id}`;
+                    showModalInformation("Categoria criada com sucesso.", () => { window.location.href = categoriaUrl }, () => { window.location.href = categoriaUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            }); 
+
+            break;
+        case 'update':
+            $.ajax({
+                type: "PUT",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    showModalInformation("Categoria atualizada com sucesso.");
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+    }
+
+       
 }
 function excluirCategoria(event) {
     event.preventDefault();
@@ -69,6 +80,5 @@ function excluirCategoria(event) {
     });        
 }
 
-$('#btnAdicionarCategoria').on('click', adicionarCategoria);
-$('#btnSalvarCategoria').on('click', salvarCategoria);
+$('#formCategoria').on('submit', salvarCategoria);
 $('#btnExcluirCategoria').on('click', excluirCategoria);    

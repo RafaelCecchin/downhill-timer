@@ -202,6 +202,12 @@
     &.modal-backup {
         .modal-container {
             min-width: max-content;
+
+            .form {
+                display: grid;
+                gap: 1rem;
+                width: 100%;
+            }
         }
     }
 }

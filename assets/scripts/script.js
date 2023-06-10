@@ -13,14 +13,14 @@ function closeModal(event, modal = false) {
 function showModalOption(message, yesCallback, noCallback = closeModal, closeCallback = closeModal) {
     $('#modalOption').addClass('show');
     $('#modalOption').find('.information-text').text(message);
-    $('#modalOption').find('#btnAceitar').off('click').on('click', yesCallback).on('click', closeModal);
+    $('#modalOption').find('#btnAceitar').focus().off('click').on('click', yesCallback).on('click', closeModal);
     $('#modalOption').find('#btnRecusar').off('click').on('click', noCallback).on('click', closeModal);
     $('#modalOption').find('.close-modal').off('click').on('click', closeCallback).on('click', closeModal);
 }
 function showModalInformation(message, okCallback = closeModal, closeCallback = closeModal) {
     $('#modalInformation').addClass('show');
     $('#modalInformation').find('.information-text').text(message);
-    $('#modalInformation').find('#btnOk').off('click').on('click', okCallback).on('click', closeModal);
+    $('#modalInformation').find('#btnOk').focus().off('click').on('click', okCallback).on('click', closeModal);
     $('#modalInformation').find('.close-modal').off('click').on('click', closeCallback).on('click', closeModal);
 }
 

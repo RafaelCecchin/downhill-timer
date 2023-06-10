@@ -1,39 +1,70 @@
-function adicionarEtapa(event) {
-    event.preventDefault();
+function validarEtapa() {
+    const campeonatoEtapa = $('#formEtapa').find('select[name="campeonatoEtapa"]').val();
+    const numeroEtapa = $('#formEtapa').find('input[name="numeroEtapa"]').val();
+    const dataEtapa = $('#formEtapa').find('input[name="dataEtapa"]').val();
 
-    campeonatoId = $('#formEtapa').find('select[name="campeonatoEtapa"]').val();
+    if (!campeonatoEtapa) {
+        showModalInformation("Informe um campeonato para a etapa.");
+        return false;
+    }
 
-    $.ajax({
-        type: "POST",
-        url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
-        dataType: "json",
-        data: $('#formEtapa').serialize(),
-        success: function(response){
-            const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas/${response.id}`;
-            showModalInformation("Etapa criada com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });    
+    if (!numeroEtapa) {
+        showModalInformation("Informe um número para a etapa.");
+        return false;
+    }
+
+    if (!dataEtapa) {
+        showModalInformation("Informe uma data para a etapa.");
+        return false;
+    }
+
+    return true;
 }
+
 function salvarEtapa(event) {
     event.preventDefault();
 
-    $.ajax({
-        type: "PUT",
-        url: url.origin + `/api` + url.pathname,
-        dataType: "json",
-        data: $('#formEtapa').serialize(),
-        success: function(response){
-            showModalInformation("Etapa atualizada com sucesso.");
-        },
-        error: function(res, status, error) {
-            const response = JSON.parse(res.responseText);
-            showModalInformation(response.message);
-        }
-    });
+    if (!validarEtapa()) {
+        return;
+    }
+
+    switch(formAction) {
+        case 'create':
+            let campeonatoId = $( this ).find('select[name="campeonatoEtapa"]').val();
+
+            $.ajax({
+                type: "POST",
+                url: url.origin + `/api/campeonatos/${campeonatoId}/etapas`,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    const etapaUrl = url.origin + `/campeonatos/${campeonatoId}/etapas/${response.id}`;
+                    showModalInformation("Etapa criada com sucesso.", () => { window.location.href = etapaUrl }, () => { window.location.href = etapaUrl });
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+        case 'update':
+            $.ajax({
+                type: "PUT",
+                url: url.origin + `/api` + url.pathname,
+                dataType: "json",
+                data: $( this ).serialize(),
+                success: function(response){
+                    showModalInformation("Etapa atualizada com sucesso.");
+                },
+                error: function(res, status, error) {
+                    const response = JSON.parse(res.responseText);
+                    showModalInformation(response.message);
+                }
+            });
+
+            break;
+    }
 }
 function excluirEtapa(event) {
     event.preventDefault();
@@ -55,8 +86,7 @@ function excluirEtapa(event) {
     });        
 }
 
-$('#btnAdicionarEtapa').on('click', adicionarEtapa);
-$('#btnSalvarEtapa').on('click', salvarEtapa);
+$('#formEtapa').on('submit', salvarEtapa);
 $('#btnExcluirEtapa').on('click', excluirEtapa);  
 
 function showModalAdicionarCompetidor() {
@@ -116,7 +146,9 @@ function clearCompetidorInputs(event, cpf = false) {
     $('#modalAdicionarCompetidor').find('input[name="rfid"]').val("").attr("disabled", "");
     $('#modalAdicionarCompetidor').find('#btnAdicionarCompetidor').attr("disabled", "");
 }
-function adicionarCompetidor() {
+function adicionarCompetidor(event) {
+    event.preventDefault();
+
     const idCompetidor = $('#modalAdicionarCompetidor').find('input[name="idCompetidor"]').val();
     const categoriaCompetidor = $('#modalAdicionarCompetidor').find('select[name="categoriaCompetidor"]').val();
     const placa = $('#modalAdicionarCompetidor').find('input[name="placa"]').val();
@@ -164,7 +196,7 @@ function adicionarCompetidor() {
 $('#btnModalCompetidor').on('click', showModalAdicionarCompetidor);  
 $('#btnBuscarCompetidor').on('click', buscarCompetidor);
 $('input[name="cpfCompetidor"]').on("keyup keydown keypress click", clearCompetidorInputs);
-$('#btnAdicionarCompetidor').on('click', adicionarCompetidor);
+$('#formAdicionarCompetidor').on('submit', adicionarCompetidor);
 
 function showModalEditarCompetidor() {
     $('#modalEditarCompetidor').addClass('show');
@@ -242,7 +274,7 @@ function editarCompetidor() {
     });
 }
 $('.editar-competidor').on('click', showModalEditarCompetidor);
-$('#btnSalvarCompetidor').on('click', editarCompetidor);
+$('#formEditarCompetidor').on('submit', editarCompetidor);
 
 function showModalEditarTempoCompetidor() {
     $('#modalEditarTempoCompetidor').addClass('show');
@@ -280,7 +312,9 @@ function showModalEditarTempoCompetidor() {
     $('#modalEditarTempoCompetidor').find('input[name="pf"]').attr('valueAsDate', pfDate);
 
 }
-function editarTempoCompetidor() {
+function editarTempoCompetidor(event) {
+    event.preventDefault();
+
     const idCompetidor = $('#modalEditarTempoCompetidor').find('input[name="idCompetidor"]').val();
     
     if (!idCompetidor) {
@@ -336,7 +370,7 @@ function editarTempoCompetidor() {
     });
 }
 $('.editar-tempo-competidor').on('click', showModalEditarTempoCompetidor);
-$('#btnSalvarTempoCompetidor').on('click', editarTempoCompetidor);
+$('#formEditarTempoCompetidor').on('submit', editarTempoCompetidor);
 
 function excluirCompetidor() {
 
@@ -494,7 +528,9 @@ function updateFileName() {
     const fileName = absoluteFileName.split('\\').pop();
     $('#modalBackup').find('#nomeArquivoBackup').val( fileName );
 }
-function importarBackup() {
+function importarBackup(event) {
+    event.preventDefault();
+
     if (!$('#arquivoBackup').val()) {
         showModalInformation('Você deve informar um arquivo válido.');
         return;
@@ -525,7 +561,7 @@ $('#modalBackup').find('.close-modal').on('click', closeModal);
 $('#modalBackup').find('#btnCancelar').on('click', closeModal);
 $('#modalBackup').find('#btnSelecionarArquivoBackup').on('click', showFileExplorer);
 $('#modalBackup').find('#arquivoBackup').on('change', updateFileName);
-$('#modalBackup').find('#btnImportarBackup').on('click', importarBackup);
+$('#modalBackup').find('#formBackup').on('submit', importarBackup);
 $('#btnModalBackup').on('click', showModalBackup);
 
 $('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});
