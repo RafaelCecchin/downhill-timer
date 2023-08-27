@@ -210,13 +210,13 @@ class SerialService {
                     switch(currentRun.getDataValue('status')) {
                         case 0: 
                             if (!el.getDataValue('dci')) {
-                                el.set('dci', serialData.data.time);
+                                el.set('dci', serialData.data.dateTime);
                             }
     
                             break;
                         case 1: 
                             if (!el.getDataValue('pi')) {
-                                el.set('pi', serialData.data.time);
+                                el.set('pi', serialData.data.dateTime);
                             }
     
                             break;
@@ -226,13 +226,13 @@ class SerialService {
                     switch(currentRun.getDataValue('status')) {
                         case 0: 
                             if (!el.getDataValue('dcf')) {
-                                el.set('dcf', serialData.data.time);
+                                el.set('dcf', serialData.data.dateTime);
                             }
 
                             break;
                         case 1: 
                             if (!el.getDataValue('pf')) {
-                                el.set('pf', serialData.data.time);
+                                el.set('pf', serialData.data.dateTime);
                             }
 
                             break;
