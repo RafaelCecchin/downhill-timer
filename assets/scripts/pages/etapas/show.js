@@ -421,7 +421,7 @@ serialSocket.on('log', (json) => {
     }
 
     $('#modalLog').find('.log-list').append(
-        '<li>' + '[' + data.data['time'] + '] ' + data.message + '</li>'
+        '<li>' + '[' + data.data['dateTime'] + '] ' + data.message + '</li>'
     );
 })
 serialSocket.on('saved', () => {
