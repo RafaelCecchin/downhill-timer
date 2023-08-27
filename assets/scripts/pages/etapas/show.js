@@ -567,8 +567,7 @@ $('#btnModalBackup').on('click', showModalBackup);
 $('input[name="cpfCompetidor"]').mask('000.000.000-00', {reverse: true});
 
 function openLiveView() {
-    window.open( `/campeonatos/${campeonatoId}/etapas/${etapaId}/live`, 'Live', `scrollbars=no,status=no,location=no,toolbar=no,menubar=no,
-    width=0,height=0,left=-1000,top=-1000`);
+    window.open( `/campeonatos/${campeonatoId}/etapas/${etapaId}/live`, 'Live' );
 }
 
 $('#btnLive').on('click', openLiveView);
