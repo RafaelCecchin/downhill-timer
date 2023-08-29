@@ -204,9 +204,9 @@ class SerialService {
             if (el.rfid != serialData.data.rfid) {
                 return false;
             }
-
+            
             switch(serialData.device) {
-                case 2:
+                case '2':
                     switch(currentRun.getDataValue('status')) {
                         case 0: 
                             if (!el.getDataValue('dci')) {
@@ -222,7 +222,7 @@ class SerialService {
                             break;
                     }
                     break;
-                case 3:
+                case '3':
                     switch(currentRun.getDataValue('status')) {
                         case 0: 
                             if (!el.getDataValue('dcf')) {

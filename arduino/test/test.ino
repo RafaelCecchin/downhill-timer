@@ -1,3 +1,4 @@
+#include <TimeLib.h>
 #define ever (;;)
 
 struct DataInfo {
@@ -66,7 +67,11 @@ void sendData(const JSONData& jsonData) {
     jsonString += "}";
   }
   
-  Serial.println("{" + jsonString + "}");
+  Serial.print("{");
+  Serial.print(jsonString);
+  Serial.print("}");
+
+  Serial.println();
 }
 bool isValidJSON(String str) {
     if (str.length() == 0 || (str.charAt(0) != '{' && str.charAt(str.length() - 1) != '}')) {
@@ -181,26 +186,46 @@ void startRace() {
   
   JSONData output;
   
-  output.device = 1;
   output.operation = 2;
   output.status = 1;
 
-  for (int device = 1; device < 3; device++) {
+  tmElements_t tm;
+  tm.Year = 53;   // Ano 2023 (anos desde 1970)
+  tm.Month = 9;   // Mês 
+  tm.Day = 5;     // Dia
+  tm.Hour = 0;    // Hora
+  tm.Minute = 0;  // Minuto
+  tm.Second = 0;  // Segundo
+  
+  for (int device = 2; device < 4; device++) {
+    output.device = device;
+
+    if (device == 3) {
+      tm.Minute = 4;
+    }
+    
     for (int i = 0; i < 12; i++) {
       String message = "Competidor [NOME_COMPETIDOR] (RFID " + rfids[i] + ") ";
-
-      if (device == 1) {
+      if (device == 2) {
         message += "iniciou o circuito.";
       }
-
-      if (device == 2) {
+      if (device == 3) {
         message += "finalizou o circuito.";
       }
       
       output.message = message;
       output.dataInfo.rfid = rfids[i];
-      output.dataInfo.dateTime = "2023-01-01 00:00:00";
+
+      tm.Minute++;
+      tm.Second += random(35,55);
+      time_t t = makeTime(tm);
+      char dateTimeStr[25];
+      sprintf(dateTimeStr, "%04d-%02d-%02d %02d:%02d:%02d", year(t), month(t), day(t), hour(t), minute(t), second(t));
+      
+      output.dataInfo.dateTime = dateTimeStr;
+
       sendData(output);
+      delay(20);
     }
   }
         
