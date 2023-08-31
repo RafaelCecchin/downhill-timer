@@ -16,8 +16,8 @@ struct JSONData {
 unsigned long startTime;
 const unsigned long timeoutDuration = 500;
 const String rfids[] = {
-  "123456", "234567", "345678", "456789", "567890", "678901",
-  "789012", "890123", "901234", "101234", "102345", "103456"
+  "123456", "234567", "345678", "456789",
+  "789012", "890123", "901234", "101234"
 };
 
 void sendData(const JSONData& jsonData) {
@@ -203,8 +203,10 @@ void startRace() {
     if (device == 3) {
       tm.Minute = 4;
     }
+
+    int arrayLength = sizeof(rfids)/sizeof(rfids[0]);
     
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < arrayLength; i++) {
       String message = "Competidor [NOME_COMPETIDOR] (RFID " + rfids[i] + ") ";
       if (device == 2) {
         message += "iniciou o circuito.";
@@ -225,7 +227,6 @@ void startRace() {
       output.dataInfo.dateTime = dateTimeStr;
 
       sendData(output);
-      delay(20);
     }
   }
         
@@ -247,6 +248,13 @@ String getSerialData() {
   }
 
   return received;
+}
+
+void clearOutput(JSONData& output) {
+  output.device = NULL;
+  output.operation = NULL;
+  output.status = NULL;
+  output.message = "";
 }
 
 void setup() {
@@ -323,7 +331,9 @@ void loop() {
           sendData(output);
   
           break;
-      }    
+      }
+
+      clearOutput(output);
     }
   }
 }
