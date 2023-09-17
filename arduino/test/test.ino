@@ -1,5 +1,10 @@
+
+#include <Wire.h>
+#include "RTClib.h"
 #include <TimeLib.h>
 #define ever (;;)
+
+RTC_DS3231 rtc;
 
 struct DataInfo {
   String rfid;
@@ -13,12 +18,13 @@ struct JSONData {
   DataInfo dataInfo;
 };
 
-unsigned long startTime;
-const unsigned long timeoutDuration = 500;
 const String rfids[] = {
   "123456", "234567", "345678", "456789",
   "789012", "890123", "901234", "101234"
 };
+const int quantityOfCompetitors = sizeof(rfids)/sizeof(rfids[0]);
+unsigned long startTime;
+const unsigned long timeoutDuration = 500;
 
 void sendData(const JSONData& jsonData) {
   String jsonString = "";
@@ -168,69 +174,38 @@ JSONData parseJSON(const String& jsonString) {
     return jsonData;
 }
 
-String getFormattedDateTime(String dt){
-  int year, month, day, hour, minute, second;
-  char formattedDateTime[25];
-
-  sscanf(dt.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second);
-  snprintf(formattedDateTime, sizeof(formattedDateTime), "%02d/%02d/%04d %02d:%02d:%02d", day, month, year, hour, minute, second);
+String getHour() {
+  DateTime now = rtc.now();
   
-  return formattedDateTime;
+  char time[20];
+  sprintf( time, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second() );
+  
+  return time;
+}
+void setHour(String dateTime) {
+    int year, month, day, hour, minute, second;
+    
+    if (sscanf(dateTime.c_str(), "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second) == 6) {
+        rtc.adjust(DateTime(year, month, day, hour, minute, second));
+    }
 }
 
-bool finishRace = false;
-void startRace() {
-  if (finishRace) {
-    return;
-  }
-  
-  JSONData output;
-  
-  output.operation = 2;
-  output.status = 1;
+int startButton = 7;
+int startCount = 0;
+int finishButton = 6;
+int finishCount = 0;
 
-  tmElements_t tm;
-  tm.Year = 53;   // Ano 2023 (anos desde 1970)
-  tm.Month = 9;   // Mês 
-  tm.Day = 5;     // Dia
-  tm.Hour = 0;    // Hora
-  tm.Minute = 0;  // Minuto
-  tm.Second = 0;  // Segundo
-  
-  for (int device = 2; device < 4; device++) {
-    output.device = device;
+bool startButtonPressed () {
+  return digitalRead(startButton) == HIGH;  
+}
 
-    if (device == 3) {
-      tm.Minute = 4;
-    }
+bool finishButtonPressed () {
+  return digitalRead(finishButton) == HIGH;  
+}
 
-    int arrayLength = sizeof(rfids)/sizeof(rfids[0]);
-    
-    for (int i = 0; i < arrayLength; i++) {
-      String message = "Competidor [NOME_COMPETIDOR] (RFID " + rfids[i] + ") ";
-      if (device == 2) {
-        message += "iniciou o circuito.";
-      }
-      if (device == 3) {
-        message += "finalizou o circuito.";
-      }
-      
-      output.message = message;
-      output.dataInfo.rfid = rfids[i];
-
-      tm.Minute++;
-      tm.Second += random(35,55);
-      time_t t = makeTime(tm);
-      char dateTimeStr[25];
-      sprintf(dateTimeStr, "%04d-%02d-%02d %02d:%02d:%02d", year(t), month(t), day(t), hour(t), minute(t), second(t));
-      
-      output.dataInfo.dateTime = dateTimeStr;
-
-      sendData(output);
-    }
-  }
-        
-  finishRace = true;
+void setupButtons() {
+  pinMode(startButton, INPUT);
+  pinMode(finishButton, INPUT);
 }
 
 bool hasSerialData() {
@@ -257,19 +232,69 @@ void clearOutput(JSONData& output) {
   output.message = "";
 }
 
-void setup() {
-  Serial.begin(9600);
+void setupRTC() {
+    while (!rtc.begin()) {
+      Serial.println("Erro ao inicializar o módulo RTC!");
+    }
+
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 }
 
-void loop() {
-  startRace();
-  
+void setup() {
+  Serial.begin(9600);
+  setupRTC();
+  setupButtons();
+}
+
+void loop() {    
   for ever {
+    JSONData input;
+    JSONData output;
+      
+    if (startButtonPressed()) {
+
+      if (finishCount >= quantityOfCompetitors && startCount >= quantityOfCompetitors) {
+        startCount = 0;
+        finishCount = 0;
+      }
+      
+      if (startCount >= quantityOfCompetitors) {
+        continue;
+      }
+            
+      output.device = 2;
+      output.operation = 2;
+      output.status = 1;
+      output.message = "Competidor [NOME_COMPETIDOR] (RFID " + rfids[startCount] + ") iniciou o circuito.";
+      output.dataInfo.rfid = rfids[startCount];
+      output.dataInfo.dateTime = getHour();
+      
+      sendData(output);
+      
+      startCount++;
+      delay(500);
+    }
+
+    if (finishButtonPressed()) {
+      
+      if (finishCount >= quantityOfCompetitors || finishCount >= startCount) {
+        continue;
+      }
+            
+      output.device = 3;
+      output.operation = 2;
+      output.status = 1;
+      output.message = "Competidor [NOME_COMPETIDOR] (RFID " + rfids[finishCount] + ") finalizou o circuito.";
+      output.dataInfo.rfid = rfids[finishCount];
+      output.dataInfo.dateTime = getHour();
+      
+      sendData(output);
+      
+      finishCount++;
+      delay(500);
+    }
+    
     if (hasSerialData()) {
-
-      JSONData input;
-      JSONData output;
-
       String received = getSerialData();
 
       if (!isValidJSON(received)) {
@@ -311,17 +336,29 @@ void loop() {
             break;
           }
           
+          setHour(input.dataInfo.dateTime);
           output.dataInfo.dateTime = input.dataInfo.dateTime;
           output.status = 1;
-          output.message = "A data e hora identificada foi " + getFormattedDateTime(input.dataInfo.dateTime);
+          output.message = "A data e hora identificada foi " + getHour();
           sendData(output);
 
           break;
 
         case 4:
-          output.status = 1;
-          output.message = "O interruptor foi acionado.";
-          sendData(output);
+
+          int startTime = millis();
+          bool buttonPressed = false;
+          
+          while (millis() - startTime < 5000) {
+            if (startButtonPressed() || finishButtonPressed()) {
+              output.status = 1;
+              output.message = "O interruptor foi acionado.";
+              sendData(output);
+  
+              buttonPressed = true;
+              break;
+            }
+          }         
   
           break;
   
