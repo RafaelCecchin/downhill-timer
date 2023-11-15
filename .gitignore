@@ -1,3 +1,4 @@
 /node_modules
-/dist
+/dist/*
+!/dist/Downhill\ Timer\ Setup\ 1.0.0.exe
 .env
