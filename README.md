@@ -6,7 +6,8 @@ O principal objetivo deste projeto é desenvolver um software que simplifique o 
 
 A relevância deste projeto reside na sua capacidade de contribuir para a modernização do gerenciamento de provas de downhill, simplificando processos e integrando tecnologias. Ao finalizar este trabalho, espera-se que o software desenvolvido demonstre sua eficácia e que os resultados obtidos possam impactar positivamente a realização de competições dessa modalidade.
 
-**Link de Download removido temporariamente para se adequar as regras do Github**
+[Download](https://github.com/RafaelCecchin/downhill-timer/releases/tag/v1.0.0)
 
 Documentação completa no site do IFPR - Instituto Federal do Paraná
+
 [Acessar documentação](https://ifpr.edu.br/uniao-da-vitoria/wp-content/uploads/sites/27/2024/02/TCC-IFPR-RAFAEL.pdf)
