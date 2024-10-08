@@ -8,12 +8,6 @@ A relevância deste projeto reside na sua capacidade de contribuir para a modern
 
 [Download](https://github.com/RafaelCecchin/downhill-timer/releases/tag/v1.0.0)
 
-Documentação completa no site do IFPR - Instituto Federal do Paraná
+Documentação completa no site do IFPR - Instituto Federal do Paraná | [Acessar documentação](https://ifpr.edu.br/uniao-da-vitoria/wp-content/uploads/sites/27/2024/02/TCC-IFPR-RAFAEL.pdf)
 
-[Acessar documentação](https://ifpr.edu.br/uniao-da-vitoria/wp-content/uploads/sites/27/2024/02/TCC-IFPR-RAFAEL.pdf)
-
-Segue um podcast gerado pelo Google NotebookLM
-
-<audio controls>
-  <source src="https://github.com/RafaelCecchin/downhill-timer/blob/master/assets/audio/notebooklm-podcast.wav?raw=true" type="audio/wav">
-</audio>
+Segue um podcast gerado pelo Google NotebookLM | [Acessar podcast](https://github.com/RafaelCecchin/downhill-timer/blob/master/assets/audio/notebooklm-podcast.wav?raw=true)
