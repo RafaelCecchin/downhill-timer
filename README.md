@@ -1,4 +1,4 @@
-# Downhill timer
+# Downhill timer 🚴⏱️
 
 Este trabalho se propõe a abordar o desenvolvimento de um software inovador dedicado ao gerenciamento de competições de downhill, com o objetivo de aprimorar a organização e otimizar a execução de eventos dessa modalidade do mountain bike. 
 
@@ -11,3 +11,9 @@ A relevância deste projeto reside na sua capacidade de contribuir para a modern
 Documentação completa no site do IFPR - Instituto Federal do Paraná
 
 [Acessar documentação](https://ifpr.edu.br/uniao-da-vitoria/wp-content/uploads/sites/27/2024/02/TCC-IFPR-RAFAEL.pdf)
+
+Segue um podcast gerado pelo Google NotebookLM
+
+<audio controls>
+  <source src="https://github.com/RafaelCecchin/downhill-timer/blob/master/assets/audio/notebooklm-podcast.wav?raw=true" type="audio/wav">
+</audio>
